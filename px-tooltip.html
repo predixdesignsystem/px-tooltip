@@ -241,7 +241,7 @@ Element providing solution to no problem in particular. As a simple, increments 
             this.$.carat.style.top = (this.thisRect.height/2) - (this.caratRect.width) + 'px';
             // position the tooltip itself
             this.style.left = (this.targetRect.left - this.thisRect.width) + (this.margin/2) + 'px';
-            this.style.top = this.targetRect.top - (this.thisRect.height/2) + (this.margin/2) + 'px';
+            this.style.top = Math.round( (this.targetRect.top + (this.targetRect.height/2)) - (this.thisRect.height/2)) + 'px';
         },
         _positionRight: function () {
             this.$.carat.classList.remove(this._values.TYPE.top,this._values.TYPE.bottom,this._values.TYPE.left,this._values.TYPE.right);
@@ -252,7 +252,9 @@ Element providing solution to no problem in particular. As a simple, increments 
             this.$.carat.style.top = (this.thisRect.height/2) - (this.caratRect.width) + 'px';
             // position the tooltip itself
             this.style.left = (this.targetRect.right - this.caratRect.width) + 'px';
-            this.style.top = this.targetRect.top - (this.thisRect.height/2) + (this.margin/2) + 'px';
+
+
+            this.style.top = Math.round( (this.targetRect.top + (this.targetRect.height/2)) - (this.thisRect.height/2)) + 'px';
         }
 
     });

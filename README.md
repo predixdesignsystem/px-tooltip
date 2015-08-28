@@ -86,7 +86,7 @@ The element to which the tooltip provides additional information.
 The position of the tooltip relative to the 'for' element. Currently supports 'top', 'bottom', 'left' and 'right'.
 
 **tooltip-message**
-The text message that will be displayed in the tooltip.
+The text message that will be displayed in the tooltip. Also support HTML elements.
 
 **delay**
 The delay in milliseconds until the tooltip is displayed.

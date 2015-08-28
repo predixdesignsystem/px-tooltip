@@ -26,7 +26,7 @@ Element providing solution to no problem in particular. As a simple, increments 
         <div id="tooltipWrapper" hidden>
             <div id="carat"></div>
             <div id="tooltip">
-                <p>{{tooltipMessage}}</p>
+                <div id="message"></div>
             </div>
         </div>
     </template>
@@ -125,6 +125,10 @@ Element providing solution to no problem in particular. As a simple, increments 
         detached: function () {
             this.unlisten(this._target, 'mouseenter', '_show');
             this.unlisten(this._target, 'mouseleave', '_hide');
+        },
+        ready: function() {
+            // this may be BAD
+            this.$.message.innerHTML = this.tooltipMessage;
         },
         _onIronResize: function () {
             this._setPosition();

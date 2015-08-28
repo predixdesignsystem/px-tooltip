@@ -1,30 +1,109 @@
-<!--
-    @license
-    Copyright (c) 2014 The Polymer Project Authors. All rights reserved.
-    This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-    The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-    The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-    Code distributed by Google as part of the polymer project is also
-    subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
 <!doctype html>
+
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>seed-element</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>px-tooltip Demo</title>
+        <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+        <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+        <script src="../web-component-tester/browser.js"></script>
+        <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+        <link rel="import" href="../px-tooltip.html"/>
+        <style media="screen">
+            .sample-container {
+                width: 250px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hover-tooltip {
+                padding: 15px;
+                width: 200px;
+                background-color: gray;
+                color: white;
+                text-align: center;
+                vertical-align: middle;
+            }
+        </style>
+    </head>
 
-    <script src="../../webcomponentsjs/webcomponents.min.js"></script>
+    <body>
 
-    <!-- Step 1: import the element to test -->
-    <link rel="import" href="../px-tooltip.html">
-</head>
-<body>
+        <h3>Demo</h3>
 
-<!-- You use the document as a place to set up your fixtures. -->
-<px-tooltip counter-value="1">
-    &hearts;
-</px-tooltip>
+        <p>
+            Although related, examples are /not/ the same as the test fixtures.
+            Tests are tests, examples are examples.
+        </p>
 
-</body>
+        <p>
+            Also see the <a href="index.html">documentation</a> and the <a href="test/fixture.html">UI test fixture</a>.
+        </p>
+
+        <p>
+            Hover over the boxes to see tooltips:
+        </p>
+
+        <!-- instance 1, "predix" theme -->
+        <div class="sample-container">
+            <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
+            <px-tooltip
+                id="testTooltip"
+                for="hoverDivTop"
+                orientation="top"
+                delay="5000"
+                tooltip-message="Top tooltip">
+            </px-tooltip>
+            <p></p>
+            <div id="hoverDivBottom" class="hover-tooltip">Hover for tooltip<br/><span>(bottom, default delay: 1 sec)</span></div>
+            <px-tooltip
+                for="hoverDivBottom"
+                orientation="bottom"
+                tooltip-message="Bottom tooltip">
+            </px-tooltip>
+            <p></p>
+            <div id="hoverDivLeft" class="hover-tooltip">Hover for tooltip<br/><span>(left, delay: 3 sec)</span></div>
+            <px-tooltip
+                for="hoverDivLeft"
+                delay="3000"
+                orientation="left"
+                tooltip-message="Left tooltip">
+            </px-tooltip>
+            <p></p>
+            <div id="hoverDivRight" class="hover-tooltip">Hover for tooltip<br/><span>(right, default delay: 1 sec)</span></div>
+            <px-tooltip
+                for="hoverDivRight"
+                orientation="right"
+                tooltip-message="Right tooltip">
+            </px-tooltip>
+        </div>
+
+        <script>
+            suite('<px-tooltip>', function() {
+                var testTooltip = document.getElementById('testTooltip');
+
+                test('reflects the "for" property', function() {
+                    assert.equal(testTooltip.for, "hoverDivTop");
+                });
+
+                test('reflects the "delay" property', function() {
+                    assert.equal(testTooltip.delay, 5000);
+                });
+
+                test('reflects the "orientation" property', function() {
+                    assert.equal(testTooltip.orientation, "top");
+                });
+
+                test('reflects the "tooltip-message" property', function() {
+                    assert.equal(testTooltip.tooltipMessage, "Top tooltip");
+                });
+
+                test('hides tooltip before click', function() {
+                    var wrapper = document.querySelectorAll('#testTooltip #tooltipWrapper')[0];
+                    expect(wrapper.hidden).to.equal(true);
+                });
+
+            });
+        </script>
+    </body>
 </html>

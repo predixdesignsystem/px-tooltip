@@ -79,15 +79,32 @@ watch: {
 
 ### Options
 
-Does this component have runtime configuration options?  If so, they should be able to be passed as attributes on the element with examples shown below.
+**for**
+The element to which the tooltip provides additional information.
 
-### Function calls
+**orientation**
+The position of the tooltip relative to the 'for' element. Currently supports 'top', 'bottom', 'left' and 'right'.
 
-What is the public API of this component?
+**tooltip-message**
+The text message that will be displayed in the tooltip.
 
-### Extending styles
+**delay**
+The delay in milliseconds until the tooltip is displayed.
 
-Documented CSS extension points?
+### example
+
+```
+<div class="sample-container">
+    <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
+    <px-tooltip
+        for="hoverDivTop"
+        orientation="top"
+        delay="5000"
+        tooltip-message="Top tooltip">
+    </px-tooltip>
+</div>
+
+```
 
 ### Extending behavior
 

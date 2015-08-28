@@ -23,6 +23,12 @@
                 text-align: center;
                 vertical-align: middle;
             }
+            .test-el {
+                padding:10px;
+                text-align: center;
+                vertical-align: middle;
+                background-color: gray;
+            }
         </style>
     </head>
 
@@ -53,11 +59,11 @@
                 tooltip-message="Top tooltip">
             </px-tooltip>
             <p></p>
-            <div id="hoverDivBottom" class="hover-tooltip">Hover for tooltip<br/><span>(bottom, default delay: 1 sec)</span></div>
+            <div id="hoverDivBottom" class="hover-tooltip">Hover for tooltip<br/><span>(HTML element, bottom, default delay: 1 sec)</span></div>
             <px-tooltip
                 for="hoverDivBottom"
                 orientation="bottom"
-                tooltip-message="Bottom tooltip<br>with html<br><button class='btn'>HTML Button</button>">
+                tooltip-message="Bottom tooltip<br>with html<br><div class='test-el'>HTML Div</div>">
             </px-tooltip>
             <p></p>
             <div id="hoverDivLeft" class="hover-tooltip">Hover for tooltip<br/><span>(left, delay: 3 sec)</span></div>

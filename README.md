@@ -72,11 +72,6 @@ watch: {
 }
 ```
 
-**We hope `grunt devmode` puts your development into *#beastmode*.**
-
-<img src="http://imgc.allpostersimages.com/images/P-488-488-90/71/7108/JJUV100Z/posters/teen-wolf-beast-mode.jpg" alt="Slam Dunks for Days" width=
-"250" />
-
 ### Options
 
 **for**

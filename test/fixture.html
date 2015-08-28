@@ -99,7 +99,7 @@
                 });
 
                 test('hides tooltip before click', function() {
-                    var wrapper = document.querySelectorAll('#testTooltip #tooltipWrapper')[0];
+                    var wrapper = document.querySelector('#testTooltip #tooltipWrapper');
                     expect(wrapper.hidden).to.equal(true);
                 });
 

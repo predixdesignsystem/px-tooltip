@@ -1,0 +1,259 @@
+
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. ui tests, examples), we assume the server is started with
+    'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs
+    See https://github.sw.ge.com/jreichenberg/grunt-dep-serve#why-do-we-need-this
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+
+<!--
+Element providing solution to no problem in particular. As a simple, increments a counter when clicked.
+
+##### Usage
+
+    <px-tooltip counter-value="1">Hi</px-tooltip>
+
+@element px-tooltip
+@blurb Element providing solution to no problem in particular.
+@homepage index.html
+@demo demo.html
+-->
+<dom-module id="px-tooltip">
+    <link rel="import" type="css" href="css/px-tooltip.css"/>
+    <template>
+        <div id="tooltipWrapper" hidden>
+            <div id="carat"></div>
+            <div id="tooltip">
+                <p>{{tooltipMessage}}</p>
+            </div>
+        </div>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+
+        is: 'px-tooltip',
+        behaviors: [
+            Polymer.IronResizableBehavior
+        ],
+        /**
+         * Private Properties, used in internal view logic.
+         */
+        _values: { // attribute values
+            TYPE: {
+                top: 'top',
+                bottom: 'bottom',
+                left: 'left',
+                right: 'right'
+            }
+        },
+        _isShowing: false,
+        _mouseInside: false,
+        _cancel: false,
+        /**
+         * Properties block, expose attribute values to the DOM via 'reflect'
+         *
+         * @property properties
+         * @type Object
+         */
+        properties: {
+            /**
+             * The id of the element that the tooltip is anchored to. This element
+             * must be a sibling of the tooltip.
+             */
+            for: {
+                type: String,
+                reflect: true,
+                value: 'prev'
+            },
+            /**
+             * The id of the element that the tooltip is anchored to. This element
+             * must be a sibling of the tooltip.
+             */
+            delay: {
+                type: Number,
+                reflect: true,
+                value: 1000
+            },
+            /**
+             * The direction that the tooltip is displayed relative to the
+             * 'for' element.
+             * - 'auto' calculated at render time or resize
+             * - 'left' to the left of the 'for' element
+             * - 'right' to the right of the 'for' element
+             * - 'top' above the 'for' element
+             * - 'bottom' below the 'for' element
+             */
+            orientation: {
+                type: String,
+                reflect: true,
+                value: 'auto'
+            },
+            /**
+             * The String to be display in the tooltip title
+             */
+            tooltipMessage: {
+                type: String,
+                reflect: true,
+                value: 'This is a px-tooltip'
+            }
+        },
+        get target () {
+            var ownerRoot = Polymer.dom(this).getOwnerRoot();
+            var parentNode = this.parentNode;
+            var target;
+            if (this.for) {
+                target = parentNode.querySelector('#' + this.for);
+            } else if (parentNode.nodeType == 11) { // DOCUMENT_FRAGMENT_NODE
+                target = ownerRoot.host;
+            } else {
+                target = parentNode;
+            }
+            return target;
+        },
+        listeners: {
+            'iron-resize': '_onIronResize'
+        },
+        attached: function () {
+            this._target = this.target;
+            this.listen(this._target, 'mouseenter', '_show');
+            this.listen(this._target, 'mouseleave', '_hide');
+        },
+        detached: function () {
+            this.unlisten(this._target, 'mouseenter', '_show');
+            this.unlisten(this._target, 'mouseleave', '_hide');
+        },
+        _onIronResize: function () {
+            this._setPosition();
+        },
+        _setMouseInside: function () {
+            this._mouseInside = true;
+        },
+        _isDescendant: function (parent, child) {
+        var node = child.parentNode;
+            while (node != null) {
+                if (node == parent) {
+                    return true;
+                }
+                node = node.parentNode;
+            }
+            return false;
+        },
+        _timer: null,
+        _show: function () {
+            var _this = this;
+            this._timer = setTimeout(function() {
+                // show this thing
+                if(_this._cancel === true) {
+                    return false;
+                }
+                _this.$.tooltipWrapper.hidden = false;
+                _this._setPosition();
+                _this._isShowing = true;
+                _this.fire('px-tooltip-show', {
+                    target: _this
+                });
+            }, this.delay);
+        },
+        _clearTimer: function () {
+            if(this._timer) {
+                clearTimeout(this._timer);
+            }
+        },
+        /**
+         * Hide the tooltip
+         *
+         * @method _hide
+         */
+        _hide: function () {
+            // hide this thing
+            this._clearTimer();
+            this.$.tooltipWrapper.hidden = true;
+            this._isShowing = false
+        },
+        _setPosition: function() {
+            if (!this._target)
+              return;
+            // using this method so that we can calucate the best position
+            // in the _positionXXX methods without having to do recursion.
+            this.parentRect = this.offsetParent.getBoundingClientRect();
+            this.targetRect = this._target.getBoundingClientRect();
+            this.thisRect = this.getBoundingClientRect();
+            this.caratRect = this.$.carat.getBoundingClientRect();
+            this.margin = parseInt(getComputedStyle(this.$.tooltip).marginTop.replace('px',''));
+
+            if(this.orientation === this._values.TYPE.left) {
+                this._positionLeft();
+            } else if (this.orientation === this._values.TYPE.right) {
+                this._positionRight();
+            } else if (this.orientation === this._values.TYPE.top) {
+                this._positionTop();
+            } else if (this.orientation === this._values.TYPE.bottom) {
+                this._positionBottom();
+            } else { // auto
+                this._autoPositon();
+            }
+        },
+        _autoPositon: function () {
+            this._positionRight();
+        },
+        _helpers: {
+            resetCaratStyle: function () {
+                this.$.carat.classList.remove(this._values.TYPE.top,this._values.TYPE.bottom,this._values.TYPE.left,this._values.TYPE.right);
+            }
+        },
+        _positionTop: function () {
+            // add the style to the carat
+            this.$.carat.classList.add(this._values.TYPE.top);
+            this.updateStyles();
+            // move the carat to the correct position
+            this.caratRect = this.$.carat.getBoundingClientRect();
+            this.$.carat.style.left = (this.thisRect.width/2) - (this.caratRect.width/2) + 'px';
+            this.$.carat.style.top = (this.thisRect.height - this.margin) + 'px';
+            // position the tooltip itself
+            var centerOffset = (this.targetRect.width - this.thisRect.width) / 2;
+            this.style.left = (this.targetRect.left - (this.thisRect.width/2) + (this.targetRect.width/2)) + 'px';
+            this.style.top = (this.targetRect.top - this.thisRect.height) + this.margin/2 + 'px';
+        },
+        _positionBottom: function () {
+            // add the style to the carat
+            this.$.carat.classList.remove(this._values.TYPE.top,this._values.TYPE.bottom,this._values.TYPE.left,this._values.TYPE.right);
+            this.$.carat.classList.add(this._values.TYPE.bottom);
+            this.updateStyles();
+            // move the carat to the correct position
+            this.caratRect = this.$.carat.getBoundingClientRect();
+            this.$.carat.style.left = (this.thisRect.width/2) - (this.caratRect.width/2) + 'px';
+            // position the tooltip itself
+            var centerOffset = (this.targetRect.width - this.thisRect.width) / 2;
+            this.style.left = (this.targetRect.left - (this.thisRect.width/2) + (this.targetRect.width/2)) + 'px';
+            this.style.top = (this.targetRect.bottom - this.caratRect.height) + 'px';
+        },
+        _positionLeft: function () {
+            // add the style to the carat
+            this.$.carat.classList.remove(this._values.TYPE.top,this._values.TYPE.bottom,this._values.TYPE.left,this._values.TYPE.right);
+            this.$.carat.classList.add(this._values.TYPE.left);
+            this.updateStyles();
+            // move the carat to the correct position
+            this.caratRect = this.$.carat.getBoundingClientRect();
+            this.$.carat.style.top = (this.thisRect.height/2) - (this.caratRect.width) + 'px';
+            // position the tooltip itself
+            this.style.left = (this.targetRect.left - this.thisRect.width) + (this.margin/2) + 'px';
+            this.style.top = this.targetRect.top - (this.thisRect.height/2) + (this.margin/2) + 'px';
+        },
+        _positionRight: function () {
+            this.$.carat.classList.remove(this._values.TYPE.top,this._values.TYPE.bottom,this._values.TYPE.left,this._values.TYPE.right);
+            this.$.carat.classList.add(this._values.TYPE.right);
+            this.updateStyles();
+            // move the carat to the correct position
+            this.caratRect = this.$.carat.getBoundingClientRect();
+            this.$.carat.style.top = (this.thisRect.height/2) - (this.caratRect.width) + 'px';
+            // position the tooltip itself
+            this.style.left = (this.targetRect.right - this.caratRect.width) + 'px';
+            this.style.top = this.targetRect.top - (this.thisRect.height/2) + (this.margin/2) + 'px';
+        }
+
+    });
+</script>

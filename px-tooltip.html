@@ -26,7 +26,9 @@ Tooltip element that provides additional information to users once hovered over 
         <div id="tooltipWrapper" hidden>
             <div id="carat"></div>
             <div id="tooltip">
-                <div id="message"></div>
+                <div id="message">
+                    <span>{{ tooltipMessage }}</span><content></content>
+                </div>
             </div>
         </div>
     </template>
@@ -125,10 +127,6 @@ Tooltip element that provides additional information to users once hovered over 
         detached: function () {
             this.unlisten(this._target, 'mouseenter', '_show');
             this.unlisten(this._target, 'mouseleave', '_hide');
-        },
-        ready: function() {
-            // this may be BAD
-            this.$.message.innerHTML = this.tooltipMessage;
         },
         _onIronResize: function () {
             this._setPosition();
@@ -256,8 +254,6 @@ Tooltip element that provides additional information to users once hovered over 
             this.$.carat.style.top = (this.thisRect.height/2) - (this.caratRect.width) + 'px';
             // position the tooltip itself
             this.style.left = (this.targetRect.right - this.caratRect.width) + 'px';
-
-
             this.style.top = Math.round( (this.targetRect.top + (this.targetRect.height/2)) - (this.thisRect.height/2)) + 'px';
         }
 

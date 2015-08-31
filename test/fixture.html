@@ -100,7 +100,7 @@
 
                 test('hides tooltip before click', function() {
                     var wrapper = document.querySelector('#testTooltip #tooltipWrapper');
-                    expect(wrapper.hidden).to.equal(true);
+                    expect(wrapper.classList.contains('visuallyhidden')).to.equal(true);
                 });
 
             });

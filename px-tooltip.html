@@ -23,7 +23,7 @@ Tooltip element that provides additional information to users once hovered over 
 <dom-module id="px-tooltip">
     <link rel="import" type="css" href="css/px-tooltip.css"/>
     <template>
-        <div id="tooltipWrapper" class="visuallyhidden">
+        <div id="tooltipWrapper" class="hidden">
             <div id="carat"></div>
             <div id="tooltip">
                 <div id="message">
@@ -153,7 +153,7 @@ Tooltip element that provides additional information to users once hovered over 
                 if(_this._cancel === true) {
                     return false;
                 }
-                _this.$.tooltipWrapper.classList.remove('visuallyhidden');
+                _this.$.tooltipWrapper.classList.remove('hidden');
                 _this._setPosition();
                 _this._isShowing = true;
                 _this.fire('px-tooltip-show', {
@@ -174,7 +174,7 @@ Tooltip element that provides additional information to users once hovered over 
         _hide: function () {
             // hide this thing
             this._clearTimer();
-            this.$.tooltipWrapper.classList.add('visuallyhidden');
+            this.$.tooltipWrapper.classList.add('hidden');
             this._isShowing = false
         },
         _setPosition: function() {

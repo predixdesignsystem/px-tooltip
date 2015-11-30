@@ -75,7 +75,7 @@ watch: {
 ### Options
 
 **for**
-The element to which the tooltip provides additional information.
+The element to which the tooltip provides additional information.  Optional, tooltip will be attached to parent element if a 'for' id is not provided.
 
 **orientation**
 The position of the tooltip relative to the 'for' element. Currently supports 'top', 'bottom', 'left' and 'right'.
@@ -90,13 +90,25 @@ The delay in milliseconds until the tooltip is displayed.
 
 ```
 <div class="sample-container">
-    <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
+    <div id="hoverDivTop">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
     <px-tooltip
         for="hoverDivTop"
         orientation="top"
         delay="5000"
         tooltip-message="Top tooltip">
     </px-tooltip>
+</div>
+
+```
+
+```
+<div class="sample-container">
+    <div>No id needed for tooltip
+        <px-tooltip
+            orientation="top"
+            tooltip-message="No id tooltip">
+        </px-tooltip>
+    </div>
 </div>
 
 ```

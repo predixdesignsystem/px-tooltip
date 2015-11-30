@@ -65,11 +65,12 @@ Tooltip element that provides additional information to users once hovered over 
             /**
              * The id of the element that the tooltip is anchored to. This element
              * must be a sibling of the tooltip.
+             * 
+             * (Optional)  If not provided, the px-tooltip will be attached to its parent element.
              */
             for: {
                 type: String,
-                reflect: true,
-                value: 'prev'
+                reflect: true
             },
             /**
              * The id of the element that the tooltip is anchored to. This element
@@ -176,6 +177,20 @@ Tooltip element that provides additional information to users once hovered over 
             this.$.tooltipWrapper.classList.add('hidden');
             this._isShowing = false
         },
+        _recurseToGetFullOffsetValue: function(offsetTopOrLeft) {
+            var element = this._target;
+            var offsetValue = this._target[offsetTopOrLeft];
+            while (element = element.offsetParent) {
+                offsetValue += element[offsetTopOrLeft];
+            }
+            return offsetValue;
+        },
+        _getOffsetTop: function() {
+            return this._recurseToGetFullOffsetValue("offsetTop");
+        },
+        _getOffsetLeft: function() {
+            return this._recurseToGetFullOffsetValue("offsetLeft");
+        },
         _setPosition: function() {
             if (!this._target)
               return;
@@ -217,8 +232,8 @@ Tooltip element that provides additional information to users once hovered over 
             this.$.carat.style.top = (this.thisRect.height - this.margin) + 'px';
             // position the tooltip itself
             var centerOffset = (this.targetRect.width - this.thisRect.width) / 2;
-            this.style.left = (this._target.offsetLeft - (this.thisRect.width/2) + (this.targetRect.width/2)) + 'px';
-            this.style.top = (this._target.offsetTop - this.thisRect.height) + this.margin/2 + 'px';
+            this.style.left = (this._getOffsetLeft() - (this.thisRect.width/2) + (this.targetRect.width/2)) + 'px';
+            this.style.top = (this._getOffsetTop() - this.thisRect.height) + this.margin/2 + 'px';
         },
         _positionBottom: function () {
             // add the style to the carat
@@ -230,8 +245,8 @@ Tooltip element that provides additional information to users once hovered over 
             this.$.carat.style.left = (this.thisRect.width/2) - (this.caratRect.width/2) + 'px';
             // position the tooltip itself
             var centerOffset = (this.targetRect.width - this.thisRect.width) / 2;
-            this.style.left = (this._target.offsetLeft - (this.thisRect.width/2) + (this.targetRect.width/2)) + 'px';
-            this.style.top = ((this._target.offsetTop + this.targetRect.height) - this.caratRect.height) + 'px';
+            this.style.left = (this._getOffsetLeft() - (this.thisRect.width/2) + (this.targetRect.width/2)) + 'px';
+            this.style.top = ((this._getOffsetTop() + this.targetRect.height) - this.caratRect.height) + 'px';
         },
         _positionLeft: function () {
             // add the style to the carat
@@ -242,8 +257,8 @@ Tooltip element that provides additional information to users once hovered over 
             this.caratRect = this.$.carat.getBoundingClientRect();
             this.$.carat.style.top = (this.thisRect.height/2) - (this.caratRect.width) + 'px';
             // position the tooltip itself
-            this.style.left = (this._target.offsetLeft - this.thisRect.width) + (this.margin/2) + 'px';
-            this.style.top = Math.round( (this._target.offsetTop + (this.targetRect.height/2)) - (this.thisRect.height/2)) + 'px';
+            this.style.left = (this._getOffsetLeft() - this.thisRect.width) + (this.margin/2) + 'px';
+            this.style.top = Math.round( (this._getOffsetTop() + (this.targetRect.height/2)) - (this.thisRect.height/2)) + 'px';
         },
         _positionRight: function () {
             this.$.carat.classList.remove(this._values.TYPE.top,this._values.TYPE.bottom,this._values.TYPE.left,this._values.TYPE.right);
@@ -253,8 +268,8 @@ Tooltip element that provides additional information to users once hovered over 
             this.caratRect = this.$.carat.getBoundingClientRect();
             this.$.carat.style.top = (this.thisRect.height/2) - (this.caratRect.width) + 'px';
             // position the tooltip itself
-            this.style.left = ((this._target.offsetLeft + this.targetRect.width) - this.caratRect.width) + 'px';
-            this.style.top = Math.round( (this._target.offsetTop + (this.targetRect.height/2)) - (this.thisRect.height/2)) + 'px';
+            this.style.left = ((this._getOffsetLeft() + this.targetRect.width) - this.caratRect.width) + 'px';
+            this.style.top = Math.round( (this._getOffsetTop() + (this.targetRect.height/2)) - (this.thisRect.height/2)) + 'px';
         }
 
     });

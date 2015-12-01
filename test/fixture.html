@@ -54,20 +54,24 @@
         <div class="sample-container">
             <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
             <px-tooltip
-                id="testTooltip"
+                id="topTooltip"
                 for="hoverDivTop"
                 orientation="top"
-                delay="5000"
+                delay="500"
                 tooltip-message="Top tooltip">
             </px-tooltip>
             <p></p>
             <div id="hoverDivBottom" class="hover-tooltip">Hover for tooltip<br/><span>(bottom, default delay: 1 sec)</span></div>
-            <px-tooltip for="hoverDivBottom" orientation="bottom">
+            <px-tooltip 
+                id="bottomTooltip"
+                for="hoverDivBottom" 
+                orientation="bottom">
                 Bottom tooltip<br>with html<br><div class='test-el'>HTML Div</div>
             </px-tooltip>
             <p></p>
             <div id="hoverDivLeft" class="hover-tooltip">Hover for tooltip<br/><span>(left, delay: 3 sec)</span></div>
             <px-tooltip
+                id="leftTooltip"
                 for="hoverDivLeft"
                 delay="3000"
                 orientation="left"
@@ -76,6 +80,7 @@
             <p></p>
             <div id="hoverDivRight" class="hover-tooltip">Hover for tooltip<br/><span>(right, default delay: 1 sec)</span></div>
             <px-tooltip
+                id="rightTooltip"
                 for="hoverDivRight"
                 orientation="right"
                 tooltip-message="Right tooltip">
@@ -87,14 +92,15 @@
 
         <script>
             suite('<px-tooltip>', function() {
-                var testTooltip = document.getElementById('testTooltip');
+                var testTooltip = document.getElementById('topTooltip');
+                var wrapper = document.querySelector('#topTooltip #tooltipWrapper');
 
                 test('reflects the "for" property', function() {
                     assert.equal(testTooltip.for, "hoverDivTop");
                 });
 
                 test('reflects the "delay" property', function() {
-                    assert.equal(testTooltip.delay, 5000);
+                    assert.equal(testTooltip.delay, 500);
                 });
 
                 test('reflects the "orientation" property', function() {
@@ -106,11 +112,26 @@
                 });
 
                 test('hides tooltip before click', function() {
-                    var wrapper = document.querySelector('#testTooltip #tooltipWrapper');
                     expect(wrapper.classList.contains('hidden')).to.equal(true);
                 });
 
+                suite('when tooltip is shown', function() {
+
+                    setup('when _show called', function(done) {
+                        testTooltip._show();
+                        setTimeout(function() {
+                            done();
+                        }, 600); // delay is 500 ms
+                    });
+
+                    test('_show() shows it (called on hover)', function() {
+                        expect(wrapper.classList.contains('hidden')).to.equal(false);
+                    });
+
+                });
+
             });
+
         </script>
     </body>
 </html>

@@ -65,7 +65,7 @@ Tooltip element that provides additional information to users once hovered over 
             /**
              * The id of the element that the tooltip is anchored to. This element
              * must be a sibling of the tooltip.
-             * 
+             *
              * (Optional)  If not provided, the px-tooltip will be attached to its parent element.
              */
             for: {
@@ -177,19 +177,16 @@ Tooltip element that provides additional information to users once hovered over 
             this.$.tooltipWrapper.classList.add('hidden');
             this._isShowing = false
         },
-        _recurseToGetFullOffsetValue: function(offsetTopOrLeft) {
-            var element = this._target;
-            var offsetValue = this._target[offsetTopOrLeft];
-            while (element = element.offsetParent) {
-                offsetValue += element[offsetTopOrLeft];
-            }
-            return offsetValue;
+        _getPosition: function(topOrLeft, pageXOrYOffset) {
+            var position = this.targetRect[topOrLeft]; // use the targetRect (which uses bounding box) initially
+            position += window[pageXOrYOffset]; // factor in any window scrolling we've done
+            return position;
         },
         _getOffsetTop: function() {
-            return this._recurseToGetFullOffsetValue("offsetTop");
+            return this._getPosition("top", "pageYOffset"); // use pageYOffset & pageXOffset, scrollX and scrollY undefined in IE
         },
         _getOffsetLeft: function() {
-            return this._recurseToGetFullOffsetValue("offsetLeft");
+            return this._getPosition("left", "pageXOffset");
         },
         _setPosition: function() {
             if (!this._target)

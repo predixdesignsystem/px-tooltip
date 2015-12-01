@@ -86,6 +86,11 @@ The text message that will be displayed in the tooltip. Also support HTML elemen
 **delay**
 The delay in milliseconds until the tooltip is displayed.
 
+**smartOrientation**
+If smartOrientation is turned on and the orientation is "top" or "bottom", then the tooltip will override the default orientation (top or bottom) to try to better fit on the page (example: will be on left if tooltip will go off right side of the screen)
+
+Note: this feature is only enabled for the "top" or "bottom" orientations
+
 ### example
 
 ```

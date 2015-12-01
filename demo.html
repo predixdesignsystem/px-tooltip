@@ -16,6 +16,13 @@
                 margin-left: auto;
                 margin-right: auto;
             }
+            .sample-container-left {
+                width: 250px;
+            }
+            .sample-container-right {
+                width: 250px;
+                float: right;
+            }
             .hover-tooltip {
                 padding: 15px;
                 width: 200px;
@@ -80,8 +87,36 @@
                 tooltip-message="Right tooltip">
             </px-tooltip>
         </div>
-        <p>
-            
-        </p>
+
+        <div class="sample-container-left">
+            <div id="hoverDivTop2" class="hover-tooltip">Hover for tooltip
+                <px-tooltip
+                    smart-orientation
+                    orientation="top"
+                    tooltip-message="Goes_to_right_orientation_because_top_would_go_off_screen">
+                </px-tooltip>
+            </div>
+        </div>
+
+        <div class="sample-container">
+            <div id="hoverDivTop3" class="hover-tooltip">Hover for tooltip
+                <px-tooltip
+                    smart-orientation
+                    orientation="top"
+                    tooltip-message="Is on screen, so goes with top orientation">
+                </px-tooltip>
+            </div>
+        </div>
+
+        <div class="sample-container-right">
+            <div id="hoverDivTop4" class="hover-tooltip">Hover for tooltip
+                <px-tooltip
+                    smart-orientation
+                    orientation="top"
+                    tooltip-message="Goes_to_left_orientation_because_top_would_go_off_screen">
+                </px-tooltip>
+            </div>
+        </div>
+
     </body>
 </html>

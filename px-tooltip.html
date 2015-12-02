@@ -241,7 +241,7 @@ Tooltip element that provides additional information to users once hovered over 
         },
         _isOffScreenOnRight: function() {
             var tooltipFarRightPoint = this._getTargetPositionLeft() + (this.targetRect.width/2) + (this.thisRect.width/2);           
-            return tooltipFarRightPoint - window.screen.width > 0;
+            return tooltipFarRightPoint - window.innerWidth > 0;
         },
         _autoPositon: function () {
             this._positionRight();

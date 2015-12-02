@@ -52,6 +52,7 @@ $tooltip-text-color: $white;
     background-color: $tooltip-color;
     margin: $margin;
     color: $tooltip-text-color;
+    white-space: nowrap; 
     h6 {
         margin: 0;
     }

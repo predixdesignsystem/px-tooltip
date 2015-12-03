@@ -1,9 +1,3 @@
-<!--
-    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
-    siblings. When this component is run from its own repo (e.g. ui tests, examples), we assume the server is started with
-    'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs
-    See https://github.com/jreichenberg/grunt-dep-serve#why-do-we-need-this
--->
 <link rel="import" href="../polymer/polymer.html"/>
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 
@@ -12,7 +6,12 @@ Tooltip element that provides additional information to users once hovered over 
 
 ##### Usage
 
-    <px-tooltip counter-value="1">Hi</px-tooltip>
+    <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
+    <px-tooltip
+        for="hoverDivTop"
+        orientation="top"
+        tooltip-message="Top tooltip">
+    </px-tooltip>
 
 @element px-tooltip
 @blurb Tooltip element that provides additional information to users once hovered over the target element for a specified amount of time.
@@ -220,27 +219,23 @@ Tooltip element that provides additional information to users once hovered over 
         }
       }
       else { // auto
-        this._autoPositon();
+        this._autoPosition();
       }
     },
+    _autoPosition: function() {
+      this._positionRight(); // just positioning to right automatically for now
+    },
     _isOffScreenOnLeft: function() {
-      var tooltipFarLeftPoint = this._getTargetPositionLeft() + (this.targetRect.width / 2) - (this._getTooltipWidth() / 2);
-      return tooltipFarLeftPoint < 0;
+      var tooltipFarLeftPoint = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2);
+      return tooltipFarLeftPoint < 0; // if the far left point of the tooltip is off the screen
     },
     _isOffScreenOnRight: function() {
-      var tooltipFarRightPoint = this._getTargetPositionLeft() + (this.targetRect.width / 2) + (this._getTooltipWidth() / 2);
-      return tooltipFarRightPoint - window.innerWidth > 0;
+      var tooltipFarRightPoint = this.getTargetPositionCenterOfLeftRight() + (this._getTooltipWidth() / 2);
+      return tooltipFarRightPoint > window.innerWidth; // if the far right point of the tooltip is off the screen
     },
-    _autoPositon: function() {
-      this._positionRight();
-    },
-    _styleTheCaratAs: function(newCaratState) {
-      // clear all old styles and add the new one
-      this.$.carat.classList.remove(this._values.TYPE.top, this._values.TYPE.bottom, this._values.TYPE.left, this._values.TYPE.right);
-      this.$.carat.classList.add(newCaratState);
-      this.updateStyles();
-      this.caratRect = this.$.carat.getBoundingClientRect(); // need to remeasure carat since height/width changes
-    },
+
+    /******** position the tooltip in the four different positions (top, left, right, bottom) **********/
+
     _positionTop: function() {
       // restyle the carat
       this._styleTheCaratAs(this._values.TYPE.top);
@@ -289,7 +284,13 @@ Tooltip element that provides additional information to users once hovered over 
       this.style.left = this._getTargetPositionRight() - this._getCaratWidth() + 'px';
       this.style.top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
     },
-
+    _styleTheCaratAs: function(newCaratState) {
+      // clear all old styles and add the new one
+      this.$.carat.classList.remove(this._values.TYPE.top, this._values.TYPE.bottom, this._values.TYPE.left, this._values.TYPE.right);
+      this.$.carat.classList.add(newCaratState);
+      this.updateStyles();
+      this.caratRect = this.$.carat.getBoundingClientRect(); // need to remeasure carat since height/width changes
+    },
 
     /**** Helpers for making positioning logic more readable ****/
 

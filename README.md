@@ -75,7 +75,7 @@ watch: {
 ### Options
 
 **for**
-The element to which the tooltip provides additional information.
+The element to which the tooltip provides additional information.  Optional, tooltip will be attached to parent element if a 'for' id is not provided.
 
 **orientation**
 The position of the tooltip relative to the 'for' element. Currently supports 'top', 'bottom', 'left' and 'right'.
@@ -86,17 +86,34 @@ The text message that will be displayed in the tooltip. Also support HTML elemen
 **delay**
 The delay in milliseconds until the tooltip is displayed.
 
+**smartOrientation**
+If smartOrientation is turned on and the orientation is "top" or "bottom", then the tooltip will override the default orientation (top or bottom) to try to better fit on the page (example: will be on left if tooltip will go off right side of the screen)
+
+Note: this feature is only enabled for the "top" or "bottom" orientations
+
 ### example
 
 ```
 <div class="sample-container">
-    <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
+    <div id="hoverDivTop">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
     <px-tooltip
         for="hoverDivTop"
         orientation="top"
         delay="5000"
         tooltip-message="Top tooltip">
     </px-tooltip>
+</div>
+
+```
+
+```
+<div class="sample-container">
+    <div>No id needed for tooltip
+        <px-tooltip
+            orientation="top"
+            tooltip-message="No id tooltip">
+        </px-tooltip>
+    </div>
 </div>
 
 ```

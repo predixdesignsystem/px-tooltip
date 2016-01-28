@@ -243,7 +243,8 @@ Tooltip element that provides additional information to users once hovered over 
 
       // position the tooltip itself
       this.style.left = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px';
-      this.style.top = this._getTargetPositionTop() - this._getTooltipHeight() + this.margin / 2 + 'px';
+      this.style.top = this._getTargetPositionTop() - this._getTooltipHeight() + this.margin / 2 - 5 + 'px';
+
     },
     _positionBottom: function() {
       // restyle the carat
@@ -255,7 +256,7 @@ Tooltip element that provides additional information to users once hovered over 
 
       // position the tooltip itself
       this.style.left = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px';
-      this.style.top = this._getTargetPositionBottom() - this._getCaratHeight() + 'px';
+      this.style.top = this._getTargetPositionBottom() - this._getCaratHeight() + 5 + 'px';
     },
     _positionLeft: function() {
       // restyle the carat
@@ -266,7 +267,7 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.top = (this._getTooltipHeight() / 2) - (this._getCaratWidth()) + 'px';
 
       // position the tooltip itself
-      this.style.left = this._getTargetPositionLeft() - this._getTooltipWidth() + this.margin / 2 + 'px';
+      this.style.left = this._getTargetPositionLeft() - this._getTooltipWidth() + this.margin / 2 - 5 + 'px';
       this.style.top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
     },
     _positionRight: function() {
@@ -278,7 +279,7 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.top = (this._getTooltipHeight() / 2) - (this._getCaratWidth()) + 'px';
 
       // position the tooltip itself
-      this.style.left = this._getTargetPositionRight() - this._getCaratWidth() + 'px';
+      this.style.left = this._getTargetPositionRight() - this._getCaratWidth() + 5 +'px';
       this.style.top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
     },
     _styleTheCaratAs: function(newCaratState) {

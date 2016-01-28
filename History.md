@@ -1,3 +1,3 @@
-v0.0.1
+v0.2.1
 ==================
-* Initial release
+* added a 5px margin to the tooltip, regardless of orientation.

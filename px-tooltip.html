@@ -118,7 +118,7 @@ Tooltip element that provides additional information to users once hovered over 
       var target;
       if(this.for) {
         target = parentNode.querySelector('#' + this.for);
-      } else if(parentNode.nodeType == 11) { // DOCUMENT_FRAGMENT_NODE
+      } else if(parentNode.nodeType === 11) { // DOCUMENT_FRAGMENT_NODE
         target = ownerRoot.host;
       } else {
         target = parentNode;
@@ -146,7 +146,7 @@ Tooltip element that provides additional information to users once hovered over 
     _isDescendant: function(parent, child) {
       var node = child.parentNode;
       while(node != null) {
-        if(node == parent) {
+        if(node === parent) {
           return true;
         }
         node = node.parentNode;
@@ -183,11 +183,13 @@ Tooltip element that provides additional information to users once hovered over 
       // hide this thing
       this._clearTimer();
       this.$.tooltipWrapper.classList.add('hidden');
-      this._isShowing = false
+      this._isShowing = false;
     },
     _setPosition: function() {
-      if(!this._target)
+      if(!this._target) {
         return;
+      }
+
       // using this method so that we can calculate the best position
       // in the _positionXXX methods without having to do recursion, plus
       // avoiding issues when in tables in IE and inside scroll panes

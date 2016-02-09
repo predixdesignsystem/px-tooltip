@@ -9,3 +9,6 @@ v0.2.2
 v0.3.0
 ==================
 * added the _position_ attribute, allowing the element to position itself correctly when it's under an element that is positioned (position relative).
+v0.3.1
+==================
+* removed console logs.

@@ -348,8 +348,6 @@ Tooltip element that provides additional information to users once hovered over 
     _getTargetPositionRight: function() {
       var position;
       if (this.position !== "relative") {
-        console.log('this.targetRect.width = ' + this.targetRect.width);
-        console.log('this._getTargetPositionLeft() = ' + this._getTargetPositionLeft());
         position = this._getTargetPositionLeft() + this.targetRect.width;
       } else {
         position = this.targetRect.width;
@@ -385,7 +383,6 @@ Tooltip element that provides additional information to users once hovered over 
         position =  (targetWidth > thisWidth) ? (targetWidth - thisWidth) : -Math.abs(thisWidth - targetWidth);
         position = position / 2;
       }
-      console.log('position = '  + position);
       return position;
     },
 

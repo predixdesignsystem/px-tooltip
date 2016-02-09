@@ -110,6 +110,10 @@ Tooltip element that provides additional information to users once hovered over 
       smartOrientation: {
         type: Boolean,
         value: false
+      },
+      position: {
+        type: String,
+        value: 'absolute'
       }
     },
     get target() {
@@ -225,11 +229,11 @@ Tooltip element that provides additional information to users once hovered over 
       this._positionRight(); // just positioning to right automatically for now
     },
     _isOffScreenOnLeft: function() {
-      var tooltipFarLeftPoint = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2);
+      var tooltipFarLeftPoint = this.getTargetPositionCenterOfLeftRight(true) - (this._getTooltipWidth() / 2);
       return tooltipFarLeftPoint < 0; // if the far left point of the tooltip is off the screen
     },
     _isOffScreenOnRight: function() {
-      var tooltipFarRightPoint = this.getTargetPositionCenterOfLeftRight() + (this._getTooltipWidth() / 2);
+      var tooltipFarRightPoint = this.getTargetPositionCenterOfLeftRight(true) + (this._getTooltipWidth() / 2);
       return tooltipFarRightPoint > window.innerWidth; // if the far right point of the tooltip is off the screen
     },
 
@@ -244,8 +248,8 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.top = (this._getTooltipHeight() - this.margin) + 'px';
 
       // position the tooltip itself
-      this.style.left = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px';
-      this.style.top = this._getTargetPositionTop() - this._getTooltipHeight() + this.margin / 2 - 5 + 'px';
+      this.style.left = (this.position !=="relative") ? this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px' : this.getTargetPositionCenterOfLeftRight() + 'px';
+      this.style.top = this._getTargetPositionTop() - this._getTooltipHeight() + (this.margin / 2) - 5 + 'px';
 
     },
     _positionBottom: function() {
@@ -257,22 +261,30 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.top = null;
 
       // position the tooltip itself
-      this.style.left = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px';
+      this.style.left = (this.position !=="relative") ? this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px' : this.getTargetPositionCenterOfLeftRight() + 'px';
       this.style.top = this._getTargetPositionBottom() - this._getCaratHeight() + 5 + 'px';
     },
     _positionLeft: function() {
+      var top;
       // restyle the carat
       this._styleTheCaratAs(this._values.TYPE.left);
 
       // move the carat to the correct position
       this.$.carat.style.left = null;
-      this.$.carat.style.top = (this._getTooltipHeight() / 2) - (this._getCaratWidth()) + 'px';
+      this.$.carat.style.top = (this._getTooltipHeight() / 2) - this._getCaratWidth() + 'px';
+
+      if (this.position !== "relative") {
+        top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
+      } else {
+        top = this.getTargetPositionCenterOfTopBottom() + 'px';
+      }
 
       // position the tooltip itself
       this.style.left = this._getTargetPositionLeft() - this._getTooltipWidth() + this.margin / 2 - 5 + 'px';
-      this.style.top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
+      this.style.top = top;
     },
     _positionRight: function() {
+      var top;
       // restyle the carar
       this._styleTheCaratAs(this._values.TYPE.right);
 
@@ -280,9 +292,15 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.left = null;
       this.$.carat.style.top = (this._getTooltipHeight() / 2) - (this._getCaratWidth()) + 'px';
 
+      if (this.position !== "relative") {
+        top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
+      } else {
+        top = this.getTargetPositionCenterOfTopBottom() + 'px';
+      }
+
       // position the tooltip itself
-      this.style.left = this._getTargetPositionRight() - this._getCaratWidth() + 5 +'px';
-      this.style.top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
+      this.style.left = this._getTargetPositionRight() - this._getCaratWidth() + 5 + 'px';
+      this.style.top = top;
     },
     _styleTheCaratAs: function(newCaratState) {
       // clear all old styles and add the new one
@@ -296,30 +314,85 @@ Tooltip element that provides additional information to users once hovered over 
 
     // target (the thing they hover over) vertical positioning (top, bottom, center)
     _getTargetPositionTop: function() {
-      return this._getTargetPosition("top", "pageYOffset"); // use pageYOffset & pageXOffset, scrollX and scrollY undefined in IE
+      var position;
+      if (this.position !== "relative") {
+          position =  this._getTargetPosition("top", "pageYOffset"); // use pageYOffset & pageXOffset, scrollX and scrollY undefined in IE
+      } else {
+        position = 0;
+      }
+
+      return position;
     },
     _getTargetPositionBottom: function() {
-      return this._getTargetPositionTop() + this.targetRect.height;
+      var position;
+      if (this.position !== "relative") {
+        position = this._getTargetPositionTop() + this.targetRect.height;
+      } else {
+        position = this.targetRect.height;
+      }
+
+      return position;
+    },
+
+    // target (the thing they hover over) horizontal positioning (left, right, center)
+    _getTargetPositionLeft: function(smartOrientation) {
+      var position;
+      if (this.position !== "relative" || smartOrientation) {
+        position = this._getTargetPosition("left", "pageXOffset");
+      } else {
+        position = 0;
+      }
+
+      return position;
+    },
+    _getTargetPositionRight: function() {
+      var position;
+      if (this.position !== "relative") {
+        console.log('this.targetRect.width = ' + this.targetRect.width);
+        console.log('this._getTargetPositionLeft() = ' + this._getTargetPositionLeft());
+        position = this._getTargetPositionLeft() + this.targetRect.width;
+      } else {
+        position = this.targetRect.width;
+      }
+
+      return position;
     },
     getTargetPositionCenterOfTopBottom: function() {
-      return this._getTargetPositionTop() + (this.targetRect.height / 2);
+      var position,
+          targetHeight,
+          thisHeight;
+
+      if (this.position !== "relative") {
+        position =  this._getTargetPositionTop() + (this.targetRect.height / 2);
+      } else {
+        thisHeight = this.thisRect.height;
+        targetHeight = this.targetRect.height;
+        position = (targetHeight > thisHeight) ? (this.targetRect.height - this.thisRect.height) / 2 : -Math.abs((this.thisRect.height  - this.targetRect.height) / 2);
+      }
+
+      return position;
+    },
+    getTargetPositionCenterOfLeftRight: function(smartOrientation) {
+      var position = 0,
+          targetWidth,
+          thisWidth;
+      if (this.position !== "relative" || smartOrientation) {
+        position = this._getTargetPositionLeft(smartOrientation) + (this.targetRect.width / 2);
+      } else {
+        targetWidth = this.targetRect.width;
+        thisWidth = this.thisRect.width;
+        thisWidth = Math.round(thisWidth);
+        position =  (targetWidth > thisWidth) ? (targetWidth - thisWidth) : -Math.abs(thisWidth - targetWidth);
+        position = position / 2;
+      }
+      console.log('position = '  + position);
+      return position;
     },
 
     _getTargetPosition: function(topOrLeft, pageXOrYOffset) {
       var position = this.targetRect[topOrLeft]; // use the targetRect (which uses bounding box) initially
       position += window[pageXOrYOffset]; // factor in any window scrolling we've done
       return position;
-    },
-
-    // target (the thing they hover over) horizontal positioning (left, right, center)
-    _getTargetPositionLeft: function() {
-      return this._getTargetPosition("left", "pageXOffset");
-    },
-    _getTargetPositionRight: function() {
-      return this._getTargetPositionLeft() + this.targetRect.width;
-    },
-    getTargetPositionCenterOfLeftRight: function() {
-      return this._getTargetPositionLeft() + (this.targetRect.width / 2);
     },
 
     // tooltip height/width

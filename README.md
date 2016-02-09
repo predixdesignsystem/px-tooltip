@@ -40,6 +40,17 @@ Finally, use the component in your application:
 
 ## Attributes
 
+####delay
+*Type:* **Number** - (*Optional*) - *Default:* "1000"
+The delay in milliseconds until the tooltip is displayed.
+
+```
+<px-tooltip
+  ...
+  delay="500">
+</px-tooltip>
+```
+
 ####for
 *Type:* **String** - (*Optional*) - *Default:* ""
 The element to which the tooltip provides additional information.  Optional, tooltip will be attached to parent element if a 'for' id is not provided.
@@ -62,25 +73,14 @@ The position of the tooltip relative to the 'for' element. Currently supports 't
 </px-tooltip>
 ```
 
-####tooltip-message
-*Type:* **String** - (*Required*) - *Default:* ""
-The text message that will be displayed in the tooltip. Also support HTML elements.
+####position
+*Type:* **String** - (*Optional*) - *Default:* "absolute"
+This attributes is to be used when the tooltip is placed under an element that is _positioned_ (i.e. relative). Since it makes the component calculate its position relative to its parent, we recommend wrapping the component in an element with has _position:relative_ on it for best placing results. Please note, _position: fixed_ is not supported.
 
 ```
 <px-tooltip
   ...
-  tooltip-message="Hello World">
-</px-tooltip>
-```
-
-####delay
-*Type:* **Number** - (*Optional*) - *Default:* "1000"
-The delay in milliseconds until the tooltip is displayed.
-
-```
-<px-tooltip
-  ...
-  delay="500">
+  position="relative">
 </px-tooltip>
 ```
 
@@ -97,6 +97,16 @@ Note: this feature is only enabled for the "top" or "bottom" orientations
 </px-tooltip>
 ```
 
+####tooltip-message
+*Type:* **String** - (*Required*) - *Default:* ""
+The text message that will be displayed in the tooltip. Also support HTML elements.
+
+```
+<px-tooltip
+  ...
+  tooltip-message="Hello World">
+</px-tooltip>
+```
 
 <br />
 <hr />

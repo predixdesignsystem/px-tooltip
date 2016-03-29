@@ -579,7 +579,7 @@ a {
 
 :host {
   display: block;
-  position: absolute;
+  position: absolute !important;
   outline: none;
   z-index: 1002; }
 

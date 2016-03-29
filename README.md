@@ -73,17 +73,6 @@ The position of the tooltip relative to the 'for' element. Currently supports 't
 </px-tooltip>
 ```
 
-####position
-*Type:* **String** - (*Optional*) - *Default:* "absolute"
-This attributes is to be used when the tooltip is placed under an element that is _positioned_ (i.e. relative). Since it makes the component calculate its position relative to its parent, we recommend wrapping the component in an element with has _position:relative_ on it for best placing results. Please note, _position: fixed_ is not supported.
-
-```
-<px-tooltip
-  ...
-  position="relative">
-</px-tooltip>
-```
-
 ####smartOrientation
 *Type:* **Boolean** - (*Optional*) - *Default:* "false"
 If smartOrientation is turned on and the orientation is "top" or "bottom", then the tooltip will override the default orientation (top or bottom) to try to better fit on the page (example: will be on left if tooltip will go off right side of the screen)

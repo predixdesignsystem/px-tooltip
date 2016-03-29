@@ -42,6 +42,8 @@ Tooltip element that provides additional information to users once hovered over 
     ],
     /**
      * Private Properties, used in internal view logic.
+     * @property _values
+     * @type Object
      */
     _values: { // attribute values
       TYPE: {
@@ -51,9 +53,6 @@ Tooltip element that provides additional information to users once hovered over 
         right: 'right'
       }
     },
-    _isShowing: false,
-    _mouseInside: false,
-    _cancel: false,
     /**
      * Properties block, expose attribute values to the DOM via 'reflect'
      *
@@ -66,13 +65,20 @@ Tooltip element that provides additional information to users once hovered over 
        * must be a sibling of the tooltip.
        *
        * (Optional)  If not provided, the px-tooltip will be attached to its parent element.
+       * @property for
+       * @type String
+       * @default ''
        */
       for: {
-        type: String
+        type: String,
+        value: ''
       },
       /**
        * The id of the element that the tooltip is anchored to. This element
        * must be a sibling of the tooltip.
+       * @property delay
+       * @type Number
+       * @default 1000
        */
       delay: {
         type: Number,
@@ -87,6 +93,9 @@ Tooltip element that provides additional information to users once hovered over 
        * - 'right' to the right of the 'for' element
        * - 'top' above the 'for' element
        * - 'bottom' below the 'for' element
+       * @property orientation
+       * @type String
+       * @default 'auto'
        */
       orientation: {
         type: String,
@@ -94,46 +103,61 @@ Tooltip element that provides additional information to users once hovered over 
       },
       /**
        * The String to be displayed in the tooltip message.
+       * @property tooltipMessage
+       * @type String
+       * @default ''
        */
       tooltipMessage: {
         type: String,
         value: ''
       },
-
       /**
        * If smartOrientation is turned on and the orientation is "top" or "bottom",
        *      then the tooltip will override the default orientation (top or bottom)
        *      to try to better fit on the page (example: will be on left if tooltip will go off right side of the screen)
        *
        * Note: this feature is only enabled for the "top" or "bottom" orientations
+       * @property smartOrientation
+       * @type Boolean
+       * @default false
        */
       smartOrientation: {
         type: Boolean,
         value: false
       },
-      position: {
-        type: String,
-        value: 'absolute'
+      /**
+       * This is a private property, letting us know whether the tooltip is showing at the moment.
+       *
+       * @property _isShowing
+       * @type Boolean
+       * @default false
+       */
+      _isShowing: {
+        type: Boolean,
+        value: false
+      },
+      /**
+       * This is a private property, which is activates if the user hovers OFF the target element.
+       *
+       * @property _cancel
+       * @type Boolean
+       * @default false
+       */
+      _cancel: {
+        type: Boolean,
+        value: false
       }
-    },
-    get target() {
-      var ownerRoot = Polymer.dom(this).getOwnerRoot();
-      var parentNode = this.parentNode;
-      var target;
-      if(this.for) {
-        target = parentNode.querySelector('#' + this.for);
-      } else if(parentNode.nodeType === 11) { // DOCUMENT_FRAGMENT_NODE
-        target = ownerRoot.host;
-      } else {
-        target = parentNode;
-      }
-      return target;
     },
     listeners: {
       'iron-resize': '_onIronResize'
     },
     attached: function() {
-      this._target = this.target;
+      // we want to make sure the target isn't set EVERYTIME the tooltip is attached -
+      // only the first time!
+      if (!this.target) {
+        this.target = this._getTarget();
+        this._target = this.target;
+      }
       this.listen(this._target, 'mouseenter', '_show');
       this.listen(this._target, 'mouseleave', '_hide');
     },
@@ -141,54 +165,104 @@ Tooltip element that provides additional information to users once hovered over 
       this.unlisten(this._target, 'mouseenter', '_show');
       this.unlisten(this._target, 'mouseleave', '_hide');
     },
+    /**
+     * @method _onIronResize
+     * This function listens to the iron-resize event, and calls
+     * the _setPosition function on resize.
+     *
+     */
     _onIronResize: function() {
       this._setPosition();
     },
-    _setMouseInside: function() {
-      this._mouseInside = true;
-    },
-    _isDescendant: function(parent, child) {
-      var node = child.parentNode;
-      while(node != null) {
-        if(node === parent) {
-          return true;
-        }
-        node = node.parentNode;
+    /**
+     * @method _getTarget
+     * This function sets the target on the component (the item hovered over)
+     *
+     */
+    _getTarget: function() {
+      var ownerRoot = Polymer.dom(this).getOwnerRoot();
+      var parentNode = this.parentNode;
+      var target;
+      if(this.for) {
+        target = Polymer.dom(parentNode).querySelector('#' + this.for);
+      } else if(parentNode.nodeType === 11) { // DOCUMENT_FRAGMENT_NODE
+        target = ownerRoot.host;
+      } else {
+        target = parentNode;
       }
-      return false;
+      return target;
     },
     _timer: null,
+    /**
+     * @method _show
+     * This function sets a timeout witht he delay value, and if
+     * this.cancel has not been called, moves the tooltip to the DOM root,
+     * and sets the tooltip as visible.
+     *
+     */
     _show: function() {
       var _this = this;
+      //we start out with _cancel being false, but if at any time during the timeout it's set to true, we cancel the whole thing.
+      this.set('_cancel',false);
       this._timer = setTimeout(function() {
-        // show this thing
         if(_this._cancel === true) {
           return false;
         }
-        _this.$.tooltipWrapper.classList.remove('hidden');
-        _this._setPosition();
+        // show this thing
         _this._isShowing = true;
-        _this.fire('px-tooltip-show', {
-          target: _this
-        });
+        var tooltip = _this.parentNode.querySelector('px-tooltip');
+        // we check to make sure there is no element with class movedTooltip
+        if (!document.querySelector('.movedTooltip')) {
+          // and toggle that class on, to ensure we don't have 2 tooltips in the dom root at once.
+          Polymer.dom(_this).classList.toggle('movedTooltip');
+          // we also want to remember where this tooltip was placed originally.
+          _this.set('tooltipParent', _this.parentNode);
+          // now that we are all set, we move the tooltip to the dom root, where the absolute positioning works everytime,
+          // and we don't have to worry about overflows, the scourge of css.
+          document.body.appendChild(tooltip);
+          _this.$.tooltipWrapper.classList.remove('hidden');
+          _this._setPosition();
+          _this.fire('px-tooltip-show', {
+           target: _this
+         });
+        }
       }, this.delay);
     },
+    /**
+     * @method _clearTimer
+     * This function clears out the timer if the user hovers off the
+     * target.
+     *
+     */
     _clearTimer: function() {
       if(this._timer) {
         clearTimeout(this._timer);
       }
     },
     /**
-     * Hide the tooltip
-     *
      * @method _hide
+     * Hide the tooltip, clear the timer, and move the tooltip back to whence it came.
+     *
      */
     _hide: function() {
       // hide this thing
-      this._clearTimer();
-      this.$.tooltipWrapper.classList.add('hidden');
-      this._isShowing = false;
+      this.set('_cancel',true);
+      if (this._isShowing) {
+        this._clearTimer();
+        //get rid of out movedTooltip class
+        Polymer.dom(this).classList.toggle('movedTooltip');
+        //and we move the tooltip back to whence it came.
+        this.tooltipParent.appendChild(this);
+        this.$.tooltipWrapper.classList.add('hidden');
+        this._isShowing = false;
+      }
     },
+    /**
+     * @method _setPosition
+     * This function calls the appropriate positioning function,
+     * according to the orientation specified.
+     *
+     */
     _setPosition: function() {
       if(!this._target) {
         return;
@@ -225,20 +299,40 @@ Tooltip element that provides additional information to users once hovered over 
         this._autoPosition();
       }
     },
+    /**
+     * @method _autoPosition
+     * This function is called as the default positioning
+     * in _setPosition
+     *
+     */
     _autoPosition: function() {
       this._positionRight(); // just positioning to right automatically for now
     },
+    /**
+     * @method _isOffScreenOnLeft
+     * This function checks whether the tooltip is off screen on the left.
+     *
+     */
     _isOffScreenOnLeft: function() {
       var tooltipFarLeftPoint = this.getTargetPositionCenterOfLeftRight(true) - (this._getTooltipWidth() / 2);
       return tooltipFarLeftPoint < 0; // if the far left point of the tooltip is off the screen
     },
+    /**
+     * @method _isOffScreenOnRight
+     * This function checks whether the tooltip is off screen on the right.
+     *
+     */
     _isOffScreenOnRight: function() {
       var tooltipFarRightPoint = this.getTargetPositionCenterOfLeftRight(true) + (this._getTooltipWidth() / 2);
       return tooltipFarRightPoint > window.innerWidth; // if the far right point of the tooltip is off the screen
     },
 
     /******** position the tooltip in the four different positions (top, left, right, bottom) **********/
-
+    /**
+     * @method _positionTop
+     * This function sets the carat and tooltip position on top.
+     *
+     */
     _positionTop: function() {
       // restyle the carat
       this._styleTheCaratAs(this._values.TYPE.top);
@@ -248,10 +342,15 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.top = (this._getTooltipHeight() - this.margin) + 'px';
 
       // position the tooltip itself
-      this.style.left = (this.position !=="relative") ? this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px' : this.getTargetPositionCenterOfLeftRight() + 'px';
+      this.style.left = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px';
       this.style.top = this._getTargetPositionTop() - this._getTooltipHeight() + (this.margin / 2) - 5 + 'px';
 
     },
+    /**
+     * @method _positionBottom
+     * This function sets the carat and tooltip position on bottom.
+     *
+     */
     _positionBottom: function() {
       // restyle the carat
       this._styleTheCaratAs(this._values.TYPE.bottom);
@@ -261,9 +360,14 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.top = null;
 
       // position the tooltip itself
-      this.style.left = (this.position !=="relative") ? this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px' : this.getTargetPositionCenterOfLeftRight() + 'px';
+      this.style.left = this.getTargetPositionCenterOfLeftRight() - (this._getTooltipWidth() / 2) + 'px';
       this.style.top = this._getTargetPositionBottom() - this._getCaratHeight() + 5 + 'px';
     },
+    /**
+     * @method _positionLeft
+     * This function sets the carat and tooltip position on left.
+     *
+     */
     _positionLeft: function() {
       var top;
       // restyle the carat
@@ -273,16 +377,17 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.left = null;
       this.$.carat.style.top = (this._getTooltipHeight() / 2) - this._getCaratWidth() + 'px';
 
-      if (this.position !== "relative") {
-        top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
-      } else {
-        top = this.getTargetPositionCenterOfTopBottom() + 'px';
-      }
+      top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
 
       // position the tooltip itself
       this.style.left = this._getTargetPositionLeft() - this._getTooltipWidth() + this.margin / 2 - 5 + 'px';
       this.style.top = top;
     },
+    /**
+     * @method _positionRight
+     * This function sets the carat and tooltip position on right.
+     *
+     */
     _positionRight: function() {
       var top;
       // restyle the carar
@@ -292,16 +397,17 @@ Tooltip element that provides additional information to users once hovered over 
       this.$.carat.style.left = null;
       this.$.carat.style.top = (this._getTooltipHeight() / 2) - (this._getCaratWidth()) + 'px';
 
-      if (this.position !== "relative") {
-        top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
-      } else {
-        top = this.getTargetPositionCenterOfTopBottom() + 'px';
-      }
+      top = Math.round(this.getTargetPositionCenterOfTopBottom() - (this._getTooltipHeight() / 2)) + 'px';
 
       // position the tooltip itself
       this.style.left = this._getTargetPositionRight() - this._getCaratWidth() + 5 + 'px';
       this.style.top = top;
     },
+    /**
+     * @method _styleTheCaratAs
+     * This function updates the styles on the tooltip carat.
+     *
+     */
     _styleTheCaratAs: function(newCaratState) {
       // clear all old styles and add the new one
       this.$.carat.classList.remove(this._values.TYPE.top, this._values.TYPE.bottom, this._values.TYPE.left, this._values.TYPE.right);
@@ -310,103 +416,103 @@ Tooltip element that provides additional information to users once hovered over 
       this.caratRect = this.$.carat.getBoundingClientRect(); // need to remeasure carat since height/width changes
     },
 
-    /**** Helpers for making positioning logic more readable ****/
-
+    /**** Helpers for making positioning logic more readable ****/    /**
+    /**
+     * @method _getTargetPositionTop
+     * This function returns the target position on top
+     *
+     */
     // target (the thing they hover over) vertical positioning (top, bottom, center)
     _getTargetPositionTop: function() {
-      var position;
-      if (this.position !== "relative") {
-          position =  this._getTargetPosition("top", "pageYOffset"); // use pageYOffset & pageXOffset, scrollX and scrollY undefined in IE
-      } else {
-        position = 0;
-      }
-
-      return position;
+      return this._getTargetPosition("top", "pageYOffset"); // use pageYOffset & pageXOffset, scrollX and scrollY undefined in IE
     },
+    /**
+     * @method _getTargetPositionBottom
+     * This function returns the target position on bottom
+     *
+     */
     _getTargetPositionBottom: function() {
-      var position;
-      if (this.position !== "relative") {
-        position = this._getTargetPositionTop() + this.targetRect.height;
-      } else {
-        position = this.targetRect.height;
-      }
-
-      return position;
+      return this._getTargetPositionTop() + this.targetRect.height;
     },
-
+    /**
+     * @method _getTargetPositionLeft
+     * This function returns the target position on left
+     *
+     */
     // target (the thing they hover over) horizontal positioning (left, right, center)
     _getTargetPositionLeft: function(smartOrientation) {
-      var position;
-      if (this.position !== "relative" || smartOrientation) {
-        position = this._getTargetPosition("left", "pageXOffset");
-      } else {
-        position = 0;
-      }
-
-      return position;
+      return this._getTargetPosition("left", "pageXOffset");
     },
+    /**
+     * @method _getTargetPositionRight
+     * This function returns the target position on right
+     *
+     */
     _getTargetPositionRight: function() {
-      var position;
-      if (this.position !== "relative") {
-        position = this._getTargetPositionLeft() + this.targetRect.width;
-      } else {
-        position = this.targetRect.width;
-      }
-
-      return position;
+      return this._getTargetPositionLeft() + this.targetRect.width;
     },
+    /**
+     * @method getTargetPositionCenterOfTopBottom
+     * This function returns the target position on the center of
+     * either the top or bottom
+     *
+     */
     getTargetPositionCenterOfTopBottom: function() {
-      var position,
-          targetHeight,
-          thisHeight;
-
-      if (this.position !== "relative") {
-        position =  this._getTargetPositionTop() + (this.targetRect.height / 2);
-      } else {
-        thisHeight = this.thisRect.height;
-        targetHeight = this.targetRect.height;
-        position = (targetHeight > thisHeight) ? (this.targetRect.height - this.thisRect.height) / 2 : -Math.abs((this.thisRect.height  - this.targetRect.height) / 2);
-      }
-
-      return position;
+      return   this._getTargetPositionTop() + (this.targetRect.height / 2);
     },
+    /**
+     * @method getTargetPositionCenterOfLeftRight
+     * This function returns the target position on the center of
+     * either the left or right
+     *
+     */
     getTargetPositionCenterOfLeftRight: function(smartOrientation) {
-      var position = 0,
-          targetWidth,
-          thisWidth;
-      if (this.position !== "relative" || smartOrientation) {
-        position = this._getTargetPositionLeft(smartOrientation) + (this.targetRect.width / 2);
-      } else {
-        targetWidth = this.targetRect.width;
-        thisWidth = this.thisRect.width;
-        thisWidth = Math.round(thisWidth);
-        position =  (targetWidth > thisWidth) ? (targetWidth - thisWidth) : -Math.abs(thisWidth - targetWidth);
-        position = position / 2;
-      }
-      return position;
+      return this._getTargetPositionLeft() + (this.targetRect.width / 2);
     },
-
+    /**
+     * @method _getTargetPosition
+     * This function calculates the target position, with passed
+     * parameters
+     *
+     */
     _getTargetPosition: function(topOrLeft, pageXOrYOffset) {
       var position = this.targetRect[topOrLeft]; // use the targetRect (which uses bounding box) initially
       position += window[pageXOrYOffset]; // factor in any window scrolling we've done
       return position;
     },
-
+    /**
+     * @method _getTooltipWidth
+     * This function returns the tooltip width
+     *
+     */
     // tooltip height/width
     _getTooltipWidth: function() {
       return this.thisRect.width;
     },
+    /**
+     * @method _getTooltipHeight
+     * This function returns the tooltip height
+     *
+     */
     _getTooltipHeight: function() {
       return this.thisRect.height;
     },
-
+    /**
+     * @method _getCaratHeight
+     * This function returns the carat height
+     *
+     */
     // carat height/width
     _getCaratHeight: function() {
       return this.caratRect.height;
     },
+    /**
+     * @method _getCaratWidth
+     * This function returns the carat width
+     *
+     */
     _getCaratWidth: function() {
       return this.caratRect.width;
     }
-
   });
 </script>

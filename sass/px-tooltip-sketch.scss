@@ -40,7 +40,7 @@ $tooltip-text-color: $white;
 
 :host {
     display: block;
-    position: absolute;
+    position: absolute !important;
     outline: none;
     z-index: 1002;
 }
@@ -52,7 +52,7 @@ $tooltip-text-color: $white;
     background-color: $tooltip-color;
     margin: $margin;
     color: $tooltip-text-color;
-    white-space: nowrap; 
+    white-space: nowrap;
     h6 {
         margin: 0;
     }

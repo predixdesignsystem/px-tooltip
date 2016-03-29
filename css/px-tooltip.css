@@ -592,7 +592,7 @@ a {
 
 :host {
   display: block;
-  position: absolute;
+  position: absolute !important;
   outline: none;
   z-index: 1002; }
 
@@ -1152,7 +1152,6 @@ div#carat {
   #tooltip p {
     margin: 0;
     -webkit-hyphens: auto;
-       -moz-hyphens: auto;
         -ms-hyphens: auto;
             hyphens: auto; }
     #tooltip p:first-child {

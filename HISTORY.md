@@ -1,8 +1,10 @@
-v0.3.3
+v0.4.0
 ==================
 * removed the position attribute, which wasn't needed anymore.
 * changed the behavior of the component to ensure that the positioning will work every single time.
 * updated internal comments and cleaned up code a bit.
+* Added testing in line with our usual testing methods.
+
 v0.3.2
 ==================
 * Updated License

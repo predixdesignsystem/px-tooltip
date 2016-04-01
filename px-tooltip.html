@@ -282,7 +282,7 @@ Tooltip element that provides additional information to users once hovered over 
        this.thisRect = this.getBoundingClientRect();
        this.margin = parseInt(getComputedStyle(this.$.tooltip).marginTop.replace('px', ''));
 
-       if(this.orientation === this._values.TYPE.auto) {
+       if(this.orientation === 'auto') {
 
          //auto positioning
          this._autoPosition();

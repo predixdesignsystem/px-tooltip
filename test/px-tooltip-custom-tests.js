@@ -36,14 +36,10 @@ function runCustomTests() {
      setup('when _show called', function(done) {
          px_tooltip._show();
          setTimeout(function() {
+             expect(wrapper.classList.contains('hidden')).to.equal(false);
              done();
-         }, 6000); // delay is 500 ms
+         }, 3000); // delay is 500 ms
      });
-
-     test('_show() shows it (called on hover)', function() {
-         expect(wrapper.classList.contains('hidden')).to.equal(false);
-     });
-
    });
   });
 }

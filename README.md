@@ -52,14 +52,32 @@ The delay in milliseconds until the tooltip is displayed.
 ```
 
 ####for
-*Type:* **String** - (*Optional*) - *Default:* ""
-The element to which the tooltip provides additional information.  Optional, tooltip will be attached to parent element if a 'for' id is not provided.
+*Type:* **Object** - (*Optional*) - *Default:* ""
+The element to which the tooltip provides additional information.  
+Optional, tooltip will be attached to parent element if a 'for' id is not provided.
+
+'for' can be either an String for the ID of the element, or the element itself.
+
+If an ID is passed, this element must be a sibling of the tooltip.
 
 ```
 <px-tooltip
   ...
   for="exampleDiv">
 </px-tooltip>
+
+<px-tooltip
+...
+id="myTooltip">
+</px-tooltip>
+<script>
+  document.addEventListener("WebComponentsReady", function() {
+    var target = Polymer.dom(document).querySelector('#hoverDiv'),
+        tt = Polymer.dom(document).querySelector('#myTooltip');
+
+    tt.set('for',target);
+  });
+</script>
 ```
 
 ####orientation

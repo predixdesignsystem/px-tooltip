@@ -61,17 +61,21 @@ Tooltip element that provides additional information to users once hovered over 
      */
     properties: {
       /**
-       * The id of the element that the tooltip is anchored to. This element
-       * must be a sibling of the tooltip.
+       * Either the id of the element that the tooltip is anchored to or the element itself.
+       *
+       * If an ID is passed, this element must be a sibling of the tooltip.
+       * If an element, location in the dom does not matter.
        *
        * (Optional)  If not provided, the px-tooltip will be attached to its parent element.
        * @property for
-       * @type String
+       * @type:Object,
        * @default ''
        */
       for: {
-        type: String,
-        value: ''
+        type:Object,
+        observer:'_onFor',
+        notify:true,
+        value:''
       },
       /**
        * The id of the element that the tooltip is anchored to. This element
@@ -154,18 +158,31 @@ Tooltip element that provides additional information to users once hovered over 
       'iron-resize': '_onIronResize'
     },
     attached: function() {
-      // we want to make sure the target isn't set EVERYTIME the tooltip is attached -
-      // only the first time!
-      if (!this.target) {
-        this.target = this._getTarget();
-        this._target = this.target;
+      // we want to make sure the target exists-
+      if(this._target){
+        this.listen(this._target, 'mouseenter', '_show');
+        this.listen(this._target, 'mouseleave', '_hide');
       }
-      this.listen(this._target, 'mouseenter', '_show');
-      this.listen(this._target, 'mouseleave', '_hide');
     },
     detached: function() {
       this.unlisten(this._target, 'mouseenter', '_show');
       this.unlisten(this._target, 'mouseleave', '_hide');
+    },
+    /**
+     * @method _onFor
+     * This function fires on a change on the 'for' property
+     * calls _getTarget and sets the target
+     *
+     */
+    _onFor:function(){
+      if(this._target){
+        this.unlisten(this._target, 'mouseenter', '_show');
+        this.unlisten(this._target, 'mouseleave', '_hide');
+      }
+      this.target = this._getTarget();
+      this._target = this.target;
+      this.listen(this._target, 'mouseenter', '_show');
+      this.listen(this._target, 'mouseleave', '_hide');
     },
     /**
      * @method _onIronResize
@@ -191,11 +208,14 @@ Tooltip element that provides additional information to users once hovered over 
      *
      */
     _getTarget: function() {
-      var ownerRoot = Polymer.dom(this).getOwnerRoot();
-      var parentNode = this.parentNode;
-      var target;
-      if(this.for) {
+      var ownerRoot = Polymer.dom(this).getOwnerRoot(),
+          parentNode = this.parentNode,
+          target;
+
+      if(this.for && typeof(this.for) === 'string') {
         target = Polymer.dom(parentNode).querySelector('#' + this.for);
+      }else if(this.for && typeof(this.for) === 'object') {
+        target = this.for;
       } else if(parentNode.nodeType === 11) { // DOCUMENT_FRAGMENT_NODE
         target = ownerRoot.host;
       } else {

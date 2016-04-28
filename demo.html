@@ -101,7 +101,28 @@
                 orientation="right"
                 tooltip-message="Right tooltip">
             </px-tooltip>
+
+            <p></p>
+            <div id="hoverDivObj" class="hover-tooltip">For is an Element elsewhere in the dom
+            </div>
+
         </div>
+
+
+        <px-tooltip
+            id="elemTooltip"
+            smart-orientation
+            orientation="right"
+            tooltip-message="Element passed in as a for">
+        </px-tooltip>
+        <script>
+          document.addEventListener("WebComponentsReady", function() {
+            var target = Polymer.dom(document).querySelector('#hoverDivObj'),
+                tt = Polymer.dom(document).querySelector('#elemTooltip');
+
+            tt.set('for',target);
+          });
+        </script>
 
         <div class="sample-container-left">
             <div id="hoverDivTop2" class="hover-tooltip">Smart: Hover for tooltip

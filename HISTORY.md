@@ -1,3 +1,7 @@
+v0.5.0
+==================
+* Added ability to pass an element into 'for'. Allows for a tooltip to be placed anywhere in the dom. 
+
 v0.4.0
 ==================
 * removed the position attribute, which wasn't needed anymore.

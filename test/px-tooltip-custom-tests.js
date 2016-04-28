@@ -7,7 +7,7 @@ function runCustomTests() {
 
   // This is the placeholder suite to place custom tests in
   // Use testCase(options) for a more convenient setup of the test cases
-  suite('Custom Automation Tests for px-dropdown', function() {
+  suite('Custom Automation Tests for px-tooltip', function() {
     var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_1')
         wrapper = px_tooltip.$$('#tooltipWrapper');
 
@@ -29,6 +29,39 @@ function runCustomTests() {
 
   test('reflects the "tooltip-message" property', function() {
      assert.equal(px_tooltip.tooltipMessage, "Top tooltip");
+  });
+
+   suite('when tooltip is shown', function() {
+
+     setup('when _show called', function(done) {
+         px_tooltip._show();
+         setTimeout(function() {
+             expect(wrapper.classList.contains('hidden')).to.equal(false);
+             done();
+         }, 3000); // delay is 500 ms
+     });
+   });
+  });
+
+// Object
+suite('Custom Automation Tests for px-tooltip', function() {
+  var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_8')
+      wrapper = px_tooltip.$$('#tooltipWrapper');
+
+  var target =  Polymer.dom(document).querySelector('#hoverDivTop5');
+
+  px_tooltip_8.set('for',target);
+
+  test('hides tooltip before click', function() {
+    expect(wrapper.classList.contains('hidden')).to.equal(true);
+  });
+
+  test('"for" property is object', function() {
+     assert.equal(typeof(px_tooltip.for), 'object');
+  });
+
+  test('reflects the "for" property', function() {
+     assert.equal(px_tooltip.for, target);
   });
 
    suite('when tooltip is shown', function() {

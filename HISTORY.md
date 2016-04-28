@@ -1,6 +1,10 @@
+v0.6.0
+=================
+* Upgrade to Polymer 1.4.0
+
 v0.5.0
 ==================
-* Added ability to pass an element into 'for'. Allows for a tooltip to be placed anywhere in the dom. 
+* Added ability to pass an element into 'for'. Allows for a tooltip to be placed anywhere in the dom.
 
 v0.4.0
 ==================

@@ -1,3 +1,7 @@
+v0.6.1
+=================
+* fix case where parent could not be found at initializationß
+
 v0.6.0
 =================
 * Upgrade to Polymer 1.4.0

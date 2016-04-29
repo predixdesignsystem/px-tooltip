@@ -163,6 +163,10 @@ Tooltip element that provides additional information to users once hovered over 
         this.listen(this._target, 'mouseenter', '_show');
         this.listen(this._target, 'mouseleave', '_hide');
       }
+      else {
+        //make sure tooltip find its parent if it has no for
+        this._onFor();
+      }
     },
     detached: function() {
       this.unlisten(this._target, 'mouseenter', '_show');
@@ -181,8 +185,10 @@ Tooltip element that provides additional information to users once hovered over 
       }
       this.target = this._getTarget();
       this._target = this.target;
-      this.listen(this._target, 'mouseenter', '_show');
-      this.listen(this._target, 'mouseleave', '_hide');
+      if(this._target){
+        this.listen(this._target, 'mouseenter', '_show');
+        this.listen(this._target, 'mouseleave', '_hide');
+      }
     },
     /**
      * @method _onIronResize
@@ -209,16 +215,22 @@ Tooltip element that provides additional information to users once hovered over 
      */
     _getTarget: function() {
       var ownerRoot = Polymer.dom(this).getOwnerRoot(),
-          parentNode = this.parentNode,
+          parentNode = Polymer.dom(this).parentNode,
           target;
 
       if(this.for && typeof(this.for) === 'string') {
         target = Polymer.dom(parentNode).querySelector('#' + this.for);
       }else if(this.for && typeof(this.for) === 'object') {
         target = this.for;
-      } else if(parentNode.nodeType === 11) { // DOCUMENT_FRAGMENT_NODE
-        target = ownerRoot.host;
-      } else {
+      }
+      //DOCUMENT_FRAGMENT_NODE
+      else if(parentNode.nodeType === 11) {
+          //at this point if we can't find the acual owner root
+          //we're probably not attached yet. Just set it to null
+          //and wait for 'this' to be attached and rerun this function
+          target = ownerRoot ? ownerRoot.host : null;
+      }
+      else {
         target = parentNode;
       }
       return target;

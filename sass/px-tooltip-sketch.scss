@@ -37,6 +37,7 @@ $carat: 7px;
 $border-radius: 4px;
 $tooltip-color: $black;
 $tooltip-text-color: $white;
+$tooltip-max-width: 400px;
 
 :host {
     display: block;
@@ -48,11 +49,12 @@ $tooltip-text-color: $white;
 #tooltip {
     outline: none;
     padding: 15px;
-    width: auto;
     background-color: $tooltip-color;
     margin: $margin;
     color: $tooltip-text-color;
-    white-space: nowrap;
+    max-width: $tooltip-max-width;
+    white-space: normal;
+
     h6 {
         margin: 0;
     }

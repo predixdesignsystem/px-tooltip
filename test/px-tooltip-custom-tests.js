@@ -54,8 +54,7 @@ function runCustomTests() {
       test('Check max width of tooltip', function() {
           if (tooltip_text.length > 52){
               assert.equal(width_styles, '400px');
-          }
-        
+          }   
       });
       
   });

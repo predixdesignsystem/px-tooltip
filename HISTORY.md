@@ -1,3 +1,7 @@
+v0.6.5
+=================
+* PR to fix max tooltip width.
+
 v0.6.4
 =================
 * added oss_notice to bower ignore

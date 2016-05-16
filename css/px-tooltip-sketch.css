@@ -588,11 +588,11 @@ a {
 
 #tooltip {
   outline: none;
-  padding: 15px;
+  padding: 1rem;
   background-color: black;
-  margin: 15px;
+  margin: 1rem;
   color: white;
-  max-width: 400px;
+  max-width: 26.6666666667rem;
   white-space: normal; }
   #tooltip h6 {
     margin: 0; }
@@ -604,25 +604,25 @@ div#carat {
   width: 0;
   height: 0; }
   div#carat.bottom {
-    top: 8px;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-bottom: 7px solid black; }
+    top: 1.4666666667rem;
+    border-left: 0.4666666667rem solid transparent;
+    border-right: 0.4666666667rem solid transparent;
+    border-bottom: 0.4666666667rem solid black; }
   div#carat.top {
-    top: 0px;
-    border-left: 7px solid transparent;
-    border-right: 7px solid transparent;
-    border-top: 7px solid black; }
+    top: 0;
+    border-left: 0.4666666667rem solid transparent;
+    border-right: 0.4666666667rem solid transparent;
+    border-top: 0.4666666667rem solid black; }
   div#carat.left {
-    right: 8px;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    border-left: 7px solid black; }
+    right: 1.4666666667rem;
+    border-top: 0.4666666667rem solid transparent;
+    border-bottom: 0.4666666667rem solid transparent;
+    border-left: 0.4666666667rem solid black; }
   div#carat.right {
-    left: 8px;
-    border-top: 7px solid transparent;
-    border-bottom: 7px solid transparent;
-    border-right: 7px solid black; }
+    left: 1.4666666667rem;
+    border-top: 0.4666666667rem solid transparent;
+    border-bottom: 0.4666666667rem solid transparent;
+    border-right: 0.4666666667rem solid black; }
 
 /*------------------------------------*    #CLEARFIX
 \*------------------------------------*/

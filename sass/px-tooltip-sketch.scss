@@ -32,12 +32,12 @@ Predix branding rules go in px-tooltip-predix.scss, not in this file.
 @import "px-viewport-design/_base.viewport.scss";
 
 
-$margin: 15px;
-$carat: 7px;
-$border-radius: 4px;
+$margin: calculateRem(15px);
+$carat: calculateRem(7px);
+$border-radius: calculateRem(4px);
 $tooltip-color: $black;
 $tooltip-text-color: $white;
-$tooltip-max-width: 400px;
+$tooltip-max-width: calculateRem(400px);
 
 :host {
     display: block;
@@ -48,7 +48,7 @@ $tooltip-max-width: 400px;
 
 #tooltip {
     outline: none;
-    padding: 15px;
+    padding: calculateRem(15px);
     background-color: $tooltip-color;
     margin: $margin;
     color: $tooltip-text-color;
@@ -74,7 +74,7 @@ div#carat {
         border-bottom: $carat solid $tooltip-color;
     }
     &.top {
-        top: 0px;
+        top: 0;
         border-left: $carat solid transparent;
         border-right: $carat solid transparent;
         border-top: $carat solid $tooltip-color;

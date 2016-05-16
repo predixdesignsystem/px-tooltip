@@ -26,7 +26,7 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
 
 #tooltip {
     background-color: $tooltip-color;
-    border-radius: 4px;
+    border-radius: calculateRem(4px);
 
     p {
         margin: 0;

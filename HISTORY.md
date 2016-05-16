@@ -1,5 +1,9 @@
 v0.6.6
 =================
+* updated readme
+
+v0.6.6
+=================
 * PR to make sure tooltip is hidden when item is clicked.
 
 v0.6.5

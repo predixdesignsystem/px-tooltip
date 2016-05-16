@@ -2,7 +2,7 @@
 
 ## Overview
 
-Px-Tooltip is a Predix Experience component which opens a tooltip message,
+Px-Tooltip is a Predix UI component which opens a tooltip message,
 allowing the user to get a better view and or understanding of the content.
 
 ## Usage
@@ -20,7 +20,7 @@ Node, npm and bower are necessary to install the component and dependencies. web
 First, install the component via bower on the command line.
 
 ```
-bower install https://github.com/PredixDev/px-tooltip.git --save
+bower install px-tooltip --save
 ```
 
 Second, import the component to your application with the following tag in your head.
@@ -37,82 +37,9 @@ Finally, use the component in your application:
 
 <br />
 <hr />
+## documentation
 
-## Attributes
-
-####delay
-*Type:* **Number** - (*Optional*) - *Default:* "1000"
-The delay in milliseconds until the tooltip is displayed.
-
-```
-<px-tooltip
-  ...
-  delay="500">
-</px-tooltip>
-```
-
-####for
-*Type:* **Object** - (*Optional*) - *Default:* ""
-The element to which the tooltip provides additional information.  
-Optional, tooltip will be attached to parent element if a 'for' id is not provided.
-
-'for' can be either an String for the ID of the element, or the element itself.
-
-If an ID is passed, this element must be a sibling of the tooltip.
-
-```
-<px-tooltip
-  ...
-  for="exampleDiv">
-</px-tooltip>
-
-<px-tooltip
-...
-id="myTooltip">
-</px-tooltip>
-<script>
-  document.addEventListener("WebComponentsReady", function() {
-    var target = Polymer.dom(document).querySelector('#hoverDiv'),
-        tt = Polymer.dom(document).querySelector('#myTooltip');
-
-    tt.set('for',target);
-  });
-</script>
-```
-
-####orientation
-*Type:* **String** - (*Optional*) - *Default:* "auto"
-The position of the tooltip relative to the 'for' element. Currently supports 'top', 'bottom', 'left', 'right' and 'auto'.
-
-```
-<px-tooltip
-  ...
-  orientation="top">
-</px-tooltip>
-```
-
-####smartOrientation
-*Type:* **Boolean** - (*Optional*) - *Default:* "false"
-If smartOrientation is turned on then the tooltip will override the default orientation to try to better fit on the page. Smart Orientation will be chosen in a clockwise manner. (example: for a tooltip with "right" orientation it will be below if tooltip will go off right side of the screen, but left if it goes off right *and* bottom side of the screen)
-
-```
-<px-tooltip
-  ...
-  smartOrientation="true">
-</px-tooltip>
-```
-
-####tooltip-message
-*Type:* **String** - (*Required*) - *Default:* ""
-The text message that will be displayed in the tooltip. Also support HTML elements.
-
-```
-<px-tooltip
-  ...
-  tooltip-message="Hello World">
-</px-tooltip>
-```
-
+Read the full API and view the demo [here](https://predixdev.github.io/px-tooltip).
 <br />
 <hr />
 

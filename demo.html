@@ -52,6 +52,7 @@
                 vertical-align: middle;
                 background-color: gray;
             }
+            
         </style>
     </head>
 
@@ -84,7 +85,7 @@
             <p></p>
             <div id="hoverDivBottom" class="hover-tooltip">Hover for tooltip<br/><span>(HTML element, bottom, default delay: 1 sec)</span></div>
             <px-tooltip for="hoverDivBottom" orientation="bottom">
-                Bottom tooltip<br>with html<br><div class='test-el'>HTML Div</div>
+                    Bottom tooltip<br>with html<br><div class='test-el'>HTML Div</div>
             </px-tooltip>
             <p></p>
             <div id="hoverDivLeft" class="hover-tooltip">Hover for tooltip<br/><span>(left, delay: 3 sec)</span></div>
@@ -104,6 +105,14 @@
 
             <p></p>
             <div id="hoverDivObj" class="hover-tooltip">For is an Element elsewhere in the dom
+            </div>
+
+            <p></p>
+            <div id="hoverDivTop6" class="hover-tooltip">Tooltip contains lots of text
+                <px-tooltip
+                    orientation="top"
+                    tooltip-message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer imperdiet velit non risus pellentesque, id molestie velit varius. Integer ac nulla hendrerit, aliquet mauris vitae, varius augue. Nulla non turpis metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur tincidunt tincidunt. Suspendisse vitae turpis libero.">
+                </px-tooltip>
             </div>
 
         </div>
@@ -153,6 +162,7 @@
                 </px-tooltip>
             </div>
         </div>
+        
 
         <div class="sample-container-right">
             <div id="hoverDivTop4" class="hover-tooltip">Smart: Hover for tooltip
@@ -163,6 +173,7 @@
                 </px-tooltip>
             </div>
         </div>
+
         <div class="sample-container-right">
             <div id="hoverDivTop5" class="hover-tooltip">Smart: Hover for tooltip
                 <px-tooltip
@@ -172,6 +183,18 @@
                 </px-tooltip>
             </div>
         </div>
+
+        <p></p>
+        <div class="sample-container-left">
+            <div id="hoverDivTop7" class="hover-tooltip">Smart: Hover for big long text tooltip
+                    <px-tooltip
+                        smart-orientation
+                        orientation="right"
+                        tooltip-message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer imperdiet velit non risus pellentesque, id molestie velit varius. Integer ac nulla hendrerit, aliquet mauris vitae, varius augue. Nulla non turpis metus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consectetur tincidunt tincidunt. Suspendisse vitae turpis libero.">
+                    </px-tooltip>
+                </div>
+        </div>
+
 
     </body>
 </html>

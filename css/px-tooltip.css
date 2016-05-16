@@ -30,6 +30,9 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
  * Monochromatic (gray10 is darkest, gray1 is lightest)
  */
 /**
+ * Define grey = gray to avoid dev typos
+ */
+/**
  * Buttons
  */
 /**
@@ -599,11 +602,11 @@ a {
 #tooltip {
   outline: none;
   padding: 15px;
-  width: auto;
   background-color: black;
   margin: 15px;
   color: white;
-  white-space: nowrap; }
+  max-width: 400px;
+  white-space: normal; }
   #tooltip h6 {
     margin: 0; }
   #tooltip p {

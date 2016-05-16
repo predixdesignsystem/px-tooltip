@@ -162,6 +162,7 @@ Tooltip element that provides additional information to users once hovered over 
       if(this._target){
         this.listen(this._target, 'mouseenter', '_show');
         this.listen(this._target, 'mouseleave', '_hide');
+        this.listen(this._target, 'mousedown', '_hide');
       }
       else {
         //make sure tooltip find its parent if it has no for
@@ -171,6 +172,7 @@ Tooltip element that provides additional information to users once hovered over 
     detached: function() {
       this.unlisten(this._target, 'mouseenter', '_show');
       this.unlisten(this._target, 'mouseleave', '_hide');
+      this.unlisten(this._target, 'mousedown', '_hide');
     },
     /**
      * @method _onFor

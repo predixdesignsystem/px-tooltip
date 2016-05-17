@@ -1,3 +1,7 @@
+v0.6.8
+=================
+* remove calculateRem from Sass
+
 v0.6.6
 =================
 * updated readme

@@ -44,19 +44,18 @@ function runCustomTests() {
   });
 
   suite('Large text string tooltip', function() {
-      
+
       var px_tooltip_large = Polymer.dom(document).querySelector('#px_tooltip_9'),
           tooltip_text = px_tooltip_large.tooltipMessage,
           tooltip_classes = Polymer.dom(px_tooltip_large.root).querySelector('#tooltip.px-tooltip'),
-          width_styles = getStyle(tooltip_classes, 'max-width'),
-          boolval = true;
+          width_styles = getStyle(tooltip_classes, 'max-width');
 
       test('Check max width of tooltip', function() {
           if (tooltip_text.length > 52){
               assert.equal(width_styles, '400px');
-          }   
+          }
       });
-      
+
   });
 
 

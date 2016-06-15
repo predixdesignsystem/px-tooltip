@@ -1,4 +1,4 @@
-# Px-Tooltip
+# Px-Tooltip [![Build Status](https://travis-ci.org/PredixDev/px-tooltip.svg?branch=master)](https://travis-ci.org/PredixDev/px-tooltip)
 
 ## Overview
 

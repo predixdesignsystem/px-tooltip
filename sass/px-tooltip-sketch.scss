@@ -54,6 +54,7 @@ $tooltip-max-width: 400px;
     color: $tooltip-text-color;
     max-width: $tooltip-max-width;
     white-space: normal;
+    overflow-wrap: break-word;
 
     h6 {
         margin: 0;

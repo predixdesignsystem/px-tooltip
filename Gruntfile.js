@@ -24,7 +24,8 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'css/noprefix/px-tooltip-sketch.css': 'sass/px-tooltip-sketch.scss',
-                    'css/noprefix/px-tooltip.css': 'sass/px-tooltip-predix.scss'
+                    'css/noprefix/px-tooltip.css': 'sass/px-tooltip-predix.scss',
+                    'css/noprefix/px-tooltip-demo.css': 'sass/px-tooltip-demo.scss'
                 }
             }
         },

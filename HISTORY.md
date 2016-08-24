@@ -1,3 +1,7 @@
+v0.7.8
+=================
+* updated bower to bring in codepen
+
 v0.7.7
 =================
 * Added tooltipParent property definition

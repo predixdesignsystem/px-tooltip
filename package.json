@@ -2,13 +2,13 @@
     "name": "px-tooltip",
     "author": "General Electric",
     "description": "A Px component that provides a tooltip on invocation",
-    "version": "0.7.7",
+    "version": "0.7.8",
     "private": true,
     "extName" : null,
     "repository" :
     {
         "type": "git",
-        "url": "https://github.com/change-this-in-package.json-please.git"
+        "url": "https://github.com/px-tooltip.git"
     },
     "homepage": "http://predix.io/",
     "devDependencies": {

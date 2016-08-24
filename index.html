@@ -149,27 +149,31 @@ window.addEventListener('WebComponentsReady', function() {
       optionsArray = [
         {
           "for":"btn1",
-          "orientation": "left",
-          "tooltipMessage": "this is a left tooltip message",
-          "delay": 500
+          "orientation": "right",
+          "tooltipMessage": "this is a right tooltip message",
+          "delay": 500,
+          "siblingElement": "<button id='btn1'>Hover over me</button>"
         },
         {
           "for":"btn2",
-          "orientation": "right",
-          "tooltipMessage": "this is a right tooltip message",
-          "delay": 2500
+          "orientation": "left",
+          "tooltipMessage": "this is a left tooltip message",
+          "delay": 2500,
+          "siblingElement": "<button id='btn2'>Hover over me</button>"
         },
         {
           "for":"btn3",
           "orientation": "top",
           "tooltipMessage": "this is a top tooltip message",
-          "delay": 1500
+          "delay": 1500,
+          "siblingElement": "<button id='btn3'>Hover over me</button>"
         },
         {
           "for":"btn4",
           "orientation": "bottom",
           "tooltipMessage": "this is a bottom tooltip message",
-          "delay": 50
+          "delay": 50,
+          "siblingElement": "<button id='btn4'>Hover over me</button>"
         },
       ],
       indexPlusOne = function(num) {

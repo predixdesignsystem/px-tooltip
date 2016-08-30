@@ -18,9 +18,12 @@ Tooltip element that provides additional information to users once hovered over 
 @homepage index.html
 @demo demo.html
 -->
+<link rel="import" href="css/px-tooltip-styles.html">
+
 <dom-module id="px-tooltip">
-  <link rel="import" type="css" href="css/px-tooltip.css"/>
   <template>
+    <style include="px-tooltip-styles"></style>
+    <style include="px-theme-styles"></style>
     <div id="tooltipWrapper" class="hidden">
       <div id="carat"></div>
       <div id="tooltip">

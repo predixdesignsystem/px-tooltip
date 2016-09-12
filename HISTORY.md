@@ -1,3 +1,7 @@
+v0.7.11
+=================
+* fixed style link issue
+
 v0.7.10
 =================
 * fixed style link issue

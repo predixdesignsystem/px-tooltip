@@ -1,4 +1,4 @@
-v0.7.9
+v0.7.10
 =================
 * fixed style link issue
 

@@ -24,8 +24,14 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
 
 @import 'px-tooltip-sketch.scss';
 
+$tooltip-color-dark: $black;
+$tooltip-text-color-dark: $white;
+
+$tooltip-color-light: $white;
+$tooltip-text-color-light: $black;
+
+
 #tooltip {
-    background-color: $tooltip-color;
     border-radius: calculateRem(4px);
 
     p {
@@ -33,6 +39,64 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
         hyphens: auto;
         &:first-child {
             text-transform: capitalize;
+        }
+    }
+
+    &.dark {
+      background-color: $tooltip-color-dark;
+      color: $tooltip-text-color-dark;
+    }
+
+    &.light {
+      background-color: $tooltip-color-light;
+      color: $tooltip-text-color-light;
+      border: 1px solid $grey7;
+    }
+}
+
+div#carat {
+    &.bottom {
+        border-left: $carat solid transparent;
+        border-right: $carat solid transparent;
+
+        &.dark {
+          border-bottom: $carat solid $tooltip-color-dark;
+        }
+        &.light {
+          border-bottom: $carat solid $tooltip-color-light;
+        }
+    }
+    &.top {
+        border-left: $carat solid transparent;
+        border-right: $carat solid transparent;
+
+        &.dark {
+          border-top: $carat solid $tooltip-color-dark;
+        }
+        &.light {
+          border-top: $carat solid $tooltip-color-light;
+        }
+    }
+    &.left {
+        border-top: $carat solid transparent;
+        border-bottom: $carat solid transparent;
+
+        &.dark {
+          border-left: $carat solid $tooltip-color-dark;
+        }
+        &.light {
+          border-left: $carat solid $tooltip-color-light;
+        }
+    }
+    &.right {
+        border-top: $carat solid transparent;
+        border-bottom: $carat solid transparent;
+
+        &.dark {
+          border-right: $carat solid $tooltip-color-dark;
+        }
+        &.light {
+          border-right: $carat solid $tooltip-color-light;
         }
     }
 }

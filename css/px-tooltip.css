@@ -626,16 +626,18 @@ a {
 div#carat {
   pointer-events: none;
   position: absolute;
-  width: 0;
-  height: 0; }
+  width: 9.899px;
+  height: 9.899px; }
   div#carat.bottom {
-    top: 8px; }
+    top: 10.899px; }
   div#carat.top {
-    top: 0; }
+    margin-top: -4.9495px; }
   div#carat.left {
-    right: 8px; }
+    right: 10.899px;
+    margin-top: 9.899px; }
   div#carat.right {
-    left: 8px; }
+    left: 10.899px;
+    margin-top: 9.899px; }
 
 /*------------------------------------*    #CLEARFIX
 \*------------------------------------*/
@@ -736,7 +738,7 @@ div#carat {
       -ms-flex: none !important;
           flex: none !important; }
 
-@media screen and (max-width: 47.9rem) {
+@media screen and (max-width: 47.9375rem) {
   .u-1\/1-palm {
     width: 100% !important; }
   .u-1\/2-palm {
@@ -795,7 +797,7 @@ div#carat {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (min-width: 48rem) and (max-width: 63.9rem) {
+@media screen and (min-width: 48rem) and (max-width: 68.204166667rem) {
   .u-1\/1-lap {
     width: 100% !important; }
   .u-1\/2-lap {
@@ -913,7 +915,7 @@ div#carat {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (max-width: 63.9rem) {
+@media screen and (max-width: 68.2rem) {
   .u-1\/1-portable {
     width: 100% !important; }
   .u-1\/2-portable {
@@ -972,7 +974,7 @@ div#carat {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (min-width: 63.9rem) {
+@media screen and (min-width: 68.266666667rem) {
   .u-1\/1-desk {
     width: 100% !important; }
   .u-1\/2-desk {
@@ -1031,7 +1033,7 @@ div#carat {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (min-width: 100%) {
+@media screen and (min-width: 80rem) {
   .u-1\/1-desk-wide {
     width: 100% !important; }
   .u-1\/2-desk-wide {
@@ -1166,34 +1168,45 @@ div#carat {
     color: black;
     border: 1px solid #7c7c84; }
 
-div#carat.bottom {
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent; }
-  div#carat.bottom.dark {
-    border-bottom: 7px solid black; }
-  div#carat.bottom.light {
-    border-bottom: 7px solid white; }
+div#carat.dark {
+  background-color: black; }
 
 div#carat.top {
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent; }
-  div#carat.top.dark {
-    border-top: 7px solid black; }
+  border: 1px solid transparent;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg); }
   div#carat.top.light {
-    border-top: 7px solid white; }
+    background-color: white;
+    border-color: transparent transparent #7c7c84 #7c7c84; }
+
+div#carat.bottom {
+  border: 1px solid transparent;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
+  div#carat.bottom.light {
+    background-color: white;
+    border-color: #7c7c84 transparent transparent #7c7c84; }
 
 div#carat.left {
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent; }
-  div#carat.left.dark {
-    border-left: 7px solid black; }
+  border: 1px solid transparent;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
   div#carat.left.light {
-    border-left: 7px solid white; }
+    background-color: white;
+    border-color: #7c7c84 #7c7c84 transparent transparent; }
 
 div#carat.right {
-  border-top: 7px solid transparent;
-  border-bottom: 7px solid transparent; }
-  div#carat.right.dark {
-    border-right: 7px solid black; }
+  border: 1px solid transparent;
+  -webkit-transform-origin: 50% 50%;
+          transform-origin: 50% 50%;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg); }
   div#carat.right.light {
-    border-right: 7px solid white; }
+    background-color: white;
+    border-color: #7c7c84 transparent transparent #7c7c84; }

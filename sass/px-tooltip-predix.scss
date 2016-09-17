@@ -30,6 +30,8 @@ $tooltip-text-color-dark: $white;
 $tooltip-color-light: $white;
 $tooltip-text-color-light: $black;
 
+$popover-color: $gray4;
+$popover-shadow-color: $red;
 
 #tooltip {
     border-radius: calculateRem(4px);
@@ -55,48 +57,49 @@ $tooltip-text-color-light: $black;
 }
 
 div#carat {
-    &.bottom {
-        border-left: $carat solid transparent;
-        border-right: $carat solid transparent;
 
-        &.dark {
-          border-bottom: $carat solid $tooltip-color-dark;
-        }
+    &.dark {
+        background-color: $tooltip-color-dark;
+    }
+
+    &.top {
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(-45deg);
+
         &.light {
-          border-bottom: $carat solid $tooltip-color-light;
+          background-color: $tooltip-color-light;
+          border-color: transparent transparent $grey7 $grey7;
         }
     }
-    &.top {
-        border-left: $carat solid transparent;
-        border-right: $carat solid transparent;
+    &.bottom {
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(45deg);
 
-        &.dark {
-          border-top: $carat solid $tooltip-color-dark;
-        }
         &.light {
-          border-top: $carat solid $tooltip-color-light;
+          background-color: $tooltip-color-light;
+          border-color: $grey7 transparent transparent $grey7;
         }
     }
     &.left {
-        border-top: $carat solid transparent;
-        border-bottom: $carat solid transparent;
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(45deg);
 
-        &.dark {
-          border-left: $carat solid $tooltip-color-dark;
-        }
         &.light {
-          border-left: $carat solid $tooltip-color-light;
+          background-color: $tooltip-color-light;
+          border-color: $grey7 $grey7 transparent transparent;
         }
-    }
+    } 
     &.right {
-        border-top: $carat solid transparent;
-        border-bottom: $carat solid transparent;
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(-45deg);
 
-        &.dark {
-          border-right: $carat solid $tooltip-color-dark;
-        }
         &.light {
-          border-right: $carat solid $tooltip-color-light;
+          background-color: $tooltip-color-light;
+          border-color: $grey7 transparent transparent  $grey7;
         }
-    }
+    } 
 }

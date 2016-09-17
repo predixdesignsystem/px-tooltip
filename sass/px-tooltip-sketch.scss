@@ -32,7 +32,8 @@ Predix branding rules go in px-tooltip-predix.scss, not in this file.
 @import "px-viewport-design/_base.viewport.scss";
 
 $margin: 15px;
-$carat: 7px;
+$carat: 9.899px;
+$half: 4.9495px;
 $border-radius: 4px;
 $tooltip-max-width: 400px;
 
@@ -64,19 +65,21 @@ $tooltip-max-width: 400px;
 div#carat {
     pointer-events: none;
     position: absolute;
-    width: 0;
-    height: 0;
+    width: 9.899px; //sqrt(7*7 + 7*7)
+    height: 9.899px;
     &.bottom {
         top: $carat + 1;
-    }
+    } 
     &.top {
-        top: 0;
+        margin-top: -$half;
     }
     &.left {
         right: $carat + 1;
+        margin-top: $carat;
     }
     &.right {
         left: $carat + 1;
+        margin-top: $carat;
     }
 }
 

@@ -24,8 +24,16 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
 
 @import 'px-tooltip-sketch.scss';
 
+$tooltip-color-dark: $black;
+$tooltip-text-color-dark: $white;
+
+$tooltip-color-light: $white;
+$tooltip-text-color-light: $black;
+
+$popover-color: $gray4;
+$popover-shadow-color: $red;
+
 #tooltip {
-    background-color: $tooltip-color;
     border-radius: calculateRem(4px);
 
     p {
@@ -35,4 +43,63 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
             text-transform: capitalize;
         }
     }
+
+    &.dark {
+      background-color: $tooltip-color-dark;
+      color: $tooltip-text-color-dark;
+    }
+
+    &.light {
+      background-color: $tooltip-color-light;
+      color: $tooltip-text-color-light;
+      border: 1px solid $grey7;
+    }
+}
+
+div#carat {
+
+    &.dark {
+        background-color: $tooltip-color-dark;
+    }
+
+    &.top {
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(-45deg);
+
+        &.light {
+          background-color: $tooltip-color-light;
+          border-color: transparent transparent $grey7 $grey7;
+        }
+    }
+    &.bottom {
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(45deg);
+
+        &.light {
+          background-color: $tooltip-color-light;
+          border-color: $grey7 transparent transparent $grey7;
+        }
+    }
+    &.left {
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(45deg);
+
+        &.light {
+          background-color: $tooltip-color-light;
+          border-color: $grey7 $grey7 transparent transparent;
+        }
+    } 
+    &.right {
+        border: 1px solid transparent;
+        transform-origin: 50% 50%;
+        transform: rotate(-45deg);
+
+        &.light {
+          background-color: $tooltip-color-light;
+          border-color: $grey7 transparent transparent  $grey7;
+        }
+    } 
 }

@@ -1,3 +1,7 @@
+v0.9.2
+=================
+* bumped demo snippet
+
 v0.9.1
 =================
 * Reshow tooltip on mouseup

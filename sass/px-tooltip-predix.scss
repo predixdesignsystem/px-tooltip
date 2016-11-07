@@ -24,8 +24,8 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
 
 @import 'px-tooltip-sketch.scss';
 
-$tooltip-color-dark: $black;
-$tooltip-text-color-dark: $white;
+$tooltip-color-dark: var(--px-tooltip-background-color, $black);
+$tooltip-text-color-dark: var(--px-tooltip-text-color, $white);
 
 $tooltip-color-light: $white;
 $tooltip-text-color-light: $black;
@@ -91,7 +91,7 @@ div#carat {
           background-color: $tooltip-color-light;
           border-color: $grey7 $grey7 transparent transparent;
         }
-    } 
+    }
     &.right {
         border: 1px solid transparent;
         transform-origin: 50% 50%;
@@ -101,5 +101,5 @@ div#carat {
           background-color: $tooltip-color-light;
           border-color: $grey7 transparent transparent  $grey7;
         }
-    } 
+    }
 }

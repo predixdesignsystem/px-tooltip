@@ -1,3 +1,7 @@
+v0.9.7
+=================
+* rebuild css
+
 v0.9.6
 =================
 * updated dependencies

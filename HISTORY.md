@@ -1,3 +1,6 @@
+v0.9.9
+==================
+* ensure smart orientation works with followMouse
 
 v0.9.8
 ==================

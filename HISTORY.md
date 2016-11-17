@@ -1,3 +1,7 @@
+v0.9.11
+==================
+* removing px-theme style call
+
 v0.9.10
 ==================
 * ensure smart orientation works with followMouse

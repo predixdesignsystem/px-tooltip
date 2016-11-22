@@ -50,7 +50,7 @@ $tooltip-max-width: 400px;
     outline: none;
     padding: 15px;
     margin: $margin;
-    max-width: $tooltip-max-width;
+    max-width: var(--px-tooltip-max-width, $tooltip-max-width);
     white-space: normal;
     overflow-wrap: break-word;
 
@@ -69,7 +69,7 @@ div#carat {
     height: 9.899px;
     &.bottom {
         top: $carat + 1;
-    } 
+    }
     &.top {
         margin-top: -$half;
     }

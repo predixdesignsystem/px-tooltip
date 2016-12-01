@@ -1,3 +1,10 @@
+v0.9.17
+==================
+* Added a watchdog to remove the tooltip if the parent has been removed
+* Added watchDogTimeout to get control over the watchDog performance impact (205ms by default)
+* Fixed hide/show issues
+* Fies event lsitening problems
+
 v0.9.16
 ==================
 * changing all devDeps to ^

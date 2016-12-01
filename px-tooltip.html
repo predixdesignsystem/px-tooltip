@@ -185,6 +185,24 @@ Custom property | Description | Default
       tooltipStyle: {
         type: String,
         value: 'dark'
+      },
+      _watchDogEnabled: {
+        type: Boolean,
+        value: false
+      },
+      _firstAttached: {
+        type: Boolean,
+        value: true
+      },
+      /**
+       * When shown the tooltip uses a watchdog to endure it is removed 
+       * if the parent is removed. The watchdog runs every watchDogTimeout ms
+       * If you see a performance degradation when showing tooltip you can
+       * increase the watchdog timeout
+       */
+      watchDogTimeout: {
+        type: Number,
+        value: 250
       }
     },
     observers: [
@@ -194,40 +212,62 @@ Custom property | Description | Default
       'iron-resize': '_onIronResize'
     },
     attached: function() {
-      // we want to make sure the target exists-
-      if(this._target){
-        if(Array.isArray(this._target)){
-          for(var i =0; i < this._target.length; i++){
-            this.listen(this._target[i], 'mouseenter', '_show');
-            this.listen(this._target[i], 'mouseup', '_show');
-            this.listen(this._target[i], 'mouseleave', '_hide');
-            this.listen(this._target[i], 'mousedown', '_hide');
-          }
-        } else {
-          this.listen(this._target, 'mouseenter', '_show');
-          this.listen(this._target, 'mouseup', '_show');
-          this.listen(this._target, 'mouseleave', '_hide');
-          this.listen(this._target, 'mousedown', '_hide');
+      if(this._firstAttached) {
+        // we want to remember where this tooltip was placed originally.
+        this.set('_tooltipParent', this.parentNode);
+        // we want to make sure the target exists-
+        if(this._target){
+          this._listenEvents();
         }
-      }
-      else {
-        //make sure tooltip find its parent if it has no for
-        this._onFor();
+        else {
+          //make sure tooltip find its parent if it has no for
+          this._onFor();
+        }
+        this.set('_firstAttached', false);
       }
     },
     detached: function() {
-      if(Array.isArray(this._target)){
-        for(var i =0; i < this._target.length; i++){
-          this.unlisten(this._target[i], 'mouseenter', '_show');
-          this.unlisten(this._target[i], 'mouseup', '_show');
-          this.unlisten(this._target[i], 'mouseleave', '_hide');
-          this.unlisten(this._target[i], 'mousedown', '_hide');
+      //don't do anything on detach because showing/hiding the tooltip
+      //triggers it since we move it to the body
+    },
+
+    _listenEvents: function() {
+      if(this._target) {
+        if(Array.isArray(this._target)){
+            for(var i =0; i < this._target.length; i++){
+              this.listen(this._target[i], 'mouseenter', '_show');
+              this.listen(this._target[i], 'mouseup', '_show');
+              this.listen(this._target[i], 'mouseleave', '_hide');
+              this.listen(this._target[i], 'mousedown', '_hide');
+            }
+        } else {
+            this.listen(this._target, 'mouseenter', '_show');
+            this.listen(this._target, 'mouseup', '_show');
+            this.listen(this._target, 'mouseleave', '_hide');
+            this.listen(this._target, 'mousedown', '_hide');
         }
-      } else {
-        this.unlisten(this._target, 'mouseenter', '_show');
-        this.unlisten(this._target, 'mouseup', '_show');
-        this.unlisten(this._target, 'mouseleave', '_hide');
-        this.unlisten(this._target, 'mousedown', '_hide');
+      }
+    },
+
+    /**
+     * Stops listening to all mouse events we were interested in
+     */
+    _unlistenEvents: function() {
+      
+      if(this._target) {
+        if(Array.isArray(this._target)){
+          for(var i =0; i < this._target.length; i++){
+            this.unlisten(this._target[i], 'mouseenter', '_show');
+            this.unlisten(this._target[i], 'mouseup', '_show');
+            this.unlisten(this._target[i], 'mouseleave', '_hide');
+            this.unlisten(this._target[i], 'mousedown', '_hide');
+          }
+        } else {
+          this.unlisten(this._target, 'mouseenter', '_show');
+          this.unlisten(this._target, 'mouseup', '_show');
+          this.unlisten(this._target, 'mouseleave', '_hide');
+          this.unlisten(this._target, 'mousedown', '_hide');
+        }
       }
     },
 
@@ -262,30 +302,12 @@ Custom property | Description | Default
      *
      */
     _onFor:function(){
-      if(this._target){
-        if(Array.isArray(this._target)){
-          for(var i =0; i < this._target.length; i++){
-            this.unlisten(this._target[i], 'mouseenter', '_show');
-            this.unlisten(this._target[i], 'mouseleave', '_hide');
-          }
-        } else {
-          this.unlisten(this._target, 'mouseenter', '_show');
-          this.unlisten(this._target, 'mouseleave', '_hide');
-        }
-      }
+      this._unlistenEvents()
+
       this.target = this._getTarget();
       this._target = this.target;
-      if(this._target){
-        if(Array.isArray(this._target)){
-          for(var i =0; i < this._target.length; i++){
-            this.listen(this._target[i], 'mouseenter', '_show');
-            this.listen(this._target[i], 'mouseleave', '_hide');
-          }
-        } else {
-          this.listen(this._target, 'mouseenter', '_show');
-          this.listen(this._target, 'mouseleave', '_hide');
-        }
-      }
+      
+      this._listenEvents();
     },
     /**
      * @method _onIronResize
@@ -353,22 +375,27 @@ Custom property | Description | Default
         if(_this._cancel === true) {
           return false;
         }
-        // show this thing
-        _this._isShowing = true;
-        var tooltip = _this.parentNode.querySelector('px-tooltip');
-        // we check to make sure there is no element with class movedTooltip
-        if (!document.querySelector('.movedTooltip')) {
-          // and toggle that class on, to ensure we don't have 2 tooltips in the dom root at once.
-          Polymer.dom(_this).classList.toggle('movedTooltip');
-          // we also want to remember where this tooltip was placed originally.
-          _this.set('_tooltipParent', _this.parentNode);
-          // now that we are all set, we move the tooltip to the dom root, where the absolute positioning works everytime,
-          // and we don't have to worry about overflows, the scourge of css.
-          document.body.appendChild(tooltip);
-          _this._setPosition();
-          _this.fire('px-tooltip-show', {
-           target: _this
-         });
+
+        _this._watchDogEnabled = true;
+        //make sure it's valid to show
+        if(_this._watchDog()) {
+
+          // show this thing
+          _this._isShowing = true;
+
+          // we check to make sure there is no element with class movedTooltip
+          if (!document.querySelector('.movedTooltip')) {
+            // and toggle that class on, to ensure we don't have 2 tooltips in the dom root at once.
+            Polymer.dom(_this).classList.toggle('movedTooltip');
+            
+            // now that we are all set, we move the tooltip to the dom root, where the absolute positioning works everytime,
+            // and we don't have to worry about overflows, the scourge of css.
+            document.body.appendChild(_this);
+            _this._setPosition();
+            _this.fire('px-tooltip-show', {
+            target: _this
+          });
+          }
         }
       }, this.delay);
     },
@@ -392,17 +419,24 @@ Custom property | Description | Default
       // hide this thing
       this.set('_cancel',true);
       if (this._isShowing) {
+        this._watchDogEnabled = false;
         this._clearTimer();
         //get rid of out movedTooltip class
         Polymer.dom(this).classList.toggle('movedTooltip');
         //and we move the tooltip back to whence it came.
         this.$.tooltipWrapper.classList.add('hidden');
         this._isShowing = false;
-        if(this._tooltipParent) {
+        if(this._tooltipParent && this._tooltipParent.appendChild) {
           this._tooltipParent.appendChild(this);
         } else {
           //something went wrong, we don't have a parent anymore. remove ourselves
-          this.remove();
+          //stupid IE can't remove
+          if(this.remove) {
+            this.remove();
+          } else {
+            this.$.tooltipWrapper.classList.add('hidden');
+            this._isShowing = false;
+          }
         }
       }
     },
@@ -816,5 +850,36 @@ Custom property | Description | Default
       position += window[pageXOrYOffset]; // factor in any window scrolling we've done
       return position;
     },
+    /**
+     * watchdog when the tooltip is showing so it can be removed
+     * if the parent is removed
+     * 
+     * return false when the tooltip is removed
+     */
+    _watchDog: function() {
+
+      //try to figure out if target is still in the document
+      //can't use document.contains or walking up the tree because
+      //of shadow dom
+      var rect = this.target.getBoundingClientRect();
+      if(rect.width === 0 && rect.height === 0 && rect.left === 0 &&
+      rect.right === 0 && rect.top === 0 && rect.bottom === 0) {
+        this._watchDogEnabled = false;
+        
+        //stupid IE can't remove
+        if(this.remove) {
+          this.remove();
+        } else {
+          this._hide()
+        }
+        
+        return false;
+      } else if(this._watchDogEnabled) {
+        setTimeout(function () {
+          this._watchDog();
+        }.bind(this), this.watchDogTimeout);
+      }
+      return true;
+    }
   });
 </script>

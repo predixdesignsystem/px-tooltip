@@ -27,11 +27,16 @@ common/abstract rules go in px-tooltip-sketch.scss, not in this file.
 $tooltip-color-dark: var(--px-tooltip-background-color, $black);
 $tooltip-text-color-dark: var(--px-tooltip-text-color, $white);
 
-$tooltip-color-light: $white;
-$tooltip-text-color-light: $black;
+$tooltip-color-light: var(--px-tooltip-light-background-color, $white);
+$tooltip-text-color-light: var(--px-tooltip-light-text-color, $grey4);
+$tooltip-light-border: var(--px-tooltip-light-border-color, $grey7);
 
 $popover-color: $gray4;
 $popover-shadow-color: $red;
+
+:host {
+    background-color: transparent;
+}
 
 #tooltip {
     border-radius: calculateRem(4px);
@@ -52,7 +57,7 @@ $popover-shadow-color: $red;
     &.light {
       background-color: $tooltip-color-light;
       color: $tooltip-text-color-light;
-      border: 1px solid $grey7;
+      border: 1px solid $tooltip-light-border;
     }
 }
 
@@ -69,7 +74,7 @@ div#carat {
 
         &.light {
           background-color: $tooltip-color-light;
-          border-color: transparent transparent $grey7 $grey7;
+          border-color: transparent transparent $tooltip-light-border $tooltip-light-border;
         }
     }
     &.bottom {
@@ -79,7 +84,7 @@ div#carat {
 
         &.light {
           background-color: $tooltip-color-light;
-          border-color: $grey7 transparent transparent $grey7;
+          border-color: $tooltip-light-border transparent transparent $tooltip-light-border;
         }
     }
     &.left {
@@ -89,7 +94,7 @@ div#carat {
 
         &.light {
           background-color: $tooltip-color-light;
-          border-color: $grey7 $grey7 transparent transparent;
+          border-color: $tooltip-light-border $tooltip-light-border transparent transparent;
         }
     }
     &.right {
@@ -99,7 +104,7 @@ div#carat {
 
         &.light {
           background-color: $tooltip-color-light;
-          border-color: $grey7 transparent transparent  $grey7;
+          border-color: $tooltip-light-border transparent transparent  $tooltip-light-border;
         }
     }
 }

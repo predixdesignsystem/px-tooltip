@@ -1,3 +1,7 @@
+v0.9.19
+==================
+* adding light version theme vars
+
 v0.9.18
 ==================
 * changing browser in wct testing from safari 8 to safari 10 on elcapitan

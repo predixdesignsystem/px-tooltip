@@ -1,3 +1,7 @@
+v0.9.18
+==================
+* changing browser in wct testing from safari 8 to safari 10 on elcapitan
+
 v0.9.17
 ==================
 * Added a watchdog to remove the tooltip if the parent has been removed

@@ -1,6 +1,6 @@
 {
     "name": "px-tooltip",
-    "version": "0.9.17",
+    "version": "0.9.18",
     "main": [
         "px-tooltip.html"
     ],

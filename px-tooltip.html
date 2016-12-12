@@ -203,6 +203,12 @@ Custom property | Description | Default
       watchDogTimeout: {
         type: Number,
         value: 250
+      },
+      /**
+       * The current target that triggered _show. Useful when target is an array
+       */
+      _currTarget: {
+        type: Object
       }
     },
     observers: [
@@ -367,37 +373,39 @@ Custom property | Description | Default
      * and sets the tooltip as visible.
      *
      */
-    _show: function() {
-      var _this = this;
+    _show: function(evt) {
+      var _this = this,
+          currTarget = Polymer.dom(evt).rootTarget;
       //we start out with _cancel being false, but if at any time during the timeout it's set to true, we cancel the whole thing.
       this.set('_cancel',false);
       this._timer = setTimeout(function() {
-        if(_this._cancel === true) {
+        if(this._cancel === true) {
           return false;
         }
 
-        _this._watchDogEnabled = true;
+        this.set('_currTarget', currTarget);
+        this._watchDogEnabled = true;
         //make sure it's valid to show
-        if(_this._watchDog()) {
+        if(this._watchDog()) {
 
           // show this thing
-          _this._isShowing = true;
+          this._isShowing = true;
 
           // we check to make sure there is no element with class movedTooltip
           if (!document.querySelector('.movedTooltip')) {
             // and toggle that class on, to ensure we don't have 2 tooltips in the dom root at once.
-            Polymer.dom(_this).classList.toggle('movedTooltip');
+            Polymer.dom(this).classList.toggle('movedTooltip');
             
             // now that we are all set, we move the tooltip to the dom root, where the absolute positioning works everytime,
             // and we don't have to worry about overflows, the scourge of css.
-            document.body.appendChild(_this);
-            _this._setPosition();
-            _this.fire('px-tooltip-show', {
-            target: _this
+            document.body.appendChild(this);
+            this._setPosition();
+            this.fire('px-tooltip-show', {
+            target: this
           });
           }
         }
-      }, this.delay);
+      }.bind(this), this.delay);
     },
     /**
      * @method _clearTimer
@@ -861,7 +869,7 @@ Custom property | Description | Default
       //try to figure out if target is still in the document
       //can't use document.contains or walking up the tree because
       //of shadow dom
-      var rect = this.target.getBoundingClientRect();
+      var rect = this._currTarget.getBoundingClientRect();
       if(rect.width === 0 && rect.height === 0 && rect.left === 0 &&
       rect.right === 0 && rect.top === 0 && rect.bottom === 0) {
         this._watchDogEnabled = false;
@@ -871,6 +879,11 @@ Custom property | Description | Default
           this.remove();
         } else {
           this._hide()
+        }
+
+        //if target is an array make sure we remove it from the array
+        if(this.target.length) {
+          this.target.remove(this._currTarget);
         }
         
         return false;

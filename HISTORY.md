@@ -1,3 +1,7 @@
+v0.9.20
+==================
+* fix watchdog for cases were target is an array
+
 v0.9.19
 ==================
 * adding light version theme vars

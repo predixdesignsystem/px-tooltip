@@ -1,3 +1,7 @@
+v0.10.0
+==================
+* Updated dependencies
+
 v0.9.19
 ==================
 * adding light version theme vars

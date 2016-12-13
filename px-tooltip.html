@@ -383,7 +383,10 @@ Custom property | Description | Default
           return false;
         }
 
+        //fallback on target if needed
+        currTarget = currTarget ? currTarget : (this.target.length ? this.target[0] : this.target);
         this.set('_currTarget', currTarget);
+
         this._watchDogEnabled = true;
         //make sure it's valid to show
         if(this._watchDog()) {

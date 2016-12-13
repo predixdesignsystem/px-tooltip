@@ -1,3 +1,7 @@
+v0.10.2
+==================
+* allow to manually call _show without it origniatiing from an event (falling back on target)
+
 v0.10.1
 ==================
 * fix watchdog for cases were target is an array

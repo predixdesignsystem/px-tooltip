@@ -1,6 +1,10 @@
-v0.9.20
+v0.10.1
 ==================
 * fix watchdog for cases were target is an array
+
+v0.10.0
+==================
+* Updated dependencies
 
 v0.9.19
 ==================

@@ -28,7 +28,7 @@ $tooltip-color-dark: var(--px-tooltip-background-color, $black);
 $tooltip-text-color-dark: var(--px-tooltip-text-color, $white);
 
 $tooltip-color-light: var(--px-tooltip-light-background-color, $white);
-$tooltip-text-color-light: var(--px-tooltip-light-text-color, $grey4);
+$tooltip-text-color-light: var(--px-tooltip-light-text-color, $black);
 $tooltip-light-border: var(--px-tooltip-light-border-color, $grey7);
 
 $popover-color: $gray4;

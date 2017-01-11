@@ -1,3 +1,7 @@
+v0.10.4
+==================
+* changing ghp.sh to account for Alpha releases
+
 v0.10.3
 ==================
 * fixed light tooltip color

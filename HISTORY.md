@@ -1,3 +1,7 @@
+v0.10.5
+==================
+* ensure tooltip stops showing and listening to events after being removed
+
 v0.10.4
 ==================
 * changing ghp.sh to account for Alpha releases

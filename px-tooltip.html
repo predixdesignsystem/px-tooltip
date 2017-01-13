@@ -209,6 +209,13 @@ Custom property | Description | Default
        */
       _currTarget: {
         type: Object
+      },
+      /**
+       * True when detached is caused by px-tooltip code
+       */
+      _internalDetaching: {
+        type: Boolean,
+        value: false
       }
     },
     observers: [
@@ -235,6 +242,10 @@ Custom property | Description | Default
     detached: function() {
       //don't do anything on detach because showing/hiding the tooltip
       //triggers it since we move it to the body
+      if(!this._internalDetaching) {
+        this._unlistenEvents();
+        this._target = null;
+      }
     },
 
     _listenEvents: function() {
@@ -401,7 +412,9 @@ Custom property | Description | Default
             
             // now that we are all set, we move the tooltip to the dom root, where the absolute positioning works everytime,
             // and we don't have to worry about overflows, the scourge of css.
+            this._internalDetaching = true;
             document.body.appendChild(this);
+            this._internalDetaching = false;
             this._setPosition();
             this.fire('px-tooltip-show', {
             target: this
@@ -438,7 +451,9 @@ Custom property | Description | Default
         this.$.tooltipWrapper.classList.add('hidden');
         this._isShowing = false;
         if(this._tooltipParent && this._tooltipParent.appendChild) {
+          this._internalDetaching = true;
           this._tooltipParent.appendChild(this);
+          this._internalDetaching = false;
         } else {
           //something went wrong, we don't have a parent anymore. remove ourselves
           //stupid IE can't remove

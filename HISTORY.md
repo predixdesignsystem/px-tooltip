@@ -1,3 +1,7 @@
+v0.10.6
+==================
+* Update colors design to pick up new colors
+
 v0.10.5
 ==================
 * ensure tooltip stops showing and listening to events after being removed

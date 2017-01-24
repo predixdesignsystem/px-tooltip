@@ -13,7 +13,7 @@
 
 <!-- Imports for this componnent -->
 <link rel="import" href="../../px-demo/css/px-demo-styles.html" />
-<link rel="import" href="../px-tooltip.html" />
+<link rel="import" href="../../px-tooltip/px-tooltip.html" />
 
 <!-- Demo DOM module -->
 <dom-module id="local-element-demo">
@@ -40,13 +40,16 @@
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
+        <button class="btn btn--tertiary" id="btn1" type="button" name="button">Hover over me, tooltip is to the {{props.orientation.value}}</button>
         <px-tooltip
-            for="{{props.for.value}}"
+            for="btn1"
             orientation="{{props.orientation.value}}"
+            delay="{{props.delay.value}}"
             tooltip-message="{{props.tooltipMessage.value}}"
-            smart-orientation="{{props.smartOrientation.value}}"
-            delay="{{props.delay.value}}">
+            tooltip-style="{{props.tooltipStyle.value}}">
         </px-tooltip>
+        </button>
+
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
 
@@ -105,31 +108,21 @@
         type: Array,
         value: function(){
           return [
-            { configName: "Default",
-              configReset: true },
-
-            { configName: "Left",
-              for: "btn2",
-              orientation: "left",
-              tooltipMessage: "this is a left tooltip message",
-              delay: 2500,
-              siblingElement: "<button id='btn2'>Hover over me</button>"
-            },
-
-            { configName: "Top",
-              for: "btn3",
-              orientation: "top",
-              tooltipMessage: "this is a top tooltip message",
-              delay: 1500,
-              siblingElement: "<button id='btn3'>Hover over me</button>"
-            },
-
-            { configName: "Bottom",
-              for: "btn4",
-              orientation: "bottom",
-              tooltipMessage: "this is a bottom tooltip message",
+            
+            { configName: "Auto",
+              orientation: "auto",
+              tooltipMessage: "This is a left tooltip message",
               delay: 50,
-              siblingElement: "<button id='btn4'>Hover over me</button>"
+              siblingElement: "<button id='btn1'>Hover over me</button>",
+              tooltipStyle: "dark"
+            },
+
+            { configName: "Light Top",
+              orientation: "top",
+              tooltipMessage: "This is a top tooltip message",
+              delay: 500,
+              siblingElement: "<button id='btn1'>Hover over me</button>",
+              tooltipStyle: "light"
             }
           ]
         }
@@ -150,7 +143,8 @@
         type: String,
         defaultValue: 'btn1',
         inputType: 'text',
-        inputPlaceholder: 'btn1'
+        inputPlaceholder: 'btn1',
+        inputDisabled: true        
       },
 
       delay: {
@@ -170,7 +164,20 @@
       orientation: {
         type: String,
         inputType: 'dropdown',
+        defaultValue: 'auto',
         inputChoices: ['auto', 'left', 'right', 'top', 'bottom']
+      },
+
+      siblingElement: {
+        type: String,
+        defaultValue: '<button id="btn1">Hover over me</button>',
+        inputDisabled: true
+      },
+
+      tooltipStyle: {
+        type: String,
+        defaultValue: 'light',
+        inputDisabled: true
       }
     },
 

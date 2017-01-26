@@ -248,8 +248,11 @@ Custom property | Description | Default
       //don't do anything on detach because showing/hiding the tooltip
       //triggers it since we move it to the body
       if(!this._internalDetaching) {
+        debugger
         this._unlistenEvents();
         this._target = null;
+      } else {
+        this._internalDetaching = false;
       }
     },
 
@@ -419,7 +422,7 @@ Custom property | Description | Default
             // and we don't have to worry about overflows, the scourge of css.
             this._internalDetaching = true;
             document.body.appendChild(this);
-            this._internalDetaching = false;
+            
             this._setPosition();
             this.fire('px-tooltip-show', {
             target: this
@@ -458,7 +461,7 @@ Custom property | Description | Default
         if(this._tooltipParent && this._tooltipParent.appendChild) {
           this._internalDetaching = true;
           this._tooltipParent.appendChild(this);
-          this._internalDetaching = false;
+
         } else {
           //something went wrong, we don't have a parent anymore. remove ourselves
           //stupid IE can't remove

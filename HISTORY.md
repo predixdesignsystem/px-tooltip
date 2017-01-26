@@ -1,3 +1,7 @@
+v0.10.8
+==================
+* fix racing conditions on detaching for several browsers
+
 v0.10.7
 ==================
 * Update to px-demo

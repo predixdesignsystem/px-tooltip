@@ -1,3 +1,8 @@
+v0.10.10
+==================
+* fix _fitBelow function
+* make sure smart orientation works with scrolling
+
 v0.10.9
 ==================
 * remove debugger

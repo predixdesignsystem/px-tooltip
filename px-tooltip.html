@@ -178,6 +178,9 @@ Custom property | Description | Default
         type: Boolean,
         value: false
       },
+      /**
+       * If using followMouse the mouse coordinates to display the tooltip at, *in viewport pixels*
+       */ 
       mouseCoords: {
         type: Array,
         value: [-9999, -9999]
@@ -536,8 +539,8 @@ Custom property | Description | Default
       var mostLeft,
           mostTop,
           mostLow,
-          startX = this.followMouse ? this.mouseCoords[0] : this.targetRect.left,
-          startY = this.followMouse ? this.mouseCoords[1] : (this.targetRect.top + this.targetRect.height/2);
+          startX = this.followMouse ? (this.mouseCoords[0] - window.pageXOffset) : this.targetRect.left,
+          startY = this.followMouse ? (this.mouseCoords[1] - window.pageYOffset) : (this.targetRect.top + this.targetRect.height/2);
 
         //we need to check if we fit on the left, but top and below as well
       mostLeft = startX - this.thisRect.width - this.caratRect.width - 5;
@@ -559,8 +562,8 @@ Custom property | Description | Default
       var mostLeft,
         mostTop,
         mostLow,
-        startX = this.followMouse ? this.mouseCoords[0] : this.targetRect.right,
-        startY = this.followMouse ? this.mouseCoords[1] : (this.targetRect.top + this.targetRect.height/2);
+        startX = this.followMouse ? (this.mouseCoords[0] - window.pageXOffset) : this.targetRect.right,
+        startY = this.followMouse ? (this.mouseCoords[1] - window.pageYOffset) : (this.targetRect.top + this.targetRect.height/2);
 
       //we need to check if we fit on the left, but top and below as well
       var mostRight = startX + this.thisRect.width + this.caratRect.width + 5;
@@ -582,8 +585,8 @@ Custom property | Description | Default
       var mostHigh,
         mostRight,
         mostLeft,
-        startX = this.followMouse ? this.mouseCoords[0] : (this.targetRect.left + this.targetRect.width/2),
-        startY = this.followMouse ? this.mouseCoords[1] : this.targetRect.top;
+        startX = this.followMouse ? (this.mouseCoords[0] - window.pageXOffset) : (this.targetRect.left + this.targetRect.width/2),
+        startY = this.followMouse ? (this.mouseCoords[1] - window.pageYOffset) : this.targetRect.top;
 
       //we need to check if we fit above, but left or right as well
       var mostHigh = startY - this.thisRect.height - this.caratRect.height - 5;
@@ -605,13 +608,13 @@ Custom property | Description | Default
       var mostHigh,
         mostRight,
         mostLeft,
-        startX = this.followMouse ? this.mouseCoords[0] : (this.targetRect.left + this.targetRect.width/2),
-        startY = this.followMouse ? this.mouseCoords[1] : this.targetRect.bottom;
+        startX = this.followMouse ? (this.mouseCoords[0] - window.pageXOffset) : (this.targetRect.left + this.targetRect.width/2),
+        startY = this.followMouse ? (this.mouseCoords[1] - window.pageYOffset) : this.targetRect.bottom;
 
       //we need to check if we fit below, but left or right as well
       var mostLow = startY + this.thisRect.height + this.caratRect.height + 5
-      var mostRight = this.startX + this.thisRect.width/2;
-      var mostLeft = this.startX - this.thisRect.width/2;
+      var mostRight = startX + this.thisRect.width/2;
+      var mostLeft = startX - this.thisRect.width/2;
 
       return mostLow < window.innerHeight && mostRight < window.innerWidth && mostLeft > 0;
     },

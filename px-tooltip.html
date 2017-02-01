@@ -245,6 +245,8 @@ Custom property | Description | Default
           this._onFor();
         }
         this.set('_firstAttached', false);
+      } else if(this._isShowing) {
+        this.$.tooltipWrapper.classList.remove('hidden');
       }
     },
     detached: function() {
@@ -488,9 +490,9 @@ Custom property | Description | Default
       }
 
       //make sure we're not hidden so we can calc our size, but 'hide' ourselves offscreen.
-    // this.$.carat.style.left = -9999 + 'px';
-    // this.style.left = -9999 + 'px';
-      this.$.tooltipWrapper.classList.remove('hidden');
+    //  this.$.carat.style.left = -9999 + 'px';
+    //  this.style.left = -9999 + 'px';
+      
 
       // using this method so that we can calculate the best position
       // in the _positionXXX methods without having to do recursion, plus

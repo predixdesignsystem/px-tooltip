@@ -1,3 +1,7 @@
+v0.10.11
+==================
+* When showing wiat for attached before removing the hidden class (to avoid flicker)
+
 v0.10.10
 ==================
 * fix _fitBelow function

@@ -247,6 +247,10 @@ Custom property | Description | Default
         this.set('_firstAttached', false);
       } else if(this._isShowing) {
         this.$.tooltipWrapper.classList.remove('hidden');
+        this._setPosition();
+        this.fire('px-tooltip-show', {
+          target: this
+        });
       }
     },
     detached: function() {
@@ -426,11 +430,6 @@ Custom property | Description | Default
             // and we don't have to worry about overflows, the scourge of css.
             this._internalDetaching = true;
             document.body.appendChild(this);
-            
-            this._setPosition();
-            this.fire('px-tooltip-show', {
-            target: this
-          });
           }
         }
       }.bind(this), this.delay);

@@ -1,3 +1,7 @@
+v0.10.12
+==================
+* Set position after showing instead of after requesting showing
+
 v0.10.11
 ==================
 * When showing wiat for attached before removing the hidden class (to avoid flicker)

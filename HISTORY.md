@@ -1,3 +1,12 @@
+v0.10.14
+==================
+* Added events to help watch the tooltip show/hide cycle. The 4 events now are:
+  * px-tooltip-show-request (new)
+  * px-tooltip-show
+  * px-tooltip-hide-request (new)
+  * px-tooltip-hide (new)
+* removed console.logs
+
 v0.10.13
 ==================
 * Change show process so that several request end up in only 1 processing

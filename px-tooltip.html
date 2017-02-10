@@ -65,6 +65,33 @@ Custom property | Description | Default
       }
     },
     /**
+    * Fired when the tooltip has been shown. Warning: at this point the tooltip has
+    * been moved to <body>, so if not listening directly to the tooltip
+    * you might miss this event.
+    * detail: { target: this}
+    * @event px-tooltip-show
+    */
+    /**
+    * Fired when a request for showing a tooltip has been started, but the tooltip
+    * hasn't shown yet. The tooltip still hasn't been moved to <body>.
+    * The request might be canceled before it is shown
+    * detail: { target: this}
+    * @event px-tooltip-show-request
+    */
+    /**
+    * Fired when a reuqest for hiding the tooltip has been started. At this point the tooltip
+    * has been visually hidden but still is in <body> and hasn't been moved back to where it
+    * belongs in the dom
+    * detail: { target: this}
+    * @event px-tooltip-request-hide
+    */
+    /**
+    * Fired when the tooltip has been moved back from the body to where it belongs in the dom.
+    * The tooltip is still visually hidden.
+    * detail: { target: this}
+    * @event px-tooltip-hide
+    */
+    /**
      * Properties block, expose attribute values to the DOM via 'reflect'
      *
      * @property properties
@@ -278,10 +305,13 @@ Custom property | Description | Default
       //don't do anything on detach because showing/hiding the tooltip
       //triggers it since we move it to the body
       if(!this._internalDetaching) {
-   //     this._unlistenEvents();
-   //     this._target = null;
+        this._unlistenEvents();
+        this._target = null;
       } else {
         this._internalDetaching = false;
+        if(!this._requestShow) {
+          this.fire('px-tooltip-hide', {target: this});
+        }
       }
     },
 
@@ -332,7 +362,7 @@ Custom property | Description | Default
     _onMouseMove: function(){
 
       if(this.followMouse && this.thisRect && this._isShowing){
-        console.log('on mouse move')
+
         if(this.orientation === 'auto') {
 
           //auto positioning
@@ -443,6 +473,7 @@ Custom property | Description | Default
           // and we don't have to worry about overflows, the scourge of css.
           this._internalDetaching = true;
 
+          this.fire('px-tooltip-request-show', { target: this});
           //this will trigger first iron resize (timed out), then attached and then _processShow
           document.body.appendChild(this);
         }
@@ -481,6 +512,8 @@ Custom property | Description | Default
         //and we move the tooltip back to whence it came.
         this.$.tooltipWrapper.classList.add('hidden');
         this._isShowing = false;
+
+        this.fire('px-tooltip-request-hide', {target: this});
         if(this._tooltipParent && this._tooltipParent.appendChild) {
           this._internalDetaching = true;
           this._tooltipParent.appendChild(this);
@@ -738,7 +771,6 @@ Custom property | Description | Default
     */
     _positionTop: function() {
       // restyle the carat
-      console.log('pos top ')
       this._styleTheCaratAs(this._values.TYPE.top);
 
       // move the carat to the correct position

@@ -252,6 +252,17 @@ Custom property | Description | Default
         value: 0
       }
     },
+    /**
+     * Object used to keep track of or show request. Only actually show
+     * once we've been attached to body and been iron-resized
+     */
+    _showRequestState: {
+      type: Object,
+      value: function() {
+        return { 'attached': false,
+                'ironResized': false}
+      }
+    },
     observers: [
       '_onMouseMove(mouseCoords.*)'
     ],
@@ -272,17 +283,14 @@ Custom property | Description | Default
           this._onFor();
         }
         this.set('_firstAttached', false);
-      } else if(this._cancel && this._requestShow) {
-        //we wanted to show and then hide, so hide
-        this._hide();
       } 
     },
     detached: function() {
       //don't do anything on detach because showing/hiding the tooltip
       //triggers it since we move it to the body
       if(!this._internalDetaching) {
-        this._unlistenEvents();
-        this._target = null;
+   //     this._unlistenEvents();
+   //     this._target = null;
       } else {
         this._internalDetaching = false;
       }
@@ -335,6 +343,7 @@ Custom property | Description | Default
     _onMouseMove: function(){
 
       if(this.followMouse && this.thisRect && this._isShowing){
+        console.log('on mouse move')
         if(this.orientation === 'auto') {
 
           //auto positioning
@@ -373,32 +382,13 @@ Custom property | Description | Default
      */
     _onIronResize: function() {
         
-      //this is where _show actually ends up showing things
-      //we need to wait for iron resize so IE can measure things properly
-      //for setPosition
-      if(this._requestShow) {
-
-        //bandaid....
-        setTimeout(function() {
-          this.$.tooltipWrapper.classList.remove('hidden');
-
-          this._isShowing = true;
+      this.debounce('tooltip-resize', function() {
+        if(this._requestShow) {
+          this._processShow();
+        } else if(this._isShowing) {
           this._setPosition();
-          
-          this.fire('px-tooltip-show', {
-            target: this
-          });
-          this._requestShow = false;
-        }.bind(this), 50);
-        
-      } else if(this._isShowing) {
-
-        //actual resize
-        this.debounce('tooltip-resize', function() {
-
-          this._setPosition();
-        }, 50);
-      }
+        }
+      }, 50);
     },
     /**
      * @method _getTarget
@@ -432,7 +422,6 @@ Custom property | Description | Default
       }
       return target;
     },
-    _timer: null,
     /**
      * @method _show
      * This function sets a timeout with the delay value, and if
@@ -446,7 +435,8 @@ Custom property | Description | Default
       //we start out with _cancel being false, but if at any time during the timeout it's set to true, we cancel the whole thing.
       this.set('_cancel',false);
       this._requestShow = true;
-      this._timer = setTimeout(function() {
+      console.log('show')
+      setTimeout(function() {
         if(this._cancel === true) {
           return false;
         }
@@ -462,22 +452,30 @@ Custom property | Description | Default
           // now that we are all set, we move the tooltip to the dom root, where the absolute positioning works everytime,
           // and we don't have to worry about overflows, the scourge of css.
           this._internalDetaching = true;
-          //this will trigger attached, and then iron resize
+
+          //this will trigger attached and then _processShow
           document.body.appendChild(this);
         }
         
       }.bind(this), this.delay);
     },
-    /**
-     * @method _clearTimer
-     * This function clears out the timer if the user hovers off the
-     * target.
-     *
-     */
-    _clearTimer: function() {
-      if(this._timer) {
-        clearTimeout(this._timer);
+    _processShow: function() {
+
+      if(this._cancel) {
+        return;
       }
+console.log('process show')
+      // this.$.carat.style.left = -9999 + 'px';
+      // this.style.left = -9999 + 'px'
+      this.$.tooltipWrapper.classList.remove('hidden');
+
+      this._isShowing = true;
+      this._setPosition();
+      
+      this.fire('px-tooltip-show', {
+        target: this
+      });
+      this._requestShow = false;
     },
     /**
      * @method _hide
@@ -491,7 +489,6 @@ Custom property | Description | Default
       if (this._isShowing || this._requestShow) {
         this._watchDogEnabled = false;
         this._requestShow = false;
-        this._clearTimer();
 
         //and we move the tooltip back to whence it came.
         this.$.tooltipWrapper.classList.add('hidden');
@@ -753,6 +750,7 @@ Custom property | Description | Default
     */
     _positionTop: function() {
       // restyle the carat
+      console.log('pos top ')
       this._styleTheCaratAs(this._values.TYPE.top);
 
       // move the carat to the correct position

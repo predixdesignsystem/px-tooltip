@@ -1,3 +1,9 @@
+v0.10.13
+==================
+* Change show process so that several request end up in only 1 processing
+* Maintain cancel feature on show
+* solve timing issues
+
 v0.10.12
 ==================
 * Set position after showing instead of after requesting showing

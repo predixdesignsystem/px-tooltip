@@ -252,17 +252,6 @@ Custom property | Description | Default
         value: 0
       }
     },
-    /**
-     * Object used to keep track of or show request. Only actually show
-     * once we've been attached to body and been iron-resized
-     */
-    _showRequestState: {
-      type: Object,
-      value: function() {
-        return { 'attached': false,
-                'ironResized': false}
-      }
-    },
     observers: [
       '_onMouseMove(mouseCoords.*)'
     ],
@@ -382,6 +371,7 @@ Custom property | Description | Default
      */
     _onIronResize: function() {
         
+      //need that debounce for IE
       this.debounce('tooltip-resize', function() {
         if(this._requestShow) {
           this._processShow();
@@ -435,7 +425,7 @@ Custom property | Description | Default
       //we start out with _cancel being false, but if at any time during the timeout it's set to true, we cancel the whole thing.
       this.set('_cancel',false);
       this._requestShow = true;
-      console.log('show')
+
       setTimeout(function() {
         if(this._cancel === true) {
           return false;
@@ -453,7 +443,7 @@ Custom property | Description | Default
           // and we don't have to worry about overflows, the scourge of css.
           this._internalDetaching = true;
 
-          //this will trigger attached and then _processShow
+          //this will trigger first iron resize (timed out), then attached and then _processShow
           document.body.appendChild(this);
         }
         
@@ -464,9 +454,7 @@ Custom property | Description | Default
       if(this._cancel) {
         return;
       }
-console.log('process show')
-      // this.$.carat.style.left = -9999 + 'px';
-      // this.style.left = -9999 + 'px'
+
       this.$.tooltipWrapper.classList.remove('hidden');
 
       this._isShowing = true;

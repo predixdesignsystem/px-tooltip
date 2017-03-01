@@ -1,3 +1,7 @@
+v0.10.15
+==================
+* fixed incorrect event name in comments/docs per #18
+
 v0.10.14
 ==================
 * Added events to help watch the tooltip show/hide cycle. The 4 events now are:

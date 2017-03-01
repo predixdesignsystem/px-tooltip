@@ -31,7 +31,7 @@ Custom property | Description | Default
 <dom-module id="px-tooltip">
   <template>
     <style include="px-tooltip-styles"></style>
-    
+
     <div id="tooltipWrapper" class="hidden">
       <div id="carat" class$="[[_getTooltipStyle(tooltipStyle)]]"></div>
       <div id="tooltip" class$="[[_getTooltipStyle(tooltipStyle)]]">
@@ -76,7 +76,7 @@ Custom property | Description | Default
     * hasn't shown yet. The tooltip still hasn't been moved to <body>.
     * The request might be canceled before it is shown
     * detail: { target: this}
-    * @event px-tooltip-show-request
+    * @event px-tooltip-request-show
     */
     /**
     * Fired when a reuqest for hiding the tooltip has been started. At this point the tooltip
@@ -207,7 +207,7 @@ Custom property | Description | Default
       },
       /**
        * If using followMouse the mouse coordinates to display the tooltip at, *in viewport pixels*
-       */ 
+       */
       mouseCoords: {
         type: Array,
         value: [-9999, -9999]
@@ -230,7 +230,7 @@ Custom property | Description | Default
         value: true
       },
       /**
-       * When shown the tooltip uses a watchdog to endure it is removed 
+       * When shown the tooltip uses a watchdog to endure it is removed
        * if the parent is removed. The watchdog runs every watchDogTimeout ms
        * If you see a performance degradation when showing tooltip you can
        * increase the watchdog timeout
@@ -299,7 +299,7 @@ Custom property | Description | Default
           this._onFor();
         }
         this.set('_firstAttached', false);
-      } 
+      }
     },
     detached: function() {
       //don't do anything on detach because showing/hiding the tooltip
@@ -337,7 +337,7 @@ Custom property | Description | Default
      * Stops listening to all mouse events we were interested in
      */
     _unlistenEvents: function() {
-      
+
       if(this._target) {
         if(Array.isArray(this._target)){
           for(var i =0; i < this._target.length; i++){
@@ -391,7 +391,7 @@ Custom property | Description | Default
 
       this.target = this._getTarget();
       this._target = this.target;
-      
+
       this._listenEvents();
     },
     /**
@@ -400,7 +400,7 @@ Custom property | Description | Default
      *
      */
     _onIronResize: function() {
-        
+
       //need that debounce for IE
       this.debounce('tooltip-resize', function() {
         if(this._requestShow) {
@@ -468,7 +468,7 @@ Custom property | Description | Default
         this._watchDogEnabled = true;
         //make sure it's valid to show
         if(this._watchDog()) {
-            
+
           // now that we are all set, we move the tooltip to the dom root, where the absolute positioning works everytime,
           // and we don't have to worry about overflows, the scourge of css.
           this._internalDetaching = true;
@@ -477,7 +477,7 @@ Custom property | Description | Default
           //this will trigger first iron resize (timed out), then attached and then _processShow
           document.body.appendChild(this);
         }
-        
+
       }.bind(this), this.delay);
     },
     _processShow: function() {
@@ -490,7 +490,7 @@ Custom property | Description | Default
 
       this._isShowing = true;
       this._setPosition();
-      
+
       this.fire('px-tooltip-show', {
         target: this
       });
@@ -528,7 +528,7 @@ Custom property | Description | Default
             this._isShowing = false;
           }
         }
-      } 
+      }
     },
     /**
      * @method _setPosition
@@ -539,7 +539,7 @@ Custom property | Description | Default
     _setPosition: function() {
       if(!this._target) {
         return;
-      }      
+      }
 
       // using this method so that we can calculate the best position
       // in the _positionXXX methods without having to do recursion, plus
@@ -952,7 +952,7 @@ Custom property | Description | Default
     /**
      * watchdog when the tooltip is showing so it can be removed
      * if the parent is removed
-     * 
+     *
      * return false when the tooltip is removed
      */
     _watchDog: function() {
@@ -964,7 +964,7 @@ Custom property | Description | Default
       if(rect.width === 0 && rect.height === 0 && rect.left === 0 &&
       rect.right === 0 && rect.top === 0 && rect.bottom === 0) {
         this._watchDogEnabled = false;
-        
+
         //stupid IE can't remove
         if(this.remove) {
           this.remove();
@@ -976,7 +976,7 @@ Custom property | Description | Default
         if(this.target.length) {
           this.target.remove(this._currTarget);
         }
-        
+
         return false;
       } else if(this._watchDogEnabled) {
         setTimeout(function () {

@@ -1,3 +1,7 @@
+v0.10.16
+==================
+* fixed demo (half of #17)
+
 v0.10.15
 ==================
 * fixed incorrect event name in comments/docs per #18

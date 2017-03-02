@@ -40,7 +40,7 @@
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
-        <button class="btn btn--tertiary" id="btn1" type="button" name="button">Hover over me, tooltip is to the {{props.orientation.value}}</button>
+        <button class="btn btn--tertiary" id="btn1" type="button" name="button">Hover over me, tooltip orientation is {{props.orientation.value}}</button>
         <px-tooltip
             for="btn1"
             orientation="{{props.orientation.value}}"
@@ -74,52 +74,27 @@
 
     properties: {
 
-      /**
-       * Note: The actual data/values for `props` are placed in `this.demoProps`
-       * to create a static reference that Polymer shouldn't overwrite.
-       *
-       * On object containing all the properties the user can configure for this
-       * demo. Usually a pretty similar copy of the component's `properties` block
-       * with some additional sugar added to describe what kind of input the
-       * user will be shown and how that input should be configured.
-       *
-       * Note that `value` for each property is the default that will be set
-       * unless a config from `configs` is applied by default.
-       *
-       *
-       * @property demoProps
-       * @type {Object}
-       */
       props: {
         type: Object,
         value: function(){ return this.demoProps; }
       },
 
-      /**
-       * An array of pre-configured `props` that can be used to provide the user
-       * with a set of common examples. These configs will be made available
-       * as a set of tabs the user can click that will automatically change
-       * the `props` to specific values.
-       *
-       * @property demoProps
-       * @type {Array}
-       */
       configs: {
         type: Array,
         value: function(){
           return [
-            
+
             { configName: "Auto",
               orientation: "auto",
-              tooltipMessage: "This is a left tooltip message",
+              tooltipMessage: "This is a tooltip message",
               delay: 50,
               siblingElement: "<button id='btn1'>Hover over me</button>",
               tooltipStyle: "dark"
             },
 
-            { configName: "Light Top",
-              orientation: "top",
-              tooltipMessage: "This is a top tooltip message",
+            { configName: "Light style",
+              orientation: "bottom",
+              tooltipMessage: "This is a tooltip message",
               delay: 500,
               siblingElement: "<button id='btn1'>Hover over me</button>",
               tooltipStyle: "light"
@@ -129,9 +104,6 @@
       }
     },
 
-    /**
-     * A reference for `this.props`. Read the documentation there.
-     */
     demoProps: {
       smartOrientation: {
         type: Boolean,
@@ -141,10 +113,7 @@
 
       for: {
         type: String,
-        defaultValue: 'btn1',
-        inputType: 'text',
-        inputPlaceholder: 'btn1',
-        inputDisabled: true        
+        defaultValue: 'btn1'
       },
 
       delay: {
@@ -156,7 +125,7 @@
 
       tooltipMessage: {
         type: String,
-        defaultValue: 'This is a right tooltip message',
+        defaultValue: 'This is a tooltip message',
         inputType: 'text',
         inputPlaceholder: 'Tooltip message'
       },
@@ -168,17 +137,19 @@
         inputChoices: ['auto', 'left', 'right', 'top', 'bottom']
       },
 
+      tooltipStyle: {
+        type: String,
+        defaultValue: 'dark',
+        inputType: 'dropdown',
+        inputChoices: ['dark','light']
+      },
+
       siblingElement: {
         type: String,
         defaultValue: '<button id="btn1">Hover over me</button>',
         inputDisabled: true
-      },
-
-      tooltipStyle: {
-        type: String,
-        defaultValue: 'light',
-        inputDisabled: true
       }
+
     },
 
   });

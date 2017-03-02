@@ -1,3 +1,7 @@
+v0.10.17
+==================
+* fixed CodePen (second half of #17)
+
 v0.10.16
 ==================
 * fixed demo (half of #17)

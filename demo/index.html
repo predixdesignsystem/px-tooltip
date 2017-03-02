@@ -88,16 +88,16 @@
               orientation: "auto",
               tooltipMessage: "This is a tooltip message",
               delay: 50,
-              siblingElement: "<button id='btn1'>Hover over me</button>",
-              tooltipStyle: "dark"
+              tooltipStyle: "dark",
+              siblingElement: "<button id='btn1'>Hover over me</button>"
             },
 
             { configName: "Light style",
               orientation: "bottom",
               tooltipMessage: "This is a tooltip message",
               delay: 500,
-              siblingElement: "<button id='btn1'>Hover over me</button>",
-              tooltipStyle: "light"
+              tooltipStyle: "light",
+              siblingElement: "<button id='btn1'>Hover over me</button>"
             }
           ]
         }
@@ -148,6 +148,11 @@
         type: String,
         defaultValue: '<button id="btn1">Hover over me</button>',
         inputDisabled: true
+      },
+
+      parentComponent: {
+        type: Array,
+        defaultValue: ["<div>","</div>"]
       }
 
     },

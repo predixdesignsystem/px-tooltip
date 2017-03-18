@@ -286,6 +286,7 @@ Custom property | Description | Default
       'iron-resize': '_onIronResize'
     },
     attached: function() {
+      this.setAttribute('role','tooltip');
 
       if(this._firstAttached) {
         // we want to remember where this tooltip was placed originally.

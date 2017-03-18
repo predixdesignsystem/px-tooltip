@@ -1,3 +1,7 @@
+v0.10.18
+==================
+* accessibility improvements
+
 v0.10.17
 ==================
 * fixed CodePen (second half of #17)

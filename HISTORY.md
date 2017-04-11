@@ -1,3 +1,7 @@
+v1.0.0
+==================
+* Major bump to pick up redesigned sub-dependencies
+
 v0.10.18
 ==================
 * accessibility improvements

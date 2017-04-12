@@ -30,7 +30,7 @@
     "px-theme": "^3.0.0"
   },
   "devDependencies": {
-    "px-starter-kit-design": "^1.0.1",
+    "px-starter-kit-design": "^1.0.0",
     "px-demo": "^1.1.5"
   }
 }

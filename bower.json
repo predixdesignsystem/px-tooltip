@@ -31,6 +31,6 @@
   },
   "devDependencies": {
     "px-starter-kit-design": "^1.0.0",
-    "px-demo": "^1.1.5"
+    "px-demo": "^2.0.0"
   }
 }

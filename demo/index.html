@@ -60,7 +60,7 @@
     </px-demo-interactive>
 
     <!-- API Viewer -->
-    <px-demo-api-viewer source="px-tooltip"></px-demo-api-viewer>
+    <px-demo-api-viewer source="px-tooltip" hide='["assignParentResizable","getTargetPositionCenterOfLeftRight","getTargetPositionCenterOfTopBottom","notifyResize","resizerShouldNotify","stopResizeNotificationsFor"]'></px-demo-api-viewer>
 
     <!-- Footer -->
     <px-demo-footer></px-demo-footer>
@@ -84,19 +84,17 @@
         value: function(){
           return [
 
-            { configName: "Auto",
+            { configName: "Auto position",
               orientation: "auto",
               tooltipMessage: "This is a tooltip message",
               delay: 50,
-              tooltipStyle: "dark",
               siblingElement: "<button id='btn1'>Hover over me</button>"
             },
 
-            { configName: "Light style",
+            { configName: "Bottom",
               orientation: "bottom",
               tooltipMessage: "This is a tooltip message",
-              delay: 500,
-              tooltipStyle: "light",
+              delay: 50,
               siblingElement: "<button id='btn1'>Hover over me</button>"
             }
           ]
@@ -118,9 +116,9 @@
 
       delay: {
         type: String,
-        defaultValue: '500',
+        defaultValue: '50',
         inputType: 'text',
-        inputPlaceholder: '500'
+        inputPlaceholder: '50'
       },
 
       tooltipMessage: {
@@ -135,13 +133,6 @@
         inputType: 'dropdown',
         defaultValue: 'auto',
         inputChoices: ['auto', 'left', 'right', 'top', 'bottom']
-      },
-
-      tooltipStyle: {
-        type: String,
-        defaultValue: 'dark',
-        inputType: 'dropdown',
-        inputChoices: ['dark','light']
       },
 
       siblingElement: {

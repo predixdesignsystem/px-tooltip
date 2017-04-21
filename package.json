@@ -3,7 +3,7 @@
     "author": "General Electric",
     "description": "A Px component that provides a tooltip on invocation",
     "version": "1.0.0",
-    "private": true,
+    "private": false,
     "extName": null,
     "repository": {
         "type": "git",

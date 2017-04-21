@@ -1,4 +1,8 @@
-v1.0.0
+v1.0.0-prerelease-1
+==================
+* component redesign
+
+v1.0.0-prerelease
 ==================
 * Major bump to pick up redesigned sub-dependencies
 

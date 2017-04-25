@@ -5,6 +5,7 @@
     "px-tooltip.html"
   ],
   "ignore": [
+    "*.enc",
     ".*",
     "node_modules",
     "bower_components",

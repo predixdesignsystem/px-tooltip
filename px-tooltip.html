@@ -2,9 +2,12 @@
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 
 <!--
-Tooltip element that provides additional information to users once hovered over the target element for a specified amount of time.
+Tooltips can be positioned above, below, to the left, or to the right of the target.
+A Smart Orientation option is included that will attempt to automatically choose a placement based on the real estate available – this attempts to prevent the tooltip from going off the screen.
 
-##### Usage
+***Note:** tooltips are not recommended for mobile or tablet applications since the hover affordance is inconsistent across devices and platforms (3D touch, tap-and-hold, proximity sensors, etc). See [px-popover](https://www.predix-ui.com/#/components/px-popover/), which is invoked on tap/click instead.
+
+### Usage
 
     <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
     <px-tooltip

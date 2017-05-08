@@ -1,6 +1,7 @@
 v1.0.0-prerelease-1
 ==================
 * component redesign
+* update documentation regarding mobile
 
 v1.0.0-prerelease
 ==================

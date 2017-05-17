@@ -1,10 +1,7 @@
-v1.0.0-prerelease-1
+v1.0.0
 ==================
 * component redesign
 * update documentation regarding mobile
-
-v1.0.0-prerelease
-==================
 * Major bump to pick up redesigned sub-dependencies
 
 v0.10.18

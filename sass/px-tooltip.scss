@@ -17,8 +17,6 @@
 @import "px-helpers-design/_generic.helpers.scss";
 
 // Base
-@import "px-flexbox-design/_base.flexbox.scss";
-@import "px-viewport-design/_base.viewport.scss";
 
 
 $tooltip-background-color: var(--px-tooltip-background-color, white);
@@ -38,7 +36,7 @@ $half: 4.9495px;
   pointer-events: none;
 }
 
-#tooltip {
+.tooltip-container {
   background-color: $tooltip-background-color;
   color: $tooltip-text-color;
   border: 1px solid $tooltip-border-color;
@@ -62,7 +60,7 @@ $half: 4.9495px;
   }
 }
 
-div#carat {
+.tooltip-carat {
   pointer-events: none;
   position: absolute;
   width: 9.899px; //sqrt(7*7 + 7*7)
@@ -104,5 +102,3 @@ div#carat {
 }
 
 // Trumps
-@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
-@import "px-widths-responsive-design/_trumps.widths-responsive.scss";

@@ -1,3 +1,7 @@
+v0.10.19
+==================
+* fixed problem with externally moving tooltip in the dom
+
 v0.10.18
 ==================
 * accessibility improvements

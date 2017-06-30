@@ -303,12 +303,15 @@ Custom property | Description | Default
       }
     },
     detached: function() {
-      //don't do anything on detach because showing/hiding the tooltip
-      //triggers it since we move it to the body
+
       if(!this._internalDetaching) {
+        //"genuine" detach
         this._unlistenEvents();
         this._target = null;
+        //ensure we reset the flag so that we start re listening if we re-attach
+        this._firstAttached = true;
       } else {
+        //detached triggered by our show/hide system
         this._internalDetaching = false;
         if(!this._requestShow) {
           this.fire('px-tooltip-hide', {target: this});

@@ -1,3 +1,7 @@
+v0.10.20
+==================
+* ensure we call _hide() on detached so that the tooltip if fully reset when being detached externally
+
 v0.10.19
 ==================
 * fixed problem with externally moving tooltip in the dom

@@ -4,6 +4,14 @@ v1.0.0
 * update documentation regarding mobile
 * Major bump to pick up redesigned sub-dependencies
 
+v0.10.20
+==================
+* ensure we call _hide() on detached so that the tooltip if fully reset when being detached externally
+
+v0.10.19
+==================
+* fixed problem with externally moving tooltip in the dom
+
 v0.10.18
 ==================
 * accessibility improvements

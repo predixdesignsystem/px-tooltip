@@ -305,12 +305,17 @@ Custom property | Description | Default
     detached: function() {
 
       if(!this._internalDetaching) {
-        //"genuine" detach
+
+        //"genuine" detach. Ensure we call hide so that everything is reset and
+        //ensuring the tooltip is put back were it should be
+        this._hide();
         this._unlistenEvents();
         this._target = null;
+
         //ensure we reset the flag so that we start re listening if we re-attach
         this._firstAttached = true;
       } else {
+
         //detached triggered by our show/hide system
         this._internalDetaching = false;
         if(!this._requestShow) {

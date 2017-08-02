@@ -1,3 +1,7 @@
+v1.0.1
+==================
+* fix display issue in FF with line height change
+
 v1.0.0
 ==================
 * component redesign

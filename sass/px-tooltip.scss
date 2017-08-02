@@ -48,15 +48,8 @@ $half: 4.9495px;
   max-width: $tooltip-max-width;
   white-space: normal;
   overflow-wrap: break-word;
-  h6 {
-    margin: 0;
-  }
-  p {
-    margin: 0;
-    hyphens: auto;
-    &:first-child {
-      text-transform: capitalize;
-    }
+  #message {
+    line-height: 1;
   }
 }
 

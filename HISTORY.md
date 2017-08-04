@@ -1,3 +1,7 @@
+v1.0.2
+==================
+* runtime theming for demo
+
 v1.0.1
 ==================
 * fix display issue in FF with line height change

@@ -24,8 +24,7 @@ $tooltip-text-color: var(--px-tooltip-text-color, black);
 $tooltip-border-color: var(--px-tooltip-border-color, black);
 $tooltip-shadow: 0 1px 3px 0 var(--px-tooltip-shadow-color, black);
 $tooltip-max-width: var(--px-tooltip-max-width, 400px);
-$carat: 9.899px;
-$half: 4.9495px;
+$carat-size: 5px;
 
 :host {
   background-color: transparent;
@@ -36,6 +35,102 @@ $half: 4.9495px;
   pointer-events: none;
 }
 
+//carat on the left
+#tooltip.right:after, #tooltip.right:before {
+	right: calc(100% - 1px);
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#tooltip.right:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-right-color: $tooltip-background-color;
+	border-width: $carat-size;
+	margin-top: -$carat-size;
+}
+#tooltip.right:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-right-color: $tooltip-border-color;
+	border-width: $carat-size + 1px;
+	margin-top: -$carat-size - 1px;
+}
+
+//carat on the right
+#tooltip.left:after, #tooltip.left:before {
+	left: calc(100% - 1px);
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#tooltip.left:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: $tooltip-background-color;
+	border-width: $carat-size;
+	margin-top: -$carat-size;
+}
+#tooltip.left:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-left-color: $tooltip-border-color;
+	border-width: $carat-size + 1px;
+	margin-top: -$carat-size - 1px;
+}
+
+//carat on top
+#tooltip.bottom:after, #tooltip.bottom:before {
+	left: 50%;
+	bottom: calc(100% - 1px);
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#tooltip.bottom:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-bottom-color: $tooltip-background-color;
+	border-width: $carat-size;
+	margin-left: -$carat-size;
+}
+#tooltip.bottom:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-bottom-color: $tooltip-border-color;
+	border-width: $carat-size + 1px;
+	margin-left: -$carat-size - 1px;
+}
+
+//carat on bottom
+#tooltip.top:after, #tooltip.top:before {
+	left: 50%;
+	top: calc(100% - 1px);
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+#tooltip.top:after {
+	border-color: rgba(136, 183, 213, 0);
+	border-top-color: $tooltip-background-color;
+	border-width: $carat-size;
+	margin-left: -$carat-size;
+}
+#tooltip.top:before {
+	border-color: rgba(194, 225, 245, 0);
+	border-top-color: $tooltip-border-color;
+	border-width: $carat-size + 1px;
+	margin-left: -$carat-size - 1px;
+}
+
 .tooltip-container {
   background-color: $tooltip-background-color;
   color: $tooltip-text-color;
@@ -44,53 +139,11 @@ $half: 4.9495px;
   pointer-events: none;
   outline: none;
   padding: 15px 20px;
-  margin: 15px;
   max-width: $tooltip-max-width;
   white-space: normal;
   overflow-wrap: break-word;
   #message {
     line-height: 1;
-  }
-}
-
-.tooltip-carat {
-  pointer-events: none;
-  position: absolute;
-  width: 9.899px; //sqrt(7*7 + 7*7)
-  height: 9.899px;
-  &.top {
-    margin-top: -$half;
-    border: 1px solid transparent;
-    transform-origin: 50% 50%;
-    transform: rotate(-45deg);
-    background-color: $tooltip-background-color;
-    border-color: transparent transparent $tooltip-border-color $tooltip-border-color;
-  }
-  &.bottom {
-    top: $carat + 1;
-    border: 1px solid transparent;
-    transform-origin: 50% 50%;
-    transform: rotate(45deg);
-    background-color: $tooltip-background-color;
-    border-color: $tooltip-border-color transparent transparent $tooltip-border-color;
-  }
-  &.left {
-    right: $carat + 1;
-    margin-top: $carat;
-    border: 1px solid transparent;
-    transform-origin: 50% 50%;
-    transform: rotate(45deg);
-    background-color: $tooltip-background-color;
-    border-color: $tooltip-border-color $tooltip-border-color transparent transparent;
-  }
-  &.right {
-    left: $carat + 1;
-    margin-top: $carat;
-    border: 1px solid transparent;
-    transform-origin: 50% 50%;
-    transform: rotate(-45deg);
-    background-color: $tooltip-background-color;
-    border-color: $tooltip-border-color transparent transparent  $tooltip-border-color;
   }
 }
 

@@ -8,11 +8,10 @@ function runCustomTests() {
   // This is the placeholder suite to place custom tests in
   // Use testCase(options) for a more convenient setup of the test cases
   suite('Custom Automation Tests for px-tooltip', function() {
-    var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_1')
-        wrapper = px_tooltip.$$('#tooltipWrapper');
+    var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_1');
 
   test('hides tooltip before click', function() {
-    expect(wrapper.classList.contains('hidden')).to.equal(true);
+    assert.isFalse(px_tooltip._isShowing);
   });
 
   test('reflects the "for" property', function() {
@@ -36,7 +35,7 @@ function runCustomTests() {
      setup('when _show called', function(done) {
          px_tooltip._show();
          setTimeout(function() {
-             expect(wrapper.classList.contains('hidden')).to.equal(false);
+             assert.isTrue(px_tooltip._isShowing);
              done();
          }, 3000); // delay is 500 ms
      });
@@ -61,15 +60,14 @@ function runCustomTests() {
 
 // Object
 suite('Custom Automation Tests for px-tooltip', function() {
-  var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_8')
-      wrapper = px_tooltip.$$('#tooltipWrapper');
+  var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_8');
 
   var target =  Polymer.dom(document).querySelector('#hoverDivTop5');
 
   px_tooltip_8.set('for',target);
 
   test('hides tooltip before click', function() {
-    expect(wrapper.classList.contains('hidden')).to.equal(true);
+    assert.isFalse(px_tooltip._isShowing);
   });
 
   test('"for" property is object', function() {
@@ -85,7 +83,7 @@ suite('Custom Automation Tests for px-tooltip', function() {
      setup('when _show called', function(done) {
          px_tooltip._show();
          setTimeout(function() {
-             expect(wrapper.classList.contains('hidden')).to.equal(false);
+             assert.isTrue(px_tooltip._isShowing);
              done();
          }, 3000); // delay is 500 ms
      });

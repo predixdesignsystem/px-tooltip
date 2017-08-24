@@ -1,3 +1,7 @@
+v1.0.4
+==================
+* Made the carat part of the tooltip rather than an individual div, avoiding situations where they could be out of sync
+
 v1.0.3
 ==================
 * fix comment for analyzer

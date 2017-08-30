@@ -1,3 +1,7 @@
+v1.0.5
+=================
+* fix edge case where the tooltip could show in the wrong place if notifyResize was called manually while the tooltip was in request show mode
+
 v1.0.4
 ==================
 * Made the carat part of the tooltip rather than an individual div, avoiding situations where they could be out of sync

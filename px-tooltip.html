@@ -362,14 +362,18 @@ Custom property | Description
      */
     _onIronResize: function() {
 
-      //need that debounce for IE
-      this.debounce('tooltip-resize', function() {
-        if(this._requestShow) {
-          this._processShow();
-        } else if(this._isShowing) {
-          this._setPosition();
-        }
-      }, 50);
+      //we check for watchdogenabled because we know that means
+      //we actually started trying to move the tooltip to the body
+      if(this._watchDogEnabled) {
+        //need that debounce for IE
+        this.debounce('tooltip-resize', function() {
+          if(this._requestShow) {
+            this._processShow();
+          } else if(this._isShowing) {
+            this._setPosition();
+          }
+        }, 50);
+      }
     },
     /**
      * This function sets the target on the component (the item hovered over)

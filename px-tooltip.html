@@ -176,7 +176,7 @@ Custom property | Description
         * helpful to catch edge states (i.e reclosing the tooltip after a show
         * request has been issued but the tooltip isn't visible yet)
         */
-      requestShow: {
+        openRequested: {
         type: Boolean,
         value: false,
         readOnly: true,
@@ -316,7 +316,7 @@ Custom property | Description
 
         //detached triggered by our show/hide system
         this._internalDetaching = false;
-        if(!this.requestShow) {
+        if(!this.openRequested) {
           this.fire('px-tooltip-hide', {target: this});
         }
       }
@@ -337,6 +337,7 @@ Custom property | Description
             }
         } else {
             this.listen(this._target, 'mouseenter', '_setOpenedTrue');
+            this.listen(this._target, 'mouseenter', '_setOpenedTruee');
             this.listen(this._target, 'mouseup', '_setOpenedTrue');
             this.listen(this._target, 'mouseleave', '_setOpenedFalse');
             this.listen(this._target, 'mousedown', '_setOpenedFalse');
@@ -368,7 +369,13 @@ Custom property | Description
     },
 
     _setOpenedTrue: function() {
+      console.log('setOpenedTrue')
       this.set('opened', true);
+    },
+
+    _setOpenedTruee: function() {
+      console.log('setOpenedTrue2')
+
     },
 
     _setOpenedFalse: function() {
@@ -376,11 +383,11 @@ Custom property | Description
     },
 
     _openedChanged: function() {
-      if(this.opened && (!this.visible || !this.requestShow)) {
+      if(this.opened && (!this.visible || !this.openRequested)) {
         this._show();
       }
 
-      if(!this.opened && (this.visible || this.requestShow)) {
+      if(!this.opened && (this.visible || this.openRequested)) {
         this._hide();
       }
     },
@@ -428,7 +435,7 @@ Custom property | Description
       if(this._watchDogEnabled) {
         //need that debounce for IE
         this.debounce('tooltip-resize', function() {
-          if(this.requestShow) {
+          if(this.openRequested) {
             this._processShow();
           } else if(this.visible) {
             this.setPosition();
@@ -478,7 +485,7 @@ Custom property | Description
       //we start out with _cancel being false, but if at any time during the timeout it's set to true, we cancel the whole thing.
       this.set('_cancel',false);
       //readonly prop
-      this._setRequestShow(true);
+      this._setOpenRequested(true);
 
       setTimeout(function() {
         if(this._cancel === true) {
@@ -518,7 +525,7 @@ Custom property | Description
         target: this
       });
       //readonly prop
-      this._setRequestShow(false);
+      this._setOpenRequested(false);
     },
     /**
      * Hide the tooltip, clear the timer, and move the tooltip back to whence
@@ -529,10 +536,10 @@ Custom property | Description
 
       // // hide this thing
       this.set('_cancel',true);
-      if (this.visible || this.requestShow) {
+      if (this.visible || this.openRequested) {
         this._watchDogEnabled = false;
         //readonly prop
-        this._setRequestShow(false);
+        this._setOpenRequested(false);
 
         //and we move the tooltip back to whence it came.
         //readonly prop
@@ -884,6 +891,23 @@ Custom property | Description
       position += window[pageXOrYOffset]; // factor in any window scrolling we've done
       return position;
     },
+
+    _isWithinDom: function(node) {
+      var current = node,
+          search = true;
+
+      while(current && current.nodeName !== 'BODY') {
+
+        //shadow root
+        if(current.nodeType === 11) {
+          current = current.host();
+        } else {
+          current = current.parentNode;
+        }
+      }
+
+      return !!current;
+    },
     /**
      * Watchdog when the tooltip is showing so it can be removed
      * if the parent is removed. Returns false when the tooltip is removed.
@@ -891,11 +915,7 @@ Custom property | Description
     _watchDog: function() {
 
       //try to figure out if target is still in the document
-      //can't use document.contains or walking up the tree because
-      //of shadow dom
-      var rect = this._currTarget.getBoundingClientRect();
-      if(rect.width === 0 && rect.height === 0 && rect.left === 0 &&
-      rect.right === 0 && rect.top === 0 && rect.bottom === 0) {
+      if(!this._isWithinDom(this._currTarget)) {
         this._watchDogEnabled = false;
 
         //IE can't remove
@@ -936,6 +956,8 @@ Custom property | Description
       //make sure the handlers are removed
       if(this.ignoreTargetEvents) {
         this.unlistenEvents();
+      } else {
+        this.listenEvents();
       }
     }
   });

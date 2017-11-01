@@ -893,7 +893,7 @@ Custom property | Description
 
         //shadow root
         if(current.nodeType === 11) {
-          current = current.host();
+          current = current.host;
         } else {
           current = current.parentNode;
         }

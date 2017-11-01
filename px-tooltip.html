@@ -431,7 +431,7 @@ Custom property | Description
           if(this.requestShow) {
             this._processShow();
           } else if(this.visible) {
-            this._setPosition();
+            this.setPosition();
           }
         }, 50);
       }
@@ -512,7 +512,7 @@ Custom property | Description
 
       //readonly prop
       this._setVisible(true);
-      this._setPosition();
+      this.setPosition();
 
       this.fire('px-tooltip-show', {
         target: this
@@ -557,9 +557,9 @@ Custom property | Description
     },
     /**
      * This function calls the appropriate positioning function,
-     * according to the orientation specified.
+     * according to the orientation specified, target and tooltip content
      */
-    _setPosition: function() {
+    setPosition: function() {
       if(!this._target) {
         return;
       }
@@ -589,7 +589,7 @@ Custom property | Description
     /**
     * @method _autoPosition
     * This function is called as the default positioning
-    * in _setPosition
+    * in setPosition
     *
     */
     _autoPosition: function() {

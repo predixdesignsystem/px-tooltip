@@ -8,6 +8,7 @@ v1.1.0
 * Make methods for listening/unlistening to target events public:
   * `listenEvents`
   * `unlistenEvents`
+* Make `setPosition` public
 
 v1.0.6
 =================

@@ -275,7 +275,8 @@ Custom property | Description
     },
     observers: [
       '_onMouseMove(mouseCoords.*)',
-      '_openedChanged(opened)'
+      '_openedChanged(opened)',
+      '_ignoreTargetEventsChanged(ignoreTargetEvents)'
     ],
     listeners: {
       'iron-resize': '_onIronResize'
@@ -349,7 +350,7 @@ Custom property | Description
      */
     unlistenEvents: function() {
 
-      if(this._target && !this.ignoreTargetEvents) {
+      if(this._target) {
         if(Array.isArray(this._target)){
           for(var i =0; i < this._target.length; i++){
             this.unlisten(this._target[i], 'mouseenter', '_setOpenedTrue');
@@ -928,6 +929,14 @@ Custom property | Description
       //style the arrow
       res += this._tooltipPos;
       return res;
+    },
+
+    _ignoreTargetEventsChanged: function() {
+
+      //make sure the handlers are removed
+      if(this.ignoreTargetEvents) {
+        this.unlistenEvents();
+      }
     }
   });
 </script>

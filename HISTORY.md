@@ -4,8 +4,8 @@ v1.1.0
   * `opened`: drives the show/hide request
   * `visible`: indicates wether the tooltip is currently shown on screen
   * `requestShow`: show request happened but not shown on screen yet
-  * `ignoreTargetEvents`: prevents the tooltip from listening to the target events, making it easier to get full control of when is shows/hide
-* Open methods for listening/unlistening to target events:
+  * `ignoreTargetEvents`: prevents the tooltip from listening to the target events, making it easier to get full control over when it shows/hide
+* Make methods for listening/unlistening to target events public:
   * `listenEvents`
   * `unlistenEvents`
 

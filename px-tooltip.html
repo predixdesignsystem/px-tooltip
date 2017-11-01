@@ -337,7 +337,6 @@ Custom property | Description
             }
         } else {
             this.listen(this._target, 'mouseenter', '_setOpenedTrue');
-            this.listen(this._target, 'mouseenter', '_setOpenedTruee');
             this.listen(this._target, 'mouseup', '_setOpenedTrue');
             this.listen(this._target, 'mouseleave', '_setOpenedFalse');
             this.listen(this._target, 'mousedown', '_setOpenedFalse');
@@ -369,13 +368,7 @@ Custom property | Description
     },
 
     _setOpenedTrue: function() {
-      console.log('setOpenedTrue')
       this.set('opened', true);
-    },
-
-    _setOpenedTruee: function() {
-      console.log('setOpenedTrue2')
-
     },
 
     _setOpenedFalse: function() {

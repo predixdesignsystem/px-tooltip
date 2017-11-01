@@ -9,6 +9,7 @@ v1.1.0
   * `listenEvents`
   * `unlistenEvents`
 * Make `setPosition` public
+* Change the watchdog so it doesn't trigger a re-layout, improving performance
 
 v1.0.6
 =================

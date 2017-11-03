@@ -11,7 +11,7 @@ function runCustomTests() {
     var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_1');
 
   test('hides tooltip before click', function() {
-    assert.isFalse(px_tooltip._isShowing);
+    assert.isFalse(px_tooltip.visible);
   });
 
   test('reflects the "for" property', function() {
@@ -19,7 +19,7 @@ function runCustomTests() {
   });
 
   test('reflects the "delay" property', function() {
-     assert.equal(px_tooltip.delay, 5000);
+     assert.equal(px_tooltip.delay, 500);
   });
 
   test('reflects the "orientation" property', function() {
@@ -32,12 +32,16 @@ function runCustomTests() {
 
    suite('when tooltip is shown', function() {
 
-     setup('when _show called', function(done) {
-         px_tooltip._show();
-         setTimeout(function() {
-             assert.isTrue(px_tooltip._isShowing);
-             done();
-         }, 3000); // delay is 500 ms
+     test('when _show called', function(done) {
+
+      assert.isFalse(px_tooltip.openRequested);
+      px_tooltip.set('opened', true);
+      assert.isTrue(px_tooltip.openRequested);
+      setTimeout(function() {
+          assert.isTrue(px_tooltip.visible);
+          assert.isFalse(px_tooltip.openRequested);
+          done();
+      }, 1000); // delay is 500 ms
      });
    });
   });
@@ -67,7 +71,7 @@ suite('Custom Automation Tests for px-tooltip', function() {
   px_tooltip_8.set('for',target);
 
   test('hides tooltip before click', function() {
-    assert.isFalse(px_tooltip._isShowing);
+    assert.isFalse(px_tooltip.visible);
   });
 
   test('"for" property is object', function() {
@@ -80,12 +84,16 @@ suite('Custom Automation Tests for px-tooltip', function() {
 
    suite('when tooltip is shown', function() {
 
-     setup('when _show called', function(done) {
-         px_tooltip._show();
+     test('when _show called', function(done) {
+
+         assert.isFalse(px_tooltip.openRequested);
+         px_tooltip.set('opened', true);
+         assert.isTrue(px_tooltip.openRequested);
          setTimeout(function() {
-             assert.isTrue(px_tooltip._isShowing);
+             assert.isTrue(px_tooltip.visible);
+             assert.isFalse(px_tooltip.openRequested);
              done();
-         }, 3000); // delay is 500 ms
+         }, 1000); // delay is 500 ms
      });
    });
   });

@@ -1,3 +1,16 @@
+v1.1.0
+=================
+* Open the tooltip for programatic use through the following properties:
+  * `opened`: drives the show/hide request
+  * `visible`: indicates wether the tooltip is currently shown on screen
+  * `openRequested`: show request happened but not shown on screen yet
+  * `ignoreTargetEvents`: prevents the tooltip from listening to the target events, making it easier to get full control over when it shows/hide
+* Make methods for listening/unlistening to target events public:
+  * `listenEvents`
+  * `unlistenEvents`
+* Make `setPosition` public
+* Change the watchdog so it doesn't trigger a re-layout, improving performance
+
 v1.0.6
 =================
 * add device flags

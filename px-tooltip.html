@@ -37,7 +37,7 @@ Custom property | Description
   <template>
     <style include="px-tooltip-styles"></style>
 
-    <div id="tooltip" class$="[[_getClass(_isShowing, _tooltipPos)]]">
+    <div id="tooltip" class$="[[_getClass(visible, _tooltipPos)]]">
       <div id="message">
         <span>{{ tooltipMessage }}</span>
         <content></content>
@@ -53,6 +53,7 @@ Custom property | Description
     behaviors: [
       Polymer.IronResizableBehavior
     ],
+
     /**
      * Private Properties, used in internal view logic.
      * @property _values
@@ -81,7 +82,7 @@ Custom property | Description
     * @event px-tooltip-request-show
     */
     /**
-    * Fired when a reuqest for hiding the tooltip has been started. At this point the tooltip
+    * Fired when a request for hiding the tooltip has been started. At this point the tooltip
     * has been visually hidden but still is in <body> and hasn't been moved back to where it
     * belongs in the dom
     * detail: { target: this}
@@ -137,6 +138,50 @@ Custom property | Description
         type: String,
         value: ''
       },
+
+      /**
+      * This boolean can be used to REQUEST an open/close action to the tooltip
+      * Because the show/hide mechanism are asynchronous this won't represent
+      * the actual presence of the tooltip on the screen, this is represented
+      * by the `visible` property
+      */
+      opened: {
+        type: Boolean,
+        value: false,
+        notify: true
+      },
+
+      /**
+        * Whether the tooltip is currently shown on screen
+        *
+        */
+      visible: {
+        type: Boolean,
+        value: false,
+        readOnly: true,
+        notify: true
+      },
+      /**
+        * If true the tooltip will ignore the targets events it usually listens
+        * to: mouseup/down, mouseleave/enter... Use this to more precisely
+        * manually control the showing/hiding of the tooltip
+        */
+      ignoreTargetEvents: {
+        type: Boolean,
+        value: false
+      },
+      /**
+        * True when opened has been requested (i.e set to true) but the tooltip
+        * hasn't been made visible yet. Not needed in most cases but might be
+        * helpful to catch edge states (i.e reclosing the tooltip after a show
+        * request has been issued but the tooltip isn't visible yet)
+        */
+        openRequested: {
+        type: Boolean,
+        value: false,
+        readOnly: true,
+        notify: true
+      },
       /**
        * If smartOrientation is turned on then the tooltip will override the
        * default orientation to try to better fit on the page. Smart Orientation
@@ -147,13 +192,6 @@ Custom property | Description
        * Note: this feature is only enabled for the "top" or "bottom" orientations
        */
       smartOrientation: {
-        type: Boolean,
-        value: false
-      },
-      /**
-       * Whether the tooltip is showing at the moment.
-       */
-      _isShowing: {
         type: Boolean,
         value: false
       },
@@ -213,10 +251,6 @@ Custom property | Description
         type: Boolean,
         value: false
       },
-      _requestShow: {
-        type: Boolean,
-        value: false
-      },
       /**
        * Used internally for calculations, includes carat + spacing from target (5+5)
        */
@@ -240,20 +274,24 @@ Custom property | Description
       }
     },
     observers: [
-      '_onMouseMove(mouseCoords.*)'
+      '_onMouseMove(mouseCoords.*)',
+      '_openedChanged(opened)',
+      '_ignoreTargetEventsChanged(ignoreTargetEvents)'
     ],
     listeners: {
       'iron-resize': '_onIronResize'
     },
     attached: function() {
-      this.setAttribute('role','tooltip');
+
 
       if(this._firstAttached) {
+
+        this.setAttribute('role','tooltip');
         // we want to remember where this tooltip was placed originally.
         this.set('_tooltipParent', this.parentNode);
         // we want to make sure the target exists-
         if(this._target){
-          this._listenEvents();
+          this.listenEvents();
         }
         else {
           //make sure tooltip find its parent if it has no for
@@ -268,8 +306,8 @@ Custom property | Description
 
         //"genuine" detach. Ensure we call hide so that everything is reset and
         //ensuring the tooltip is put back were it should be
-        this._hide();
-        this._unlistenEvents();
+        this.set('opened', false);
+        this.unlistenEvents();
         this._target = null;
 
         //ensure we reset the flag so that we start re listening if we re-attach
@@ -278,55 +316,78 @@ Custom property | Description
 
         //detached triggered by our show/hide system
         this._internalDetaching = false;
-        if(!this._requestShow) {
+        if(!this.openRequested) {
           this.fire('px-tooltip-hide', {target: this});
         }
       }
     },
 
-    _listenEvents: function() {
-      if(this._target) {
+    /**
+    * Starts listening to all mouse events (on the target(s)) we are
+    * interested in: mouseenter, mouseup, mouseleave, mousedown
+    */
+    listenEvents: function() {
+      if(this._target && !this.ignoreTargetEvents) {
         if(Array.isArray(this._target)){
             for(var i =0; i < this._target.length; i++){
-              this.listen(this._target[i], 'mouseenter', '_show');
-              this.listen(this._target[i], 'mouseup', '_show');
-              this.listen(this._target[i], 'mouseleave', '_hide');
-              this.listen(this._target[i], 'mousedown', '_hide');
+              this.listen(this._target[i], 'mouseenter', '_setOpenedTrue');
+              this.listen(this._target[i], 'mouseup', '_setOpenedTrue');
+              this.listen(this._target[i], 'mouseleave', '_setOpenedFalse');
+              this.listen(this._target[i], 'mousedown', '_setOpenedFalse');
             }
         } else {
-            this.listen(this._target, 'mouseenter', '_show');
-            this.listen(this._target, 'mouseup', '_show');
-            this.listen(this._target, 'mouseleave', '_hide');
-            this.listen(this._target, 'mousedown', '_hide');
+            this.listen(this._target, 'mouseenter', '_setOpenedTrue');
+            this.listen(this._target, 'mouseup', '_setOpenedTrue');
+            this.listen(this._target, 'mouseleave', '_setOpenedFalse');
+            this.listen(this._target, 'mousedown', '_setOpenedFalse');
         }
       }
     },
 
     /**
-     * Stops listening to all mouse events we were interested in
+     * Stops listening to all mouse events (on the target(s)) we were interested
+     * in: mouseenter, mouseup, mouseleave, mousedown
      */
-    _unlistenEvents: function() {
+    unlistenEvents: function() {
 
       if(this._target) {
         if(Array.isArray(this._target)){
           for(var i =0; i < this._target.length; i++){
-            this.unlisten(this._target[i], 'mouseenter', '_show');
-            this.unlisten(this._target[i], 'mouseup', '_show');
-            this.unlisten(this._target[i], 'mouseleave', '_hide');
-            this.unlisten(this._target[i], 'mousedown', '_hide');
+            this.unlisten(this._target[i], 'mouseenter', '_setOpenedTrue');
+            this.unlisten(this._target[i], 'mouseup', '_setOpenedTrue');
+            this.unlisten(this._target[i], 'mouseleave', '_setOpenedFalse');
+            this.unlisten(this._target[i], 'mousedown', '_setOpenedFalse');
           }
         } else {
-          this.unlisten(this._target, 'mouseenter', '_show');
-          this.unlisten(this._target, 'mouseup', '_show');
-          this.unlisten(this._target, 'mouseleave', '_hide');
-          this.unlisten(this._target, 'mousedown', '_hide');
+          this.unlisten(this._target, 'mouseenter', '_setOpenedTrue');
+          this.unlisten(this._target, 'mouseup', '_setOpenedTrue');
+          this.unlisten(this._target, 'mouseleave', '_setOpenedFalse');
+          this.unlisten(this._target, 'mousedown', '_setOpenedFalse');
         }
+      }
+    },
+
+    _setOpenedTrue: function() {
+      this.set('opened', true);
+    },
+
+    _setOpenedFalse: function() {
+      this.set('opened', false);
+    },
+
+    _openedChanged: function() {
+      if(this.opened && (!this.visible || !this.openRequested)) {
+        this._show();
+      }
+
+      if(!this.opened && (this.visible || this.openRequested)) {
+        this._hide();
       }
     },
 
     _onMouseMove: function(){
 
-      if(this.followMouse && this.thisRect && this._isShowing){
+      if(this.followMouse && this.thisRect && this.visible){
 
         if(this.orientation === 'auto') {
 
@@ -350,12 +411,12 @@ Custom property | Description
      * calls _getTarget and sets the target.
      */
     _onFor:function(){
-      this._unlistenEvents()
+      this.unlistenEvents()
 
       this.target = this._getTarget();
       this._target = this.target;
 
-      this._listenEvents();
+      this.listenEvents();
     },
     /**
      *  Make sure the tooltip is positioned properly if currently showing.
@@ -367,10 +428,10 @@ Custom property | Description
       if(this._watchDogEnabled) {
         //need that debounce for IE
         this.debounce('tooltip-resize', function() {
-          if(this._requestShow) {
+          if(this.openRequested) {
             this._processShow();
-          } else if(this._isShowing) {
-            this._setPosition();
+          } else if(this.visible) {
+            this.setPosition();
           }
         }, 50);
       }
@@ -409,13 +470,15 @@ Custom property | Description
      * This function sets a timeout with the delay value, and if
      * this.cancel has not been called, moves the tooltip to the DOM root,
      * and sets the tooltip as visible.
+     * Don't call this manually but set `opened` instead
      */
     _show: function(evt) {
       var _this = this,
           currTarget = Polymer.dom(evt).rootTarget;
       //we start out with _cancel being false, but if at any time during the timeout it's set to true, we cancel the whole thing.
       this.set('_cancel',false);
-      this._requestShow = true;
+      //readonly prop
+      this._setOpenRequested(true);
 
       setTimeout(function() {
         if(this._cancel === true) {
@@ -447,27 +510,33 @@ Custom property | Description
         return;
       }
 
-      this.set('_isShowing', true);
-      this._setPosition();
+      //readonly prop
+      this._setVisible(true);
+      this.setPosition();
 
       this.fire('px-tooltip-show', {
         target: this
       });
-      this._requestShow = false;
+      //readonly prop
+      this._setOpenRequested(false);
     },
     /**
-     * Hide the tooltip, clear the timer, and move the tooltip back to whence it came.
+     * Hide the tooltip, clear the timer, and move the tooltip back to whence
+     * it came.
+     * Don't call this manually but set `opened` instead
      */
     _hide: function() {
 
       // // hide this thing
       this.set('_cancel',true);
-      if (this._isShowing || this._requestShow) {
+      if (this.visible || this.openRequested) {
         this._watchDogEnabled = false;
-        this._requestShow = false;
+        //readonly prop
+        this._setOpenRequested(false);
 
         //and we move the tooltip back to whence it came.
-        this.set('_isShowing', false);
+        //readonly prop
+        this._setVisible(false);
 
         this.fire('px-tooltip-request-hide', {target: this});
         if(this._tooltipParent && this._tooltipParent.appendChild) {
@@ -480,16 +549,17 @@ Custom property | Description
           if(this.remove) {
             this.remove();
           } else {
-            this.set('_isShowing', false);
+            //readonly prop
+            this._setVisible('visible');
           }
         }
       }
     },
     /**
      * This function calls the appropriate positioning function,
-     * according to the orientation specified.
+     * according to the orientation specified, target and tooltip content
      */
-    _setPosition: function() {
+    setPosition: function() {
       if(!this._target) {
         return;
       }
@@ -519,7 +589,7 @@ Custom property | Description
     /**
     * @method _autoPosition
     * This function is called as the default positioning
-    * in _setPosition
+    * in setPosition
     *
     */
     _autoPosition: function() {
@@ -814,6 +884,23 @@ Custom property | Description
       position += window[pageXOrYOffset]; // factor in any window scrolling we've done
       return position;
     },
+
+    _isWithinDom: function(node) {
+      var current = node,
+          search = true;
+
+      while(current && current.nodeName !== 'BODY') {
+
+        //shadow root
+        if(current.nodeType === 11) {
+          current = current.host;
+        } else {
+          current = current.parentNode;
+        }
+      }
+
+      return !!current;
+    },
     /**
      * Watchdog when the tooltip is showing so it can be removed
      * if the parent is removed. Returns false when the tooltip is removed.
@@ -821,18 +908,14 @@ Custom property | Description
     _watchDog: function() {
 
       //try to figure out if target is still in the document
-      //can't use document.contains or walking up the tree because
-      //of shadow dom
-      var rect = this._currTarget.getBoundingClientRect();
-      if(rect.width === 0 && rect.height === 0 && rect.left === 0 &&
-      rect.right === 0 && rect.top === 0 && rect.bottom === 0) {
+      if(!this._isWithinDom(this._currTarget)) {
         this._watchDogEnabled = false;
 
         //IE can't remove
         if(this.remove) {
           this.remove();
         } else {
-          this._hide()
+          this.set('opened', false);
         }
 
         //if target is an array make sure we remove it from the array
@@ -852,13 +935,23 @@ Custom property | Description
     _getClass: function() {
       var res = 'tooltip-container ';
 
-      if(!this._isShowing) {
+      if(!this.visible) {
         res += ' hidden ';
       }
 
       //style the arrow
       res += this._tooltipPos;
       return res;
+    },
+
+    _ignoreTargetEventsChanged: function() {
+
+      //make sure the handlers are removed
+      if(this.ignoreTargetEvents) {
+        this.unlistenEvents();
+      } else {
+        this.listenEvents();
+      }
     }
   });
 </script>

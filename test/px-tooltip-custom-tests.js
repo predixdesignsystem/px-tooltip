@@ -34,12 +34,12 @@ function runCustomTests() {
 
      test('when _show called', function(done) {
 
-      assert.isFalse(px_tooltip.requestShow);
+      assert.isFalse(px_tooltip.openRequested);
       px_tooltip.set('opened', true);
-      assert.isTrue(px_tooltip.requestShow);
+      assert.isTrue(px_tooltip.openRequested);
       setTimeout(function() {
           assert.isTrue(px_tooltip.visible);
-          assert.isFalse(px_tooltip.requestShow);
+          assert.isFalse(px_tooltip.openRequested);
           done();
       }, 1000); // delay is 500 ms
      });
@@ -86,12 +86,12 @@ suite('Custom Automation Tests for px-tooltip', function() {
 
      test('when _show called', function(done) {
 
-         assert.isFalse(px_tooltip.requestShow);
+         assert.isFalse(px_tooltip.openRequested);
          px_tooltip.set('opened', true);
-         assert.isTrue(px_tooltip.requestShow);
+         assert.isTrue(px_tooltip.openRequested);
          setTimeout(function() {
              assert.isTrue(px_tooltip.visible);
-             assert.isFalse(px_tooltip.requestShow);
+             assert.isFalse(px_tooltip.openRequested);
              done();
          }, 1000); // delay is 500 ms
      });

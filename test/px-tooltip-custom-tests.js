@@ -2,11 +2,6 @@
 var getStyle = function (el, style){
   return window.getComputedStyle( el, null ).getPropertyValue( style );
 };
-function runCustomTests() {
-  // Place any setup steps like variable declaration and initialization here
-
-  // This is the placeholder suite to place custom tests in
-  // Use testCase(options) for a more convenient setup of the test cases
   suite('Custom Automation Tests for px-tooltip', function() {
     var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_1');
 
@@ -97,4 +92,3 @@ suite('Custom Automation Tests for px-tooltip', function() {
      });
    });
   });
-}

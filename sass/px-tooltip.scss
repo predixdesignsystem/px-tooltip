@@ -26,7 +26,7 @@ $tooltip-shadow: 0 1px 3px 0 var(--px-tooltip-shadow-color, black);
 $tooltip-max-width: var(--px-tooltip-max-width, 400px);
 $carat-size: 5px;
 
-:host {
+:host{
   background-color: transparent;
   display: block;
   position: absolute !important;

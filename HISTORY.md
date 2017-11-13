@@ -1,5 +1,9 @@
 v1.1.0
 =================
+* Polymer 1.x/2.x hybrid support
+
+v1.1.0
+=================
 * Open the tooltip for programatic use through the following properties:
   * `opened`: drives the show/hide request
   * `visible`: indicates wether the tooltip is currently shown on screen

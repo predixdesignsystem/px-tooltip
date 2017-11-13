@@ -1,16 +1,20 @@
-// This is the wrapper for custom tests, called upon web components ready state
-var getStyle = function (el, style){
-  return window.getComputedStyle( el, null ).getPropertyValue( style );
-};
-  suite('Custom Automation Tests for px-tooltip', function() {
-    var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_1');
+
+suite('Custom Automation Tests for px-tooltip', function() {
+  let px_tooltip;
+
+  suiteSetup((done)=>{
+    px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_1');
+    flush(()=>{
+      done();
+    })
+  });
 
   test('hides tooltip before click', function() {
     assert.isFalse(px_tooltip.visible);
   });
 
   test('reflects the "for" property', function() {
-     assert.equal(px_tooltip.for, "hoverDivTop");
+    assert.equal(px_tooltip.attributes.for.value, "hoverDivTop");
   });
 
   test('reflects the "delay" property', function() {
@@ -32,38 +36,58 @@ var getStyle = function (el, style){
       assert.isFalse(px_tooltip.openRequested);
       px_tooltip.set('opened', true);
       assert.isTrue(px_tooltip.openRequested);
-      setTimeout(function() {
+      async.until(
+        ()=> px_tooltip.visible,
+        (cb)=>{
+          setTimeout(()=>{cb()}, 1000); // delay is 500 ms
+        },
+        ()=>{
           assert.isTrue(px_tooltip.visible);
           assert.isFalse(px_tooltip.openRequested);
           done();
-      }, 1000); // delay is 500 ms
+        }
+      )
+
      });
    });
   });
 
-  suite('Large text string tooltip', function() {
-
-      var px_tooltip_large = Polymer.dom(document).querySelector('#px_tooltip_9'),
-          tooltip_text = px_tooltip_large.tooltipMessage,
-          tooltip_classes = Polymer.dom(px_tooltip_large.root).querySelector('#tooltip.px-tooltip'),
-          width_styles = getStyle(tooltip_classes, 'max-width');
-
-      test('Check max width of tooltip', function() {
-          if (tooltip_text.length > 52){
-              assert.equal(width_styles, '400px');
-          }
-      });
-
+suite('Large text string tooltip', done=> {
+  test('Check max width of tooltip', done=> {
+    let px_tooltip_large;
+    let tooltip_classes;
+    async.until(
+      ()=> {
+        px_tooltip_large = Polymer.dom(document).querySelector('#px_tooltip_9');
+        tooltip_classes = Polymer.dom(px_tooltip_large.root).querySelector('.tooltip-container');
+        return !!tooltip_classes;
+      },
+      (cb)=>{
+        setTimeout(()=>{cb()}, 1000); // delay is 500 ms
+      },
+      ()=>{
+        let tooltip_text = px_tooltip_large.tooltipMessage,
+        width_styles = window.getComputedStyle( tooltip_classes ).getPropertyValue( 'max-width' );
+        if (tooltip_text.length > 52){
+          assert.equal(width_styles, '400px');
+          done();
+        }
+      }
+    )
   });
+});
 
-
-// Object
+//
+// // Object
 suite('Custom Automation Tests for px-tooltip', function() {
-  var px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_8');
+  let px_tooltip;
+  let target;
 
-  var target =  Polymer.dom(document).querySelector('#hoverDivTop5');
-
-  px_tooltip_8.set('for',target);
+  setup(()=>{
+    px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_8');
+    target =  Polymer.dom(document).querySelector('#hoverDivTop5');
+    px_tooltip_8.for = target;
+  });
 
   test('hides tooltip before click', function() {
     assert.isFalse(px_tooltip.visible);
@@ -77,18 +101,26 @@ suite('Custom Automation Tests for px-tooltip', function() {
      assert.equal(px_tooltip.for, target);
   });
 
-   suite('when tooltip is shown', function() {
+});
 
-     test('when _show called', function(done) {
+suite('when tooltip is shown', function() {
+  let px_tooltip;
+  let target;
 
-         assert.isFalse(px_tooltip.openRequested);
-         px_tooltip.set('opened', true);
-         assert.isTrue(px_tooltip.openRequested);
-         setTimeout(function() {
-             assert.isTrue(px_tooltip.visible);
-             assert.isFalse(px_tooltip.openRequested);
-             done();
-         }, 1000); // delay is 500 ms
-     });
-   });
+  setup(()=>{
+    px_tooltip = Polymer.dom(document).querySelector('#px_tooltip_8');
+    target =  Polymer.dom(document).querySelector('#hoverDivTop5');
+    px_tooltip_8.set('for',target);
   });
+
+  test('when _show called', function(done) {
+    assert.isFalse(px_tooltip.openRequested);
+    px_tooltip.set('opened', true);
+    assert.isTrue(px_tooltip.openRequested);
+    setTimeout(function() {
+      assert.isTrue(px_tooltip.visible);
+      assert.isFalse(px_tooltip.openRequested);
+      done();
+    }, 1000); // delay is 500 ms
+  });
+});

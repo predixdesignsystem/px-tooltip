@@ -1,3 +1,7 @@
+v1.2.1
+=================
+* Change overflow-wrap to word-wrap for IE support
+
 v1.2.0
 =================
 * Polymer 1.x/2.x hybrid support

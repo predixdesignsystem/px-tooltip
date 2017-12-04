@@ -1,3 +1,11 @@
+v1.2.2
+=================
+* Temporarily revert incorrect Polymer 2.x support
+
+v1.2.1
+=================
+* https://github.com/PredixDev/px-tooltip/pull/27
+
 v1.2.0
 =================
 * Polymer 1.x/2.x hybrid support

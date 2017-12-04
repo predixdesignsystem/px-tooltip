@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "iron-resizable-behavior": "^2.0.0",
-    "polymer": "#1.9 - 2"
+    "polymer": "^1.9.0"
   },
   "devDependencies": {
     "px-normalize-design": "^1.0.0",
@@ -38,19 +38,6 @@
     "web-component-tester": "^6.0.0"
   },
   "resolutions": {
-    "webcomponentsjs": "^1.0.0"
-  },
-  "variants": {
-    "1.x": {
-      "dependencies": {
-        "polymer": "^1.9.0"
-      },
-      "devDependencies": {
-        "web-component-tester": "^5.0.0"
-      },
-      "resolutions": {
-        "webcomponentsjs": "^0.7.0"
-      }
-    }
+    "webcomponentsjs": "^0.7.0"
   }
 }

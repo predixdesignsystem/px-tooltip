@@ -4,7 +4,7 @@ v1.2.2
 
 v1.2.1
 =================
-* https://github.com/PredixDev/px-tooltip/pull/27
+* Change overflow-wrap to word-wrap for IE support
 
 v1.2.0
 =================

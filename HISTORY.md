@@ -1,3 +1,7 @@
+v1.2.3
+=================
+* Use slot instead of content
+
 v1.2.2
 =================
 * Temporarily revert incorrect Polymer 2.x support

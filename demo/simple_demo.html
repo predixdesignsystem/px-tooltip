@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>px-dropdown simple demo</title>
-  <script src="../../webcomponentsjs/webcomponents.min.js"></script>
-  <link rel="import" href="../../polymer/polymer-mini.html" />
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+  <link rel="import" href="../../polymer/polymer.html" />
   <link rel="import" href="../px-tooltip.html" />
 
   <style>
@@ -16,20 +15,61 @@
     }
   </style>
 </head>
-
 <body>
-  <template is="dom-bind">
-    <div style="margin: 50px">
-      <px-tooltip
-        for="btn1"
-        delay="50"
-        tooltip-message="This is a tooltip"
-        orientation="auto">
-      </px-tooltip>
-      <button id='btn1'>Hover over me</button>
-    </div>
-  </template>
+  <dom-bind>
+    <template is="dom-bind">
+      <!-- HTML element -->
+      <div>
+        <div style="margin: 50px">
+          <px-tooltip
+            id="tt"
+            delay="50"
+            tooltip-message="This is a tooltip"
+            orientation="auto">
+            <p>
+              so much bof
+            </p>
+            <p>
+              so much bof
+            </p>
+            <p>
+              so much bof
+            </p>
+          </px-tooltip>
+          <button id="moo">htmlElement</button>
+        </div>
+      </div>
 
+      <!-- ID -->
+      <div>
+        <div style="margin: 50px">
+          <px-tooltip
+            delay="50"
+            tooltip-message="This is a tooltip2"
+            orientation="auto"
+            for="randd">
+            <p>
+              so much bof2
+            </p>
+            <p>
+              so much bof2
+            </p>
+            <p>
+              so much bof2
+            </p>
+          </px-tooltip>
+          <button id="randd">single ID</button>
+        </div>
+      </div>
+
+
+    </template>
+  </dom-bind>
+  <script>
+    window.addEventListener('WebComponentsReady', evt => {
+      let moo = document.getElementById('tt');
+
+      moo.set('for', Polymer.dom(document).querySelector('#moo'));
+    });
+  </script>
 </body>
-
-</html>

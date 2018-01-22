@@ -32,7 +32,7 @@
     <!-- Interactive -->
     <px-demo-interactive>
       <!-- Configs -->
-      <px-demo-configs slot="px-demo-configs" configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
+      <px-demo-configs slot="px-demo-configs" configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}" on-chosen-config-changed="_hideTooltip"></px-demo-configs>
 
       <!-- Props -->
       <px-demo-props slot="px-demo-props" props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
@@ -41,6 +41,7 @@
       <px-demo-component slot="px-demo-component">
         <button class="btn btn--tertiary" id="btn1" type="button" name="button">Hover over me, tooltip orientation is {{props.orientation.value}}</button>
         <px-tooltip
+            id="tooltip"
             for="btn1"
             orientation="{{props.orientation.value}}"
             delay="{{props.delay.value}}"
@@ -147,6 +148,10 @@
       }
 
     },
+
+    _hideTooltip() {
+      this.$.tooltip.opened = false;
+    }
 
   });
 </script>

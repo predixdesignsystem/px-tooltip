@@ -1,3 +1,7 @@
+v1.2.4
+=================
+* hide tooltip on demo change
+
 v1.2.3
 =================
 * Use slot instead of content

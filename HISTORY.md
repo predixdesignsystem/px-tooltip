@@ -1,3 +1,7 @@
+v1.2.5
+=================
+* Fix demo for IE
+
 v1.2.4
 =================
 * hide tooltip on demo change

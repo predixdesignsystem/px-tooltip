@@ -1,3 +1,7 @@
+v1.3.0
+=================
+* Added px-tooltip-z-index CSS variable
+
 v1.2.5
 =================
 * Fix demo for IE

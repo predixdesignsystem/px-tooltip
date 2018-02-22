@@ -31,7 +31,7 @@ $carat-size: 5px;
   display: block;
   position: absolute !important;
   outline: none;
-  z-index: 1002;
+  z-index: var(--px-tooltip-z-index, 1002);
   pointer-events: none;
 }
 

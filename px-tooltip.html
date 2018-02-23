@@ -9,12 +9,20 @@ A Smart Orientation option is included that will attempt to automatically choose
 ***Note:** tooltips are not recommended for mobile or tablet applications since the hover affordance is inconsistent across devices and platforms (3D touch, tap-and-hold, proximity sensors, etc). See [px-popover](https://www.predix-ui.com/#/components/px-popover/), which is invoked on tap/click instead.
 
 ### Usage
+Basic:
 
-    <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip<br/><span>(top, 5 sec delay)</span></div>
+    <div id="hoverDivTop" class="hover-tooltip">Hover for tooltip</div>
     <px-tooltip
         for="hoverDivTop"
         orientation="top"
         tooltip-message="Top tooltip">
+    </px-tooltip>
+
+Custom HTML content using the default slot:
+
+    <button id="hoverButton">Hover</button>
+    <px-tooltip for="hoverButton">
+      <span><strong>My Custom Content</strong></span>
     </px-tooltip>
 
 ### Styling

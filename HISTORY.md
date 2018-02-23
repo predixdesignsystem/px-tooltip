@@ -1,3 +1,7 @@
+v1.3.1
+=================
+* add slot to docs (#32)
+
 v1.3.0
 =================
 * Added px-tooltip-z-index CSS variable

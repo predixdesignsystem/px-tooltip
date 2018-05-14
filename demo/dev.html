@@ -22,10 +22,10 @@ limitations under the License.
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>px-tooltip Demo</title>
         <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
-         <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+         <script src="../../@webcomponents/webcomponentsjs/webcomponents-lite.js"></script>
         <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
 
-        <link rel="import" href="../px-tooltip.html"/>
+        <script type="module" src="../px-tooltip.js"></script>
         <style media="screen">
             .sample-container {
                 width: 250px;
@@ -124,15 +124,15 @@ limitations under the License.
             orientation="right"
             tooltip-message="Element passed in as a for">
         </px-tooltip>
-        <script>
-          window.setTimeout(function() {
-            var target = Polymer.dom(document).querySelector('#hoverDivObj'),
-                tt = Polymer.dom(document).querySelector('#elemTooltip');
-            tt.set('for',target);
-          }, 500);
-
-
-        </script>
+        <script type="module">
+import '../px-tooltip.js';
+import { dom } from '../../@polymer/polymer/lib/legacy/polymer.dom.js';
+window.setTimeout(function() {
+  var target = dom(document).querySelector('#hoverDivObj'),
+      tt = dom(document).querySelector('#elemTooltip');
+  tt.set('for',target);
+}, 500);
+</script>
 
         <div class="sample-container-left">
             <div id="hoverDivTop2" class="hover-tooltip">Smart: Hover for tooltip

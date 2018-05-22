@@ -480,7 +480,7 @@ Custom property | Description
         target = this.for;
       }
       //DOCUMENT_FRAGMENT_NODE
-      else if(parentNode.nodeType === 11) {
+      else if(!parentNode || (parentNode.nodeType === 11)) {
           //at this point if we can't find the acual owner root
           //we're probably not attached yet. Just set it to null
           //and wait for 'this' to be attached and rerun this function

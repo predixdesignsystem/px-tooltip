@@ -1,4 +1,4 @@
-# px-tooltip [![Build Status](https://travis-ci.org/PredixDev/px-tooltip.svg?branch=master)](https://travis-ci.org/PredixDev/px-tooltip)
+# px-tooltip [![Build Status](https://travis-ci.org/predixdesignsystem/px-tooltip.svg?branch=master)](https://travis-ci.org/predixdesignsystem/px-tooltip)
 
 ## Overview
 
@@ -36,7 +36,7 @@ Finally, use the component in your application:
 
 ## Documentation
 
-Read the full API and view the demo [here](https://predixdev.github.io/px-tooltip).
+Read the full API and view the demo [here](https://www.predix-ui.com/#/elements/px-tooltip).
 
 
 ## Local Development
@@ -65,4 +65,4 @@ Navigate to the root of that server (e.g. http://localhost:8080/) in a browser t
 
 ## Known Issues
 
-Please use [Github Issues](https://github.com/PredixDev/px-tooltip/issues) to submit any bugs you might find.
+Please use [Github Issues](https://github.com/predixdesignsystem/px-tooltip/issues) to submit any bugs you might find.

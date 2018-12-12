@@ -8,407 +8,375 @@
       "properties": [
         {
           "name": "_parentResizable",
-          "type": "Object",
+          "type": "Object | null | undefined",
           "description": "The closest ancestor element that implements `IronResizableBehavior`.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 36,
+              "line": 41,
               "column": 6
             },
             "end": {
-              "line": 39,
-              "column": 7
+              "line": 41,
+              "column": 75
             }
           },
           "metadata": {
             "polymer": {
-              "observer": "\"_parentResizableChanged\""
+              "observer": "\"_parentResizableChanged\"",
+              "attributeType": "Object"
             }
           },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
           "name": "_notifyingDescendant",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "True if this element is currently notifying its descendant elements of\nresize.",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 45,
+              "line": 47,
               "column": 6
             },
             "end": {
-              "line": 48,
-              "column": 7
+              "line": 47,
+              "column": 57
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Boolean"
+            }
           },
           "defaultValue": "false",
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
-          "name": "_values",
-          "type": "Object",
-          "description": "Private Properties, used in internal view logic.",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 70,
-              "column": 4
-            },
-            "end": {
-              "line": 77,
-              "column": 5
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          }
-        },
-        {
           "name": "for",
-          "type": "HTMLElement",
+          "type": "HTMLElement | null | undefined",
           "description": "Either the id of the element that the tooltip is anchored to or the element itself.\n\nIf an ID is passed, this element must be a sibling of the tooltip.\nIf an element, location in the dom does not matter.\n\n(Optional)  If not provided, the px-tooltip will be attached to its parent element.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 114,
+              "line": 130,
               "column": 6
             },
             "end": {
-              "line": 119,
+              "line": 135,
               "column": 7
             }
           },
           "metadata": {
             "polymer": {
               "notify": true,
-              "observer": "\"_onFor\""
+              "observer": "\"_onFor\"",
+              "attributeType": "HTMLElement"
             }
           },
           "defaultValue": "\"\""
         },
         {
           "name": "delay",
-          "type": "number",
+          "type": "number | null | undefined",
           "description": "The amount of time in miliseconds before the tooltip should appear when the\ntarget element is hovered over.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 124,
+              "line": 140,
               "column": 6
             },
             "end": {
-              "line": 128,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "500"
-        },
-        {
-          "name": "orientation",
-          "type": "string",
-          "description": "The direction that the tooltip is displayed relative to the\n'for' element.\n- 'auto' calculated at render time or resize\n- 'left' to the left of the 'for' element\n- 'right' to the right of the 'for' element\n- 'top' above the 'for' element\n- 'bottom' below the 'for' element",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 138,
-              "column": 6
-            },
-            "end": {
-              "line": 141,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "\"auto\""
-        },
-        {
-          "name": "tooltipMessage",
-          "type": "string",
-          "description": "The string to be displayed in the tooltip message.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 145,
-              "column": 6
-            },
-            "end": {
-              "line": 148,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "\"\""
-        },
-        {
-          "name": "opened",
-          "type": "boolean",
-          "description": "This boolean can be used to REQUEST an open/close action to the tooltip\nBecause the show/hide mechanism are asynchronous this won't represent\nthe actual presence of the tooltip on the screen, this is represented\nby the `visible` property",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 156,
-              "column": 6
-            },
-            "end": {
-              "line": 160,
+              "line": 144,
               "column": 7
             }
           },
           "metadata": {
             "polymer": {
-              "notify": true
+              "attributeType": "Number"
+            }
+          },
+          "defaultValue": "500"
+        },
+        {
+          "name": "orientation",
+          "type": "string | null | undefined",
+          "description": "The direction that the tooltip is displayed relative to the\n'for' element.\n- 'auto' calculated at render time or resize\n- 'left' to the left of the 'for' element\n- 'right' to the right of the 'for' element\n- 'top' above the 'for' element\n- 'bottom' below the 'for' element",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 154,
+              "column": 6
+            },
+            "end": {
+              "line": 157,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "String"
+            }
+          },
+          "defaultValue": "\"auto\""
+        },
+        {
+          "name": "tooltipMessage",
+          "type": "string | null | undefined",
+          "description": "The string to be displayed in the tooltip message.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 161,
+              "column": 6
+            },
+            "end": {
+              "line": 164,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "String"
+            }
+          },
+          "defaultValue": "\"\""
+        },
+        {
+          "name": "opened",
+          "type": "boolean | null | undefined",
+          "description": "This boolean can be used to REQUEST an open/close action to the tooltip\nBecause the show/hide mechanism are asynchronous this won't represent\nthe actual presence of the tooltip on the screen, this is represented\nby the `visible` property",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 172,
+              "column": 6
+            },
+            "end": {
+              "line": 176,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "attributeType": "Boolean"
             }
           },
           "defaultValue": "false"
         },
         {
           "name": "visible",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "Whether the tooltip is currently shown on screen",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 166,
+              "line": 182,
               "column": 6
             },
             "end": {
-              "line": 171,
+              "line": 187,
               "column": 7
             }
           },
           "metadata": {
             "polymer": {
               "notify": true,
-              "readOnly": true
+              "readOnly": true,
+              "attributeType": "Boolean"
             }
           },
           "defaultValue": "false"
         },
         {
           "name": "ignoreTargetEvents",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "If true the tooltip will ignore the targets events it usually listens\nto: mouseup/down, mouseleave/enter... Use this to more precisely\nmanually control the showing/hiding of the tooltip",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 177,
+              "line": 193,
               "column": 6
             },
             "end": {
-              "line": 180,
+              "line": 196,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Boolean"
+            }
           },
           "defaultValue": "false"
         },
         {
           "name": "openRequested",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "True when opened has been requested (i.e set to true) but the tooltip\nhasn't been made visible yet. Not needed in most cases but might be\nhelpful to catch edge states (i.e reclosing the tooltip after a show\nrequest has been issued but the tooltip isn't visible yet)",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 187,
+              "line": 203,
               "column": 8
             },
             "end": {
-              "line": 192,
+              "line": 208,
               "column": 7
             }
           },
           "metadata": {
             "polymer": {
               "notify": true,
-              "readOnly": true
+              "readOnly": true,
+              "attributeType": "Boolean"
             }
           },
           "defaultValue": "false"
         },
         {
           "name": "smartOrientation",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "If smartOrientation is turned on then the tooltip will override the\ndefault orientation to try to better fit on the page. Smart Orientation\nwill be chosen in a clockwise manner. (Example: for a tooltip with\n\"right\" orientation it will be below if tooltip will go off right side\nof the screen, but left if it goes off right *and* bottom side of the\nscreen).\nNote: this feature is only enabled for the \"top\" or \"bottom\" orientations",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 202,
+              "line": 218,
               "column": 6
             },
             "end": {
-              "line": 205,
+              "line": 221,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Boolean"
+            }
           },
           "defaultValue": "false"
         },
         {
           "name": "_cancel",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "Activates if the user hovers OFF the target element.",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 209,
+              "line": 225,
               "column": 6
             },
             "end": {
-              "line": 212,
+              "line": 228,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Boolean"
+            }
           },
           "defaultValue": "false"
         },
         {
           "name": "_tooltipParent",
-          "type": "Object",
+          "type": "Object | null | undefined",
           "description": "An object referring to the tooltip's parent element.",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 216,
+              "line": 232,
               "column": 6
             },
             "end": {
-              "line": 219,
+              "line": 235,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Object"
+            }
           },
           "defaultValue": "{}"
         },
         {
           "name": "followMouse",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 220,
+              "line": 236,
               "column": 6
             },
             "end": {
-              "line": 223,
+              "line": 239,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Boolean"
+            }
           },
           "defaultValue": "false"
         },
         {
           "name": "mouseCoords",
-          "type": "Array",
+          "type": "Array | null | undefined",
           "description": "If using followMouse the mouse coordinates to display the tooltip at, *in viewport pixels*",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 227,
+              "line": 243,
               "column": 6
             },
             "end": {
-              "line": 230,
+              "line": 246,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Array"
+            }
           },
           "defaultValue": "[-9999,-9999]"
         },
         {
           "name": "_watchDogEnabled",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 231,
+              "line": 247,
               "column": 6
             },
             "end": {
-              "line": 234,
+              "line": 250,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Boolean"
+            }
           },
           "defaultValue": "false"
         },
         {
           "name": "_firstAttached",
-          "type": "boolean",
+          "type": "boolean | null | undefined",
           "description": "",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 235,
-              "column": 6
-            },
-            "end": {
-              "line": 238,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "true"
-        },
-        {
-          "name": "watchDogTimeout",
-          "type": "number",
-          "description": "When shown the tooltip uses a watchdog to ensure it is removed\nif the parent is removed. The watchdog runs every watchDogTimeout ms\nIf you see a performance degradation when showing tooltip you can\nincrease the watchdog timeout",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 245,
-              "column": 6
-            },
-            "end": {
-              "line": 248,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "250"
-        },
-        {
-          "name": "_currTarget",
-          "type": "Object",
-          "description": "The current target that triggered _show. Useful when target is an array",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 252,
+              "line": 251,
               "column": 6
             },
             "end": {
@@ -417,68 +385,141 @@
             }
           },
           "metadata": {
-            "polymer": {}
-          }
+            "polymer": {
+              "attributeType": "Boolean"
+            }
+          },
+          "defaultValue": "true"
         },
         {
-          "name": "_internalDetaching",
-          "type": "boolean",
-          "description": "True when detached is caused by px-tooltip code",
-          "privacy": "protected",
+          "name": "watchDogTimeout",
+          "type": "number | null | undefined",
+          "description": "When shown the tooltip uses a watchdog to ensure it is removed\nif the parent is removed. The watchdog runs every watchDogTimeout ms\nIf you see a performance degradation when showing tooltip you can\nincrease the watchdog timeout",
+          "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 258,
+              "line": 261,
               "column": 6
             },
             "end": {
-              "line": 261,
+              "line": 264,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Number"
+            }
+          },
+          "defaultValue": "250"
+        },
+        {
+          "name": "_currTarget",
+          "type": "Object | null | undefined",
+          "description": "The current target that triggered _show. Useful when target is an array",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 268,
+              "column": 6
+            },
+            "end": {
+              "line": 270,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Object"
+            }
+          }
+        },
+        {
+          "name": "_internalDetaching",
+          "type": "boolean | null | undefined",
+          "description": "True when detached is caused by px-tooltip code",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 274,
+              "column": 6
+            },
+            "end": {
+              "line": 277,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "attributeType": "Boolean"
+            }
           },
           "defaultValue": "false"
         },
         {
           "name": "_margin",
-          "type": "Object",
+          "type": "Object | null | undefined",
           "description": "Used internally for calculations, includes carat + spacing from target (5+5)",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 265,
+              "line": 281,
               "column": 6
             },
             "end": {
-              "line": 275,
+              "line": 291,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "Object"
+            }
           },
           "defaultValue": "{\"top\":10,\"bottom\":10,\"left\":10,\"right\":10}"
         },
         {
           "name": "_tooltipPos",
-          "type": "string",
+          "type": "string | null | undefined",
           "description": "Current position of the carat",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 279,
+              "line": 295,
               "column": 6
             },
             "end": {
-              "line": 282,
+              "line": 298,
               "column": 7
             }
           },
           "metadata": {
-            "polymer": {}
+            "polymer": {
+              "attributeType": "String"
+            }
           },
           "defaultValue": "\"right\""
+        },
+        {
+          "name": "_values",
+          "type": "Object",
+          "description": "Private Properties, used in internal view logic.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 86,
+              "column": 4
+            },
+            "end": {
+              "line": 93,
+              "column": 5
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": false
+            }
+          }
         }
       ],
       "methods": [
@@ -487,18 +528,21 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 55,
+              "line": 54,
               "column": 4
             },
             "end": {
-              "line": 60,
+              "line": 59,
               "column": 5
             }
           },
           "metadata": {},
           "params": [],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -507,16 +551,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 292,
+              "line": 308,
               "column": 4
             },
             "end": {
-              "line": 310,
+              "line": 326,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "detached",
@@ -524,23 +571,26 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 311,
+              "line": 327,
               "column": 4
             },
             "end": {
-              "line": 331,
+              "line": 347,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "notifyResize",
           "description": "Can be called to manually notify a resizable and its descendant\nresizables of a resize change.",
           "privacy": "public",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
               "line": 80,
               "column": 4
@@ -552,6 +602,9 @@
           },
           "metadata": {},
           "params": [],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -559,13 +612,13 @@
           "description": "Used to assign the closest resizable ancestor to this resizable\nif the ancestor detects a request for notifications.",
           "privacy": "public",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
               "line": 98,
               "column": 4
             },
             "end": {
-              "line": 100,
+              "line": 110,
               "column": 5
             }
           },
@@ -575,6 +628,9 @@
               "name": "parentResizable"
             }
           ],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -582,13 +638,13 @@
           "description": "Used to remove a resizable descendant from the list of descendants\nthat should be notified of a resize change.",
           "privacy": "public",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 106,
+              "line": 116,
               "column": 4
             },
             "end": {
-              "line": 113,
+              "line": 123,
               "column": 5
             }
           },
@@ -598,6 +654,9 @@
               "name": "target"
             }
           ],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -605,14 +664,14 @@
           "description": "This method can be overridden to filter nested elements that should or\nshould not be notified by the current element. Return true if an element\nshould be notified, or false if it should not be notified.",
           "privacy": "public",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 124,
+              "line": 134,
               "column": 4
             },
             "end": {
-              "line": 124,
-              "column": 59
+              "line": 136,
+              "column": 5
             }
           },
           "metadata": {},
@@ -634,13 +693,13 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 126,
+              "line": 138,
               "column": 4
             },
             "end": {
-              "line": 138,
+              "line": 150,
               "column": 5
             }
           },
@@ -650,6 +709,9 @@
               "name": "event"
             }
           ],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -657,18 +719,21 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 140,
+              "line": 152,
               "column": 4
             },
             "end": {
-              "line": 145,
+              "line": 154,
               "column": 5
             }
           },
           "metadata": {},
           "params": [],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -676,13 +741,13 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 147,
+              "line": 156,
               "column": 4
             },
             "end": {
-              "line": 162,
+              "line": 166,
               "column": 5
             }
           },
@@ -692,6 +757,9 @@
               "name": "event"
             }
           ],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -699,13 +767,13 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 164,
+              "line": 168,
               "column": 4
             },
             "end": {
-              "line": 168,
+              "line": 172,
               "column": 5
             }
           },
@@ -715,6 +783,9 @@
               "name": "parentResizable"
             }
           ],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -722,13 +793,13 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 170,
+              "line": 174,
               "column": 4
             },
             "end": {
-              "line": 181,
+              "line": 185,
               "column": 5
             }
           },
@@ -738,6 +809,9 @@
               "name": "descendant"
             }
           ],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -745,18 +819,43 @@
           "description": "",
           "privacy": "protected",
           "sourceRange": {
-            "file": "bower_components/iron-resizable-behavior/iron-resizable-behavior.html",
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
             "start": {
-              "line": 183,
+              "line": 187,
               "column": 4
             },
             "end": {
-              "line": 211,
+              "line": 232,
               "column": 5
             }
           },
           "metadata": {},
           "params": [],
+          "return": {
+            "type": "void"
+          },
+          "inheritedFrom": "Polymer.IronResizableBehavior"
+        },
+        {
+          "name": "_findParent",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "../iron-resizable-behavior/iron-resizable-behavior.html",
+            "start": {
+              "line": 234,
+              "column": 4
+            },
+            "end": {
+              "line": 246,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          },
           "inheritedFrom": "Polymer.IronResizableBehavior"
         },
         {
@@ -765,16 +864,19 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 337,
+              "line": 353,
               "column": 4
             },
             "end": {
-              "line": 353,
+              "line": 369,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "unlistenEvents",
@@ -782,16 +884,19 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 359,
+              "line": 375,
               "column": 4
             },
             "end": {
-              "line": 376,
+              "line": 392,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_setOpenedTrue",
@@ -799,16 +904,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 378,
+              "line": 394,
               "column": 4
             },
             "end": {
-              "line": 380,
+              "line": 396,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_setOpenedFalse",
@@ -816,16 +924,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 382,
+              "line": 398,
               "column": 4
             },
             "end": {
-              "line": 384,
+              "line": 400,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_openedChanged",
@@ -833,16 +944,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 386,
+              "line": 402,
               "column": 4
             },
             "end": {
-              "line": 394,
+              "line": 410,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_onMouseMove",
@@ -850,16 +964,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 396,
+              "line": 412,
               "column": 4
             },
             "end": {
-              "line": 416,
+              "line": 432,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_onFor",
@@ -867,16 +984,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 421,
+              "line": 437,
               "column": 4
             },
             "end": {
-              "line": 428,
+              "line": 444,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_onIronResize",
@@ -884,16 +1004,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 432,
+              "line": 448,
               "column": 4
             },
             "end": {
-              "line": 446,
+              "line": 462,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_getTarget",
@@ -901,11 +1024,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 450,
+              "line": 466,
               "column": 4
             },
             "end": {
-              "line": 476,
+              "line": 492,
               "column": 5
             }
           },
@@ -918,28 +1041,7 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 483,
-              "column": 4
-            },
-            "end": {
-              "line": 514,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "evt"
-            }
-          ]
-        },
-        {
-          "name": "_processShow",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 515,
+              "line": 499,
               "column": 4
             },
             "end": {
@@ -948,7 +1050,34 @@
             }
           },
           "metadata": {},
-          "params": []
+          "params": [
+            {
+              "name": "evt"
+            }
+          ],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_processShow",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 531,
+              "column": 4
+            },
+            "end": {
+              "line": 546,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_hide",
@@ -956,16 +1085,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 536,
+              "line": 552,
               "column": 4
             },
             "end": {
-              "line": 565,
+              "line": 581,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "setPosition",
@@ -973,16 +1105,19 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 570,
+              "line": 586,
               "column": 4
             },
             "end": {
-              "line": 596,
+              "line": 612,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_autoPosition",
@@ -990,16 +1125,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 603,
+              "line": 619,
               "column": 4
             },
             "end": {
-              "line": 607,
+              "line": 623,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_fitOnLeft",
@@ -1007,11 +1145,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 611,
+              "line": 627,
               "column": 4
             },
             "end": {
-              "line": 628,
+              "line": 644,
               "column": 5
             }
           },
@@ -1024,11 +1162,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 632,
+              "line": 648,
               "column": 4
             },
             "end": {
-              "line": 649,
+              "line": 665,
               "column": 5
             }
           },
@@ -1041,11 +1179,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 653,
+              "line": 669,
               "column": 4
             },
             "end": {
-              "line": 670,
+              "line": 686,
               "column": 5
             }
           },
@@ -1058,11 +1196,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 674,
+              "line": 690,
               "column": 4
             },
             "end": {
-              "line": 691,
+              "line": 707,
               "column": 5
             }
           },
@@ -1075,11 +1213,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 697,
+              "line": 713,
               "column": 4
             },
             "end": {
-              "line": 734,
+              "line": 750,
               "column": 5
             }
           },
@@ -1096,11 +1234,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 738,
+              "line": 754,
               "column": 4
             },
             "end": {
-              "line": 753,
+              "line": 769,
               "column": 5
             }
           },
@@ -1117,11 +1255,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 758,
+              "line": 774,
               "column": 4
             },
             "end": {
-              "line": 773,
+              "line": 789,
               "column": 5
             }
           },
@@ -1130,7 +1268,10 @@
             {
               "name": "orientation"
             }
-          ]
+          ],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_positionTop",
@@ -1138,24 +1279,7 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 777,
-              "column": 4
-            },
-            "end": {
-              "line": 790,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "_positionBottom",
-          "description": "This function sets the carat and tooltip position on bottom.",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 794,
+              "line": 793,
               "column": 4
             },
             "end": {
@@ -1164,11 +1288,14 @@
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
-          "name": "_positionLeft",
-          "description": "This function sets the carat and tooltip position on left.",
+          "name": "_positionBottom",
+          "description": "This function sets the carat and tooltip position on bottom.",
           "privacy": "protected",
           "sourceRange": {
             "start": {
@@ -1176,12 +1303,35 @@
               "column": 4
             },
             "end": {
-              "line": 826,
+              "line": 822,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
+        },
+        {
+          "name": "_positionLeft",
+          "description": "This function sets the carat and tooltip position on left.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 826,
+              "column": 4
+            },
+            "end": {
+              "line": 842,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_positionRight",
@@ -1189,16 +1339,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 830,
+              "line": 846,
               "column": 4
             },
             "end": {
-              "line": 846,
+              "line": 862,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         },
         {
           "name": "_getTargetPositionTop",
@@ -1206,11 +1359,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 851,
+              "line": 867,
               "column": 4
             },
             "end": {
-              "line": 853,
+              "line": 869,
               "column": 5
             }
           },
@@ -1223,11 +1376,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 857,
+              "line": 873,
               "column": 4
             },
             "end": {
-              "line": 859,
+              "line": 875,
               "column": 5
             }
           },
@@ -1240,11 +1393,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 863,
+              "line": 879,
               "column": 4
             },
             "end": {
-              "line": 865,
+              "line": 881,
               "column": 5
             }
           },
@@ -1261,11 +1414,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 869,
+              "line": 885,
               "column": 4
             },
             "end": {
-              "line": 871,
+              "line": 887,
               "column": 5
             }
           },
@@ -1278,11 +1431,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 876,
+              "line": 892,
               "column": 4
             },
             "end": {
-              "line": 878,
+              "line": 894,
               "column": 5
             }
           },
@@ -1295,11 +1448,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 883,
+              "line": 899,
               "column": 4
             },
             "end": {
-              "line": 885,
+              "line": 901,
               "column": 5
             }
           },
@@ -1316,11 +1469,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 890,
+              "line": 906,
               "column": 4
             },
             "end": {
-              "line": 894,
+              "line": 910,
               "column": 5
             }
           },
@@ -1340,11 +1493,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 896,
+              "line": 912,
               "column": 4
             },
             "end": {
-              "line": 911,
+              "line": 927,
               "column": 5
             }
           },
@@ -1361,11 +1514,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 916,
+              "line": 932,
               "column": 4
             },
             "end": {
-              "line": 941,
+              "line": 957,
               "column": 5
             }
           },
@@ -1378,11 +1531,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 943,
+              "line": 959,
               "column": 4
             },
             "end": {
-              "line": 953,
+              "line": 969,
               "column": 5
             }
           },
@@ -1395,16 +1548,19 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 955,
+              "line": 971,
               "column": 4
             },
             "end": {
-              "line": 963,
+              "line": 979,
               "column": 5
             }
           },
           "metadata": {},
-          "params": []
+          "params": [],
+          "return": {
+            "type": "void"
+          }
         }
       ],
       "staticMethods": [],
@@ -1417,11 +1573,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 58,
+          "line": 74,
           "column": 10
         },
         "end": {
-          "line": 964,
+          "line": 980,
           "column": 3
         }
       },
@@ -1433,217 +1589,217 @@
           "description": "Either the id of the element that the tooltip is anchored to or the element itself.\n\nIf an ID is passed, this element must be a sibling of the tooltip.\nIf an element, location in the dom does not matter.\n\n(Optional)  If not provided, the px-tooltip will be attached to its parent element.",
           "sourceRange": {
             "start": {
-              "line": 114,
+              "line": 130,
               "column": 6
             },
             "end": {
-              "line": 119,
+              "line": 135,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "HTMLElement"
+          "type": "HTMLElement | null | undefined"
         },
         {
           "name": "delay",
           "description": "The amount of time in miliseconds before the tooltip should appear when the\ntarget element is hovered over.",
           "sourceRange": {
             "start": {
-              "line": 124,
+              "line": 140,
               "column": 6
             },
             "end": {
-              "line": 128,
+              "line": 144,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "number"
+          "type": "number | null | undefined"
         },
         {
           "name": "orientation",
           "description": "The direction that the tooltip is displayed relative to the\n'for' element.\n- 'auto' calculated at render time or resize\n- 'left' to the left of the 'for' element\n- 'right' to the right of the 'for' element\n- 'top' above the 'for' element\n- 'bottom' below the 'for' element",
           "sourceRange": {
             "start": {
-              "line": 138,
+              "line": 154,
               "column": 6
             },
             "end": {
-              "line": 141,
+              "line": 157,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "string | null | undefined"
         },
         {
           "name": "tooltip-message",
           "description": "The string to be displayed in the tooltip message.",
           "sourceRange": {
             "start": {
-              "line": 145,
+              "line": 161,
               "column": 6
             },
             "end": {
-              "line": 148,
+              "line": 164,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "string | null | undefined"
         },
         {
           "name": "opened",
           "description": "This boolean can be used to REQUEST an open/close action to the tooltip\nBecause the show/hide mechanism are asynchronous this won't represent\nthe actual presence of the tooltip on the screen, this is represented\nby the `visible` property",
           "sourceRange": {
             "start": {
-              "line": 156,
+              "line": 172,
               "column": 6
             },
             "end": {
-              "line": 160,
+              "line": 176,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "visible",
           "description": "Whether the tooltip is currently shown on screen",
           "sourceRange": {
             "start": {
-              "line": 166,
+              "line": 182,
               "column": 6
             },
             "end": {
-              "line": 171,
+              "line": 187,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "ignore-target-events",
           "description": "If true the tooltip will ignore the targets events it usually listens\nto: mouseup/down, mouseleave/enter... Use this to more precisely\nmanually control the showing/hiding of the tooltip",
           "sourceRange": {
             "start": {
-              "line": 177,
+              "line": 193,
               "column": 6
             },
             "end": {
-              "line": 180,
+              "line": 196,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "open-requested",
           "description": "True when opened has been requested (i.e set to true) but the tooltip\nhasn't been made visible yet. Not needed in most cases but might be\nhelpful to catch edge states (i.e reclosing the tooltip after a show\nrequest has been issued but the tooltip isn't visible yet)",
           "sourceRange": {
             "start": {
-              "line": 187,
+              "line": 203,
               "column": 8
             },
             "end": {
-              "line": 192,
+              "line": 208,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "smart-orientation",
           "description": "If smartOrientation is turned on then the tooltip will override the\ndefault orientation to try to better fit on the page. Smart Orientation\nwill be chosen in a clockwise manner. (Example: for a tooltip with\n\"right\" orientation it will be below if tooltip will go off right side\nof the screen, but left if it goes off right *and* bottom side of the\nscreen).\nNote: this feature is only enabled for the \"top\" or \"bottom\" orientations",
           "sourceRange": {
             "start": {
-              "line": 202,
+              "line": 218,
               "column": 6
             },
             "end": {
-              "line": 205,
+              "line": 221,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "follow-mouse",
           "description": "",
           "sourceRange": {
             "start": {
-              "line": 220,
+              "line": 236,
               "column": 6
             },
             "end": {
-              "line": 223,
+              "line": 239,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "boolean"
+          "type": "boolean | null | undefined"
         },
         {
           "name": "mouse-coords",
           "description": "If using followMouse the mouse coordinates to display the tooltip at, *in viewport pixels*",
           "sourceRange": {
             "start": {
-              "line": 227,
+              "line": 243,
               "column": 6
             },
             "end": {
-              "line": 230,
+              "line": 246,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "Array"
+          "type": "Array | null | undefined"
         },
         {
           "name": "watch-dog-timeout",
           "description": "When shown the tooltip uses a watchdog to ensure it is removed\nif the parent is removed. The watchdog runs every watchDogTimeout ms\nIf you see a performance degradation when showing tooltip you can\nincrease the watchdog timeout",
           "sourceRange": {
             "start": {
-              "line": 245,
+              "line": 261,
               "column": 6
             },
             "end": {
-              "line": 248,
+              "line": 264,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "number"
+          "type": "number | null | undefined"
         }
       ],
       "events": [
         {
           "type": "CustomEvent",
           "name": "px-tooltip-hide",
-          "description": "px-tooltip-hide",
+          "description": "Fired when the tooltip has been moved back from the body to where it belongs in the dom.\nThe tooltip is still visually hidden.\ndetail: { target: this}",
           "metadata": {}
         },
         {
           "type": "CustomEvent",
           "name": "px-tooltip-request-hide",
-          "description": "px-tooltip-request-hide",
+          "description": "Fired when a request for hiding the tooltip has been started. At this point the tooltip\nhas been visually hidden but still is in <body> and hasn't been moved back to where it\nbelongs in the dom\ndetail: { target: this}",
           "metadata": {}
         },
         {
           "type": "CustomEvent",
           "name": "px-tooltip-request-show",
-          "description": "px-tooltip-request-show",
+          "description": "Fired when a request for showing a tooltip has been started, but the tooltip\nhasn't shown yet. The tooltip still hasn't been moved to <body>.\nThe request might be canceled before it is shown\ndetail: { target: this}",
           "metadata": {}
         },
         {
           "type": "CustomEvent",
           "name": "px-tooltip-show",
-          "description": "px-tooltip-show",
+          "description": "Fired when the tooltip has been shown. Warning: at this point the tooltip has\nbeen moved to <body>, so if not listening directly to the tooltip\nyou might miss this event.\ndetail: { target: this}",
           "metadata": {}
         },
         {
@@ -1680,13 +1836,12 @@
           "description": "",
           "name": "",
           "range": {
-            "file": "px-tooltip.html",
             "start": {
-              "line": 51,
+              "line": 67,
               "column": 8
             },
             "end": {
-              "line": 51,
+              "line": 67,
               "column": 21
             }
           }

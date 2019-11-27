@@ -18,9 +18,9 @@ limitations under the License.
 <html lang="en">
 <head>
   <title>px-dropdown simple demo</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../polymer/polymer.html" />
-  <link rel="import" href="../px-tooltip.html" />
+  <script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script type="module" src="../../@polymer/polymer/polymer-legacy.js"></script>
+  <script type="module" src="../px-tooltip.js"></script>
 
   <style>
     html,
@@ -81,11 +81,14 @@ limitations under the License.
 
     </template>
   </dom-bind>
-  <script>
-    window.addEventListener('WebComponentsReady', evt => {
-      let moo = document.getElementById('tt');
+  <script type="module">
+import '@polymer/polymer/polymer-legacy.js';
+import '../px-tooltip.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+window.addEventListener('WebComponentsReady', evt => {
+  let moo = document.getElementById('tt');
 
-      moo.set('for', Polymer.dom(document).querySelector('#moo'));
-    });
-  </script>
+  moo.set('for', dom(document).querySelector('#moo'));
+});
+</script>
 </body>

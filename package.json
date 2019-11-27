@@ -1,15 +1,14 @@
 {
-  "name": "px-tooltip",
-  "author": "General Electric",
   "description": "A Px component that provides a tooltip on invocation",
-  "version": "1.3.1",
-  "private": false,
-  "extName": null,
   "repository": {
     "type": "git",
     "url": "https://github.com/px-tooltip.git"
   },
   "homepage": "https://www.predix-ui.com/",
+  "name": "px-tooltip",
+  "author": "General Electric",
+  "version": "1.3.1",
+  "extName": null,
   "devDependencies": {
     "browser-sync": "^2.13.0",
     "ensure-px-license": "^1.0.0",
@@ -29,10 +28,20 @@
     "node-sass-import-once": "^1.2.0",
     "prettier": "^1.15.3",
     "stream-combiner2": "^1.1.1",
-    "yargs": "^6.0.0"
+    "yargs": "^6.0.0",
+    "wct-browser-legacy": "^1.0.1"
   },
   "dependencies": {
-    "polymer-cli": "^1.5.7"
+    "polymer-cli": "^1.5.7",
+    "@polymer/iron-resizable-behavior": "^3.0.0",
+    "@polymer/polymer": "^3.0.0"
   },
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "resolutions": {
+    "inherits": "2.0.3",
+    "samsam": "1.1.3",
+    "supports-color": "3.1.2",
+    "type-detect": "1.0.0"
+  },
+  "main": "px-tooltip.js"
 }

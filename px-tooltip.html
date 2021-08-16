@@ -344,12 +344,14 @@ Custom property | Description
             this.listen(this._target[i], "mouseup", "_setOpenedTrue");
             this.listen(this._target[i], "mouseleave", "_setOpenedFalse");
             this.listen(this._target[i], "mousedown", "_setOpenedFalse");
+            this.listen(this._target[i], 'dropdown-selected', '_setOpenedFalse');
           }
         } else {
           this.listen(this._target, "mouseenter", "_setOpenedTrue");
           this.listen(this._target, "mouseup", "_setOpenedTrue");
           this.listen(this._target, "mouseleave", "_setOpenedFalse");
           this.listen(this._target, "mousedown", "_setOpenedFalse");
+          this.listen(this._target, 'dropdown-selected', '_setOpenedFalse');
         }
       }
     },
@@ -366,12 +368,14 @@ Custom property | Description
             this.unlisten(this._target[i], "mouseup", "_setOpenedTrue");
             this.unlisten(this._target[i], "mouseleave", "_setOpenedFalse");
             this.unlisten(this._target[i], "mousedown", "_setOpenedFalse");
+            this.unlisten(this._target[i], 'dropdown-selected', '_setOpenedFalse');
           }
         } else {
           this.unlisten(this._target, "mouseenter", "_setOpenedTrue");
           this.unlisten(this._target, "mouseup", "_setOpenedTrue");
           this.unlisten(this._target, "mouseleave", "_setOpenedFalse");
           this.unlisten(this._target, "mousedown", "_setOpenedFalse");
+          this.unlisten(this._target, 'dropdown-selected', '_setOpenedFalse');
         }
       }
     },
